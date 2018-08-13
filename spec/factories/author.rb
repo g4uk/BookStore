@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :author do
-    first_name { FFaker::Name.first_name }
-    last_name { FFaker::Name.last_name }
+    first_name { FFaker::String.from_regexp(NAME) }
+    last_name { FFaker::String.from_regexp(NAME) }
     factory :author_with_books do
       ignore do
         books_count 5

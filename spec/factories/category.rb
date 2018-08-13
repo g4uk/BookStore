@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :category do
-    sequence(:name) { |n| "#{FFaker::Book.genre}#{n}" }
+    sequence(:name) { |n| "#{FFaker::String.from_regexp(NAME)}#{n}" }
   end
 end
