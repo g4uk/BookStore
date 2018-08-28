@@ -1,0 +1,13 @@
+%p#notice= notice
+%p
+  %strong First name:
+  = @author.first_name
+%p
+  %strong Last name:
+  = @author.last_name
+%p
+  %strong Description:
+  = @author.description
+= link_to 'Edit', edit_author_path(@author)
+|
+= link_to 'Back', authors_path

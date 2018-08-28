@@ -1,0 +1,26 @@
+= form_with(model: order, local: true) do |form|
+  - if order.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(order.errors.count, "error")
+        prohibited this order from being saved:
+      %ul
+        - order.errors.full_messages.each do |message|
+          %li= message
+  .field
+    = form.label :user_id
+    = form.text_field :user_id
+  .field
+    = form.label :delivery_id
+    = form.text_field :delivery_id
+  .field
+    = form.label :credit_card_id
+    = form.text_field :credit_card_id
+  .field
+    = form.label :coupon_id
+    = form.text_field :coupon_id
+  .field
+    = form.label :status
+    = form.text_field :status
+  .actions
+    = form.submit

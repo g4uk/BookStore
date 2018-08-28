@@ -1,0 +1,16 @@
+.row
+  = f.label(:number, class: 'control-label input-label')
+  = f.text_field :number, id: 'cardName', class: 'form-control', placeholder: true
+  .col-sm-6
+    .form-group
+      = f.label(:owner_name, class: 'control-label input-label')
+      = f.text_field :owner_name, id: 'cardName', class: 'form-control', placeholder: true
+  .col-sm-3
+    .form-group
+      = f.label(:expiration_date, class: 'control-label input-label')
+      = f.text_field :expiration_date, id: 'firstName', class: 'form-control', placeholder: true
+  .col-sm-3
+    .form-group.relative
+      = f.label(:cvv, class: 'control-label input-label')
+      = f.text_field :cvv, id: 'cvc', class: 'form-control', placeholder: true
+      %i.fa.fa-question-circle.general-form-help

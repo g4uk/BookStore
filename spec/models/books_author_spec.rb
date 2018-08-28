@@ -3,10 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe BooksAuthor, type: :model do
-  let(:books_author) { FactoryBot.create :books_author }
-
-  it { expect(books_author).to validate_presence_of(:book) }
-  it { expect(books_author).to validate_presence_of(:author) }
-  it { expect(books_author).to belong_to(:book) }
-  it { expect(books_author).to belong_to(:author) }
+  context 'validations' do
+    it { should validate_presence_of(:book) }
+    it { should validate_presence_of(:author) }
+  end
+  context 'relations' do
+    it { should belong_to(:book) }
+    it { should belong_to(:author) }
+  end
+  context 'attributes' do
+    it { should have_db_column(:book_id).of_type(:integer) }
+    it { should have_db_column(:author_id).of_type(:integer) }
+  end
 end

@@ -1,0 +1,8 @@
+= form_with model: @user, url: { action: "update_#{address.to_s}" } do |user_form|
+  - if @user.errors.any?
+    %span I understand that all data will be lost
+  .flashMessage
+  = user_form.fields_for address do |form|
+    = render 'addresses/form', f: form
+  .text-center.general-text-align
+    .btn.disabled= user_form.submit

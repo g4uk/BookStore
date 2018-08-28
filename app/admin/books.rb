@@ -1,24 +1,24 @@
+include ActiveAdminHelpers
 ActiveAdmin.register Book do
   menu priority: 1
-  
+
   filter :category
-  filter :books_authors_author_id, as: :select, collection: Author.all.map{ |author| ["#{author.first_name} #{author.last_name}", author.id] }, label: 'Author'
+  filter :books_authors_author_id#, as: :select, collection: authors_with_ids, label: 'Author'
   filter :title
   filter :price
 
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
   permit_params :title, :description, :price, :publishing_year, :dimensions, :materials,
                 :category_id, images: [], author_ids: []
 
   index do |books|
     selectable_column
-    column :image
+    column 'Images' do |book|
+      image_tag book.try(:images).first.variant(resize: '100x100') unless book.images.blank?
+    end
     column :category
     column :title
     column 'Authors' do |book|
-      book.authors.map{ |author| "#{author.first_name} #{author.last_name}" }.join(', ')
+      authors_links(book.authors)
     end
     column :description
     column :price do |book|
@@ -30,18 +30,12 @@ ActiveAdmin.register Book do
   form do |f|
     f.semantic_errors
     f.inputs 'Authors' do
-      f.input :authors, collection: Author.all.map{ |author| ["#{author.first_name} #{author.last_name}", author.id] }
+      f.input :authors, as: :check_boxes, collection: authors_with_ids
     end
     f.inputs
+    f.inputs 'Images' do
+      f.input :images, as: :file, input_html: { multiple: true }
+    end
     f.actions
   end
-  
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if params[:action] == 'create' && current_user.admin?
-#   permitted
-# end
 end

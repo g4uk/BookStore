@@ -1,0 +1,31 @@
+%main.container.general-main-wrap
+  .text-center
+    %h3.general-login-title Log In
+    %a.general-login-icon{href: "#"}
+      %i.fa.fa-facebook-official
+    %p.general-login-text or
+  = form_for(:user, url: session_path(:user), html: { class: 'general-form' }) do |f|
+    - flash.each do |name, msg|
+      - if msg.class == Array
+        - msg.each do |message|
+          = content_tag :div, message, :id => "flash_#{name}"
+      - else
+        = content_tag :div, msg, :id => "flash_#{name}"
+    .form-group.mb-30
+      = f.label :email, t(:enter_email), class: 'control-label input-label'
+      = f.text_field :email, class: 'form-control'
+    .form-group.mb-30
+      = f.label :password, class: 'control-label input-label'
+      = f.password_field :password, class: 'form-control'
+      = link_to t(:forgot_password), new_password_path(:user), class: 'help-block in-gold-500'
+    .form-group.checkbox.text-center.mb-30
+      %label.checkbox-label
+        = f.check_box :remember_me, class: 'checkbox-input', hidden: 'true'
+        %span.checkbox-icon
+          %i.fa.fa-check
+        = f.label :remember_me, class: 'checkbox-text'
+    .text-center
+      = f.submit class: 'btn btn-default mb-20'
+  %p.general-sign-text.text-center
+    Don’t have an Account?
+    = link_to t(:sign_up), signup_customer_path, class: 'in-gold-500'

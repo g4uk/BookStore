@@ -6,15 +6,13 @@ require 'ffaker'
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Status.delete_all
-statuses = %w([in_progress] [in_queue] [in_delivery] [delivered] [canceled])
-statuses.each { |status| Status.create!(name: status) }
 
 User.delete_all
-User.create!(
+user = User.create!(
   email: 'rgbookstore@rgb.ua',
   password: 'Borabora1', password_confirmation: 'Borabora1'
 )
+user.add_role :admin
 
 Category.delete_all
 categories = []

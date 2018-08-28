@@ -1,0 +1,9 @@
+= form_with model: @user do |f|
+  - if @user.errors.any?
+    %span I understand that all data will be lost
+  .email_flash_message
+  .form-group.mb-35
+    = f.label :email, class: 'control-label input-label'
+    = f.email_field :email, id: 'email', placeholder: t(:your_email), class: 'email form-control'
+  .general-text-align
+    .btn.btn-default.mb-35= f.submit

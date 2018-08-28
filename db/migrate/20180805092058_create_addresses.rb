@@ -9,10 +9,11 @@ class CreateAddresses < ActiveRecord::Migration[5.2]
       t.string :zip, null: false
       t.string :phone, null: false
       t.string :type, null: false
-      t.belongs_to :user, foreign_key: true
-      t.belongs_to :order, index: true
-
+      t.integer :addressable_id
+      t.string :addressable_type
       t.timestamps
     end
+
+    add_index :addresses, [:addressable_id, :addressable_type]
   end
 end

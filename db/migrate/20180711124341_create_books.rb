@@ -8,7 +8,7 @@ class CreateBooks < ActiveRecord::Migration[5.2]
       t.text :description
       t.decimal :price, precision: 8, scale: 2
       t.integer :publishing_year, null: false, default: Date.today.year
-      t.string :dimensions
+      t.text :dimensions
       t.string :materials
 
       t.timestamps

@@ -7,7 +7,8 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       t.decimal :delivery_price, precision: 8, scale: 2
       t.string :delivery_duration
       t.string :coupon_code
-      t.belongs_to :status, index: true
+      t.decimal :coupon_price, precision: 8, scale: 2
+      t.integer :status, null: false, default: 0
       t.belongs_to :delivery, index: true
 
       t.timestamps
