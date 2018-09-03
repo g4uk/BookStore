@@ -3,7 +3,6 @@ ActiveAdmin.register Book do
   menu priority: 1
 
   filter :category
-  filter :books_authors_author_id#, as: :select, collection: authors_with_ids, label: 'Author'
   filter :title
   filter :price
 

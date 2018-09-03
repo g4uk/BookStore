@@ -1,0 +1,9 @@
+.general-thumb-wrap
+  .thumbnail.general-thumbnail
+    = image_tag book.try(:images).first, class: 'img-shadow general-thumbnail-img'
+    .thumb-hover
+      .general-thumb-link-wrap
+        = link_to book_path(book), class: 'thumb-hover-link' do
+          %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
+        = link_to create_order_item_path(book_id: book), class: 'thumb-hover-link', remote: true do
+          %i.fa.fa-shopping-cart.thumb-icon

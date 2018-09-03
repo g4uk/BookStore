@@ -5,8 +5,8 @@ class HomesController < ApplicationController
   before_action :set_cart
 
   def index
-    @books = Book.all
-
+    @books = PopularBooksService.call
+    @latest_books = LatestBooksService.call
     respond_to do |format|
       format.html.haml
     end

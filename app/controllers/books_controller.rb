@@ -7,7 +7,14 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = BookDecorator.decorate_collection(Book.all)
+    if !params[:category].blank?
+      @books = BookDecorator.decorate_collection(Book.where(category_id: params[:category]))
+    elsif !params[:sort].blank?
+      @books = BookDecorator.decorate_collection(Book.all.order(params[:sort]))
+    else
+      @books = BookDecorator.decorate_collection(Book.all)
+    end
+    @categories = CategoryDecorator.decorate_collection(@categories_for_menu)
   end
 
   # GET /books/1

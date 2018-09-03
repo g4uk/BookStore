@@ -19,60 +19,58 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand Bookstore
-          %a.shop-link.pull-right.visible-xs{href: "#"}
+          %a.navbar-brand= t(:bookstore)
+          = link_to cart_path(@cart), class: 'shop-link pull-right visible-xs' do
             %span.shop-icon
-              %span.shop-quantity 3
-        %a.shop-link.pull-right.hidden-xs{href: "#"}
+              = render @cart
+        = link_to cart_path(@cart), class: 'shop-link pull-right hidden-xs' do
           %span.shop-icon
-            %span.shop-quantity= @cart.total_quantity
+            = render @cart
         #navbar.navbar-collapse.collapse.pl-30{'aria-expanded': "false"}
           .visible-xs
             %button.close{type: "button", 'aria-label': "Close"}
               %span{'aria-hidden': "true"} &times;
             %ul.nav.navbar-nav
               %li
-                %a{href: "#"} Home
+                = link_to t(:home), root_path
               %li
+                = link_to t(:shop), '#menu', html_options = { type: 'button', 'data-toggle': 'collapse', 'aria-expanded': 'false', 'aria-controls': 'menu' }
                 %a{type: "button", 'data-toggle': "collapse", href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"} Shop
                 %ul#menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
-                  %li
-                    %a.collapse-link{href: "#"} Mobile development
-                  %li
-                    %a.collapse-link{href: "#"} Photo
-                  %li
-                    %a.collapse-link{href: "#"} Web design
+                  - @categories_for_menu.each do |category|
+                    %li
+                      %a.collapse-link{href: "#"}= category.name
               %li
                 %a{href: "#"} My account
           .hidden-xs
             %ul.nav.navbar-nav
               %li
-                %a{href: "#"} Home
+                = link_to t(:home), root_path
               %li.dropdown
-                %a.dropdown-toggle{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} Shop
+                = link_to t(:shop), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
                 %ul.dropdown-menu
-                  %li
-                    %a{href: "#"} Mobile development
-                  %li
-                    %a{href: "#"} Photo
-                  %li
-                    %a{href: "#"} Web design
+                  - @categories_for_menu.each do |category|
+                    %li
+                      %a{href: "#"}= category.name
               - if user_signed_in?
                 %li.dropdown
-                  %a.dropdown-toggle{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} My account
+                  = link_to t(:my_account), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
                   %ul.dropdown-menu
                     %li
                       %a{href: "#"} Orders
                     %li
-                      %a{href: "#"} Settings
+                      = link_to t(:settings), settings_path(current_user)
                     %li.divider{role: "separator"}
                     %li
                       = link_to t(:log_out), destroy_user_session_path, method: :delete 
               - else
                 %li
-                  = link_to t(:log_in), login_customer_users_path
+                  = link_to t(:log_in), login_users_path
                 %li
-                  = link_to t(:sign_up), signup_customer_path
+                  = link_to t(:sign_up), signup_users_path
+    - flash.each do |name, msg|
+      = content_tag :div, :class => "alert #{name == :error ? "alert-error" : "alert-success" }" do
+        = msg
     = yield
     %footer.navbar-inverse
       .container
@@ -80,13 +78,19 @@
           .col-sm-9
             %ul.list-inline.general-align.mb-25
               %li
-                %a.nav-link{href: "#"} Home
+                = link_to t(:home), root_path, class: 'nav-link'
               %li
-                %a.nav-link{href: "#"} Shop
-              %li
-                %a.nav-link{href: "#"} Orders
-              %li
-                %a.nav-link{href: "#"} Settings
+                = link_to t(:shop), books_path, class: 'nav-link'
+              - if user_signed_in?
+                %li
+                  %a.nav-link{href: "#"} Orders
+                %li
+                  = link_to t(:settings), settings_path(current_user), class: 'nav-link'
+              - else
+                %li
+                  = link_to t(:log_in), login_users_path, class: 'nav-link'
+                %li
+                  = link_to t(:sign_up), signup_users_path, class: 'nav-link'
           .col-sm-3
             %p.general-nav-mail support@bookstore.com
             %p.general-nav-number (555)-555-5555

@@ -1,7 +1,6 @@
 ActiveAdmin.register Author do
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
+  menu priority: 3
+  
   permit_params :first_name, :last_name, :description
   index do
     selectable_column

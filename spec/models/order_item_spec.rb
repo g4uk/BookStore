@@ -16,7 +16,6 @@ RSpec.describe OrderItem, type: :model do
     it { should validate_presence_of(:book_name) }
     it { should validate_presence_of(:quantity) }
     it { should validate_presence_of(:book_price) }
-    it { should validate_presence_of(:duration) }
-    it { should validate_numericality_of(:price).is_greater_than_or_equal_to (0.01)}
+    it { should validate_numericality_of(:book_price).is_greater_than_or_equal_to (0.01)}
   end
 end

@@ -9,8 +9,7 @@ class OrderItemsController < ApplicationController
     @order_item = @cart.add_book(book)
     respond_to do |format|
       if @order_item.save
-        format.html { redirect_to @order_item.cart, notice: 'Line item was successfully created.' }
-        format.json { render :show, status: :created, location: @order_item }
+        format.js
       else
         format.html { redirect_to @order_item.cart }
         format.json { render json: @order_item.errors, status: :unprocessable_entity }

@@ -3,8 +3,6 @@ class CheckoutsController < ApplicationController
   include CurrentOrder
   include Wicked::Wizard
 
-  before_action :set_cart
-
   layout 'main'
 
   before_action :set_order, :set_cart

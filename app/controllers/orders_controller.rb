@@ -2,6 +2,8 @@ class OrdersController < ApplicationController
   include CurrentCart
   include CurrentOrder
   layout 'main'
+  before_action :checkout_authentication, only: :create
+  before_action :authenticate_user!, except: :create
   before_action :set_cart, :set_order, :ensure_cart_isnt_empty, only: [:create]
 
   # GET /orders
@@ -33,9 +35,12 @@ class OrdersController < ApplicationController
     redirect_to checkout_payment_path if @order.may_fill_payment?
     @order.assign_attributes(user: current_user, total: @cart.total_price)
     @order.add_order_items_from_cart(@cart)
+    puts "++++++++++++++++++++++++"
+    p @order.invalid?
+    p @order.errors.messages
     if @order.save
       session[:order_id] = @order.id
-      @order.checkout!
+      @order.checkout! if @order.may_checkout?
       redirect_to checkouts_path
     end
   end
@@ -72,5 +77,12 @@ class OrdersController < ApplicationController
 
   def ensure_cart_isnt_empty
     redirect_to root_url, notice: 'Your cart is empty' if @cart.order_items.empty?
+  end
+
+  def checkout_authentication
+    unless user_signed_in?
+      flash[:notice] = 'You need to sign in or sign up before continuing.'
+      redirect_to checkout_login_users_url
+    end
   end
 end

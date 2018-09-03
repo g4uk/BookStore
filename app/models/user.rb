@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   rolify
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
+         :validatable, :omniauthable, omniauth_providers: %i[facebook]
 
   has_many :comments, dependent: :destroy
   has_many :orders, dependent: :nullify
@@ -22,6 +23,27 @@ class User < ApplicationRecord
   end
 
   def assign_default_role
-    self.add_role(:customer) if self.roles.blank?
+    add_role(:customer) if roles.blank?
+  end
+
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if (email = conditions.delete(:email)).present?
+      where(email: email.downcase).first
+    elsif conditions.key?(:reset_password_token)
+      where(reset_password_token: conditions[:reset_password_token]).first
+    end
+  end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token.first(8) + rand(10).to_s
+      user.name = auth.info.name   # assuming the user model has a name
+      user.image = auth.info.image # assuming the user model has an image
+      # If you are using confirmable and the provider(s) you use validate emails, 
+      # uncomment the line below to skip the confirmation emails.
+      # user.skip_confirmation!
+    end
   end
 end

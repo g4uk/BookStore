@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-
-  before_action :set_locale
+  include SetVariables
+  before_action :set_locale, :set_categories
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
       super(options)
     else
       flash[:notice] = 'You need to sign in or sign up before continuing.'
-      redirect_to login_customer_users_url
+      redirect_to login_users_url
     end
   end
 end

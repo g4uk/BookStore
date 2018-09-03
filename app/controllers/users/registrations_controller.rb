@@ -25,8 +25,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       clean_up_passwords resource
       set_minimum_password_length
-      flash[:notice] = flash[:notice].to_a.concat resource.errors.full_messages
-      redirect_to signup_customer_url
+      flash[:danger] = flash[:danger].to_a.concat resource.errors.full_messages
+      redirect_to signup_users_url
     end
   end
 

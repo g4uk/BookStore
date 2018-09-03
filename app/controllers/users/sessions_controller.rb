@@ -17,8 +17,8 @@ class Users::SessionsController < Devise::SessionsController
       yield resource if block_given?
       respond_with resource, location: after_sign_in_path_for(resource)
     else
-      flash[:notice] = 'Invalid Email or password.'
-      redirect_to login_customer_users_url
+      flash[:danger] = 'Invalid Email or password.'
+      redirect_to login_users_url
     end
   end
 
