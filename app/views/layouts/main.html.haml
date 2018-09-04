@@ -38,8 +38,9 @@
                 %a{type: "button", 'data-toggle': "collapse", href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"} Shop
                 %ul#menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
                   - @categories_for_menu.each do |category|
-                    %li
-                      %a.collapse-link{href: "#"}= category.name
+                    -if category.books.size.positive?
+                      %li
+                        %a.collapse-link{href: "#"}= category.name
               %li
                 %a{href: "#"} My account
           .hidden-xs
@@ -50,8 +51,9 @@
                 = link_to t(:shop), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
                 %ul.dropdown-menu
                   - @categories_for_menu.each do |category|
-                    %li
-                      %a{href: "#"}= category.name
+                    -if category.books.size.positive?
+                      %li
+                        %a{href: "#"}= category.name
               - if user_signed_in?
                 %li.dropdown
                   = link_to t(:my_account), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }

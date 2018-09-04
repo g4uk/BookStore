@@ -4,6 +4,6 @@ module SetVariables
   private
 
   def set_categories
-    @categories_for_menu = Category.all.order(:name)
+    @categories_for_menu = Category.all.includes(:books).order(:name)
   end
 end

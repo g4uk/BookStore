@@ -3,7 +3,7 @@ class CategoryDecorator < Draper::Decorator
 
   delegate_all
 
-  def books_qantity
-    books.count
+  def books_quantity
+    books.size
   end
 end

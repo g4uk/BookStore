@@ -3,22 +3,30 @@ class BooksController < ApplicationController
   layout 'main'
 
   before_action :set_cart
+  before_action :sort_params, only: :index
 
   # GET /books
   # GET /books.json
   def index
-    if !params[:category].blank?
-      @books = BookDecorator.decorate_collection(Book.where(category_id: params[:category]))
-    elsif !params[:sort].blank?
-      @books = BookDecorator.decorate_collection(Book.all.order(params[:sort]))
+    if @category_id
+      books_in_category = @books.where(category_id: @category_id)
+      @sorted_books = SortedBooksService.call(sort_params: @sort_params, books: books_in_category)
     else
-      @books = BookDecorator.decorate_collection(Book.all)
+      @sorted_books = SortedBooksService.call(sort_params: @sort_params, books: @books)
     end
     @categories = CategoryDecorator.decorate_collection(@categories_for_menu)
+    @books_quantity = @books.size
   end
 
   # GET /books/1
   # GET /books/1.json
   def show
+  end
+
+  def sort_params
+    @category_id = params[:category]
+    @sort_params = params[:sort]
+    @popular = params[:popular]
+    @books = Book.all.includes(:order_items)
   end
 end

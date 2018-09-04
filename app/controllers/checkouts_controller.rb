@@ -10,15 +10,10 @@ class CheckoutsController < ApplicationController
   steps :address, :delivery, :payment, :confirm, :complete
 
   def show
-    puts "+++++++++++++++++++++++"
-    p @order
-    p @order.billing_address
-    puts "+++++++++++++++++++++++"
     @order.build_billing_address if @order.billing_address.blank?
     @order.build_shipping_address if @order.shipping_address.blank?
     @order.build_credit_card if @order.credit_card.blank?
     @deliveries = Delivery.all
-    p @order.billing_address
     render_wizard
   end
 
@@ -30,9 +25,7 @@ class CheckoutsController < ApplicationController
         redirect_to wizard_path(:confirm)
       end
       if @order.may_fill_address?
-        p order_params[:shipping_address_attributes][:first_name].blank?
-        p order_params[:shipping_address_attributes] = order_params[:billing_address_attributes] if order_params[:shipping_address_attributes][:first_name].blank?
-        p order_params
+        order_params[:shipping_address_attributes] = order_params[:billing_address_attributes] if order_params[:shipping_address_attributes][:first_name].blank?
         @order.fill_address! if @order.update(order_params)
         render_wizard @order if @order.shipping?
       end
