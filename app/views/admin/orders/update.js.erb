@@ -1,0 +1,14 @@
+console.log(<%= @errors.blank? %>);
+if ( !$('.notice').length ){
+  order_tr.find('.col-actions').prepend("<div class='notice'></div>");
+}
+order_tr = $("#order_<%= @order.id.to_s %>");
+if (<%= @errors.blank? %>){
+  $('.notice').html('<b> <%= I18n.t(:saved) %> <b>');
+  order_tr.find('.change_state').toggle();
+  order_tr.find('.col-status').html("<%= @order.status %>");
+}else{
+  $('.notice').html('<b> <%= I18n.t(:invalid_status) %> <b>');
+}
+$('.notice').fadeIn(1000);
+$('.notice').fadeOut(1000);

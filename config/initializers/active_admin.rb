@@ -4,7 +4,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "Bookstore"
+  config.site_title = 'Bookstore'
   config.authorization_adapter = ActiveAdminAdapter
   config.on_unauthorized_access = :access_denied
 

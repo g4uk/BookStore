@@ -1,0 +1,6 @@
+= semantic_form_for [:admin, author], builder: ActiveAdmin::FormBuilder, remote: true do |f|
+  = f.semantic_errors
+  = f.inputs
+  = f.actions do
+    = f.action :submit
+    = f.cancel_link({action: "index"})

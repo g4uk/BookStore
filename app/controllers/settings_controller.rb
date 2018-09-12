@@ -1,8 +1,7 @@
 class SettingsController < ApplicationController
-  include CurrentCart
   layout 'main'
 
-  before_action :set_cart, :set_user
+  before_action :set_user
 
   def index
     @user.build_billing_address if @user.billing_address.blank?

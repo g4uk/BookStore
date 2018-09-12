@@ -9,11 +9,11 @@
           .row
             .col-sm-5
               .general-img-wrap
-                = image_tag book.try(:images).first, class: 'img-shadow general-thumbnail-img', alt: 'design-book'
+                = image_tag book.main_image, class: 'img-shadow general-thumbnail-img', alt: 'design-book' unless book.images.blank? 
             .col-sm-7
               .mb-60
                 %h1= book.title
-                %p.lead= book.description
+                %p.lead= book.description.truncate(150).html_safe
                 %p.lead.small= book.formatted_authors
                 .general-align
                   = link_to t(:buy_now), create_order_item_path(book_id: book), class: 'btn btn-primary', remote: true

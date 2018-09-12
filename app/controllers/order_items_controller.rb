@@ -1,12 +1,12 @@
 class OrderItemsController < ApplicationController
-  include CurrentCart
-  
-  before_action :set_cart, only: [:create]
-  before_action :set_line_item, only: %i[update destroy]
-
   def create
-    book = Book.find(params[:book_id])
-    @order_item = @cart.add_book(book)
+    if params[:book_id].nil?
+      book = Book.find(order_item_params[:book_id])
+      @order_item = @cart.add_book(book: book, quantity: order_item_params[:quantity])
+    else
+      book = Book.find(params[:book_id])
+      @order_item = @cart.add_book(book: book)
+    end
     respond_to do |format|
       if @order_item.save
         format.js
@@ -26,6 +26,6 @@ class OrderItemsController < ApplicationController
   private
 
   def order_item_params
-    params.require(:order_item).permit(:book_id)
+    params.require(:order_item).permit(:book_id, :quantity)
   end
 end

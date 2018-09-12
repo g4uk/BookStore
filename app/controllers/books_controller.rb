@@ -1,9 +1,7 @@
 class BooksController < ApplicationController
-  include CurrentCart
   layout 'main'
 
-  before_action :set_cart
-  before_action :sort_params, only: :index
+  before_action :sort_params
 
   # GET /books
   # GET /books.json
@@ -21,12 +19,33 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
+    @book = Book.find(params[:id])
+    @book = @book.decorate
+    @comment = Comment.new(book_id: @book.id, user_id: current_user.id, status: false)
+    @order_item = OrderItem.new(book_id: @book.id)
   end
+
+  def update
+    @book = Book.find(params[:id])
+    respond_to do |format|
+      if @book.update_attributes(book_params)
+        format.js
+      else
+        @errors = @book.errors.full_messages
+        format.js { render :edit }
+      end
+    end
+  end
+
+  private
 
   def sort_params
     @category_id = params[:category]
     @sort_params = params[:sort]
-    @popular = params[:popular]
     @books = Book.all.includes(:order_items)
+  end
+
+  def book_params
+    params.require(:book).permit(comments_attributes: %i[title text user_id status])
   end
 end

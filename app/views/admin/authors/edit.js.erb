@@ -1,0 +1,4 @@
+if ( $( '.formtastic.author' ).length ){
+    $( '.formtastic.author').remove();
+}
+$('#main_content').prepend("<%= j render partial: 'form', locals: {author: @author} %>");

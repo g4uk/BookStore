@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :comments
     resources :categories
     resources :authors
-    resources :books, only: %i[index show]
+    resources :books, only: %i[index show update]
     resources :order_items, only: %i[create update destroy]
     resources :carts, only: %i[show update destroy]
     resources :checkouts

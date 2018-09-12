@@ -1,0 +1,27 @@
+context.instance_eval do
+  selectable_column
+  column :main_image do |book|
+    image_tag(Admin::AdminUtilsService.book_image(book.images.first)) unless book.images.blank?
+  end
+  column :images_number do |book|
+    book.images.size
+  end
+  column :category
+  column :title
+  column :authors do |book|
+    Admin::AdminUtilsService.authors_links(book.authors)
+  end
+  column :description do |book|
+    book.description.truncate(150).html_safe
+  end
+  column :price do |book|
+    number_to_currency book.price
+  end
+  actions defaults: false, only: :edit do |book|
+    link_to t(:edit), edit_admin_book_path(book)
+  end
+  actions defaults: false, only: :delete do |book|
+    link_to t(:delete), admin_book_path(book), method: :delete,
+                                                data: { confirm: t(:destroy_confirmation) }
+  end
+end

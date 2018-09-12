@@ -1,0 +1,11 @@
+context.instance_eval do
+  column 'Number', :id
+  column :created_at
+  column :status
+  actions defaults: false, only: :edit do |order|
+    link_to t(:change_state), edit_admin_order_path(order), remote: true, class: 'change_state'
+  end
+  actions defaults: false, only: :view do |order|
+    link_to t(:view), view_admin_order_path(order), remote: true
+  end
+end

@@ -1,11 +1,15 @@
-= form_with(model: comment, local: true) do |form|
-  - if comment.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(comment.errors.count, "error")
-        prohibited this comment from being saved:
-      %ul
-        - comment.errors.full_messages.each do |message|
-          %li= message
-  .actions
-    = form.submit
+= form_with model: comment, class: 'row' do |f|
+  .flash_message
+  .col-md-8
+    .mb-40
+      .form-group
+        = f.label :title, class: 'control-label.input-label.in-grey-600'
+        = f.text_field :title, id: 'title', class: 'form-control'
+      .form-group
+        = f.label :review, class: 'control-label.input-label.in-grey-600'
+        = f.text_area :text, id: 'review', class: 'form-control'
+        = f.hidden_field :user_id
+        = f.hidden_field :status
+        = f.hidden_field :book_id
+    .text-right
+      .btn.disabled.mb-20= f.submit

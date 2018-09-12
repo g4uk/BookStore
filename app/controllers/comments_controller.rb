@@ -25,14 +25,14 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
-
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
-        format.json { render :show, status: :created, location: @comment }
+        @comment_id = @comment.id
+        format.js
       else
-        format.html { render :new }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        puts "+++++++++++++++++++++++++++++++++++++"
+        @errors = @comment.errors.messages
+        format.js { render :new }
       end
     end
   end
@@ -41,12 +41,10 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1.json
   def update
     respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
+      if @comment.update(rating: params[:rating])
+        format.js
       else
-        format.html { render :edit }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -69,6 +67,6 @@ class CommentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
-      params.fetch(:comment, {})
+      params.require(:comment).permit(:rating, :title, :text, :user_id, :status, :book_id)
     end
 end

@@ -1,0 +1,12 @@
+$('#comment_form_wrapper').html("<div class='flash_message'><%= j t(:created_sucessfully) %></div>");
+rating = $( '.rating' ).children( '.rate-star' ).length;
+$( '.rating_wrapper' ).empty();
+
+$.ajax({
+  url: '/comments/' + "<%= @comment_id %>",
+  type: 'PUT',
+  data: {
+    'id' : "<%= @comment_id %>",
+    'rating' : rating }
+});
+

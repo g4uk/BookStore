@@ -1,0 +1,4 @@
+if ( $( '.formtastic.category' ).length ){
+    $( '.formtastic.category').remove();
+}
+$('#main_content').prepend("<%= j render partial: 'form', locals: {category: @category} %>");

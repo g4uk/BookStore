@@ -8,13 +8,13 @@ class SortedBooksService
         BookDecorator.decorate_collection(books.order('created_at desc'))
       end
     end
+    
+    private
 
     def sort_popular(books)
       grouped_books = {}
-      i = 0
-      while i < books.size
-        grouped_books[books[i]] = books[i].order_items.sum(&:quantity)
-        i += 1
+      books.each do |book|
+        grouped_books[book] = book.order_items.sum(&:quantity)
       end
       sorted_books = grouped_books.sort_by { |_key, value| value }.reverse.to_h
       BookDecorator.decorate_collection(sorted_books.keys)

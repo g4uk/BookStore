@@ -1,0 +1,14 @@
+f.semantic_errors
+f.inputs except: :description
+f.inputs do
+  f.input :description, as: :quill_editor
+  f.input :authors, as: :check_boxes, collection: Admin::AdminUtilsService.authors_with_ids
+end
+f.inputs do
+  if f.object.images.blank?
+    f.input :images, as: :file, input_html: { multiple: true }
+  else
+    f.input :images, as: :file, input_html: { multiple: true }, hint: image_tag(Admin::AdminUtilsService.book_image(f.object.images.first))
+  end
+end
+f.actions

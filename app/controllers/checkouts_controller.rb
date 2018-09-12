@@ -1,11 +1,9 @@
 class CheckoutsController < ApplicationController
-  include CurrentCart
-  include CurrentOrder
   include Wicked::Wizard
 
   layout 'main'
 
-  before_action :set_order, :set_cart
+  before_action :set_order
 
   steps :address, :delivery, :payment, :confirm, :complete
 
@@ -20,7 +18,7 @@ class CheckoutsController < ApplicationController
   def update
     case step
     when :address
-      if @order.confirmed?
+      if @order.in_queue?
         @order.update(order_params)
         redirect_to wizard_path(:confirm)
       end
@@ -31,7 +29,7 @@ class CheckoutsController < ApplicationController
       end
     when :delivery
       delivery = Delivery.find(order_params[:delivery_id])
-      if @order.confirmed?
+      if @order.in_queue?
         @order.update_attributes(delivery_id: delivery.id,
                                  delivery_type: delivery.name,
                                  delivery_price: delivery.price,
@@ -43,16 +41,16 @@ class CheckoutsController < ApplicationController
                                                           delivery_type: delivery.name,
                                                           delivery_price: delivery.price,
                                                           delivery_duration: delivery.duration)
-        render_wizard @order if @order.payment?
+        render_wizard @order if @order.in_progress?
       end
     when :payment
-      if @order.confirmed?
+      if @order.in_queue?
         @order.update(order_params)
         redirect_to wizard_path(:confirm)
       end
       if @order.may_fill_payment?
         @order.fill_payment! if @order.update(order_params)
-        render_wizard @order if @order.confirmed?
+        render_wizard @order if @order.payment?
       end
     when :confirm
       if @order.may_confirm?
@@ -70,5 +68,11 @@ class CheckoutsController < ApplicationController
                                   billing_address_attributes: %i[first_name last_name address city zip country phone],
                                   shipping_address_attributes: %i[first_name last_name address city zip country phone],
                                   credit_card_attributes: %i[number owner_name expiration_date cvv])
+  end
+
+  def set_order
+    @order = Order.find(session[:order_id])
+  rescue ActiveRecord::RecordNotFound
+    @order = Order.new
   end
 end

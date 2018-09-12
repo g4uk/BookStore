@@ -1,10 +1,8 @@
 class OrdersController < ApplicationController
-  include CurrentCart
-  include CurrentOrder
   layout 'main'
   before_action :checkout_authentication, only: :create
   before_action :authenticate_user!, except: :create
-  before_action :set_cart, :set_order, :ensure_cart_isnt_empty, only: [:create]
+  before_action :set_order, :ensure_cart_isnt_empty, only: [:create]
 
   # GET /orders
   # GET /orders.json
@@ -84,5 +82,11 @@ class OrdersController < ApplicationController
       flash[:notice] = 'You need to sign in or sign up before continuing.'
       redirect_to checkout_login_users_url
     end
+  end
+
+  def set_order
+    @order = Order.find(session[:order_id])
+  rescue ActiveRecord::RecordNotFound
+    @order = Order.new
   end
 end

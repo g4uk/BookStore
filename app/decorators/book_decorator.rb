@@ -14,4 +14,8 @@ class BookDecorator < Draper::Decorator
   def quantity
     count
   end
+
+  def main_image
+    images.first
+  end
 end

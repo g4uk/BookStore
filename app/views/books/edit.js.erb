@@ -1,0 +1,3 @@
+$('#comment_form_wrapper').html("<%= j render 'comment_form', book: @book %>");
+$('.flash_message').html("<%= j t(:fix_errors) %>");
+console.log("<%= @book.errors.full_messages %>");

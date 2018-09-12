@@ -16,4 +16,11 @@ class Book < ApplicationRecord
   validates :title, uniqueness: true
   validates :title, :materials, length: { maximum: 255 }
   validates :publishing_year, inclusion: { in: 1902..Date.today.year }
+  validate :validate_images
+
+  accepts_nested_attributes_for :comments
+
+  def validate_images
+    errors.add(:images, 'Too much images. Only 4 allowed') if images.size > 4
+  end
 end

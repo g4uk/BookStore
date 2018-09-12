@@ -6,7 +6,7 @@ class OrderDecorator < Draper::Decorator
   end
 
   def formatted_billing_address_city
-    "#{object.billing_address.city} #{object.billing_address.zip}"
+    "#{object.billing_address.country} #{object.billing_address.city} #{object.billing_address.zip}"
   end
 
   def formatted_billing_address_phone
@@ -18,7 +18,7 @@ class OrderDecorator < Draper::Decorator
   end
 
   def formatted_shipping_address_city
-    "#{object.shipping_address.city} #{object.shipping_address.zip}"
+    "#{object.shipping_address.country} #{object.shipping_address.city} #{object.shipping_address.zip}"
   end
 
   def formatted_shipping_address_phone
@@ -30,7 +30,7 @@ class OrderDecorator < Draper::Decorator
   end
 
   def formatted_credit_card_number
-    "** ** ** #{object.credit_card.number}"
+    "** *3 #{object.credit_card.number}"
   end
 
   # Define presentation-specific methods here. Helpers are accessed through
