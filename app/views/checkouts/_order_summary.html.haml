@@ -2,16 +2,16 @@
 %table.general-summary-table{class: ('general-summary-table-right general-text-right' if (current_step?(:confirm) || current_step?(:complete))) }
   %tr
     %td
-      %p.font-16= t(:subtotal)
+      %p.font-16= t(:item_total)
     %td
-      %p.font-16 €117.69
+      %p.font-16= order.formatted_item_total
   %tr
     %td
-      %p.font-16= t(:coupon)
+      %p.font-16= t(:shipping)
     %td
-      %p.font-16 €0.00
+      %p.font-16= order.formatted_delivery_price
   %tr
     %td
       %strong.font-18= t(:order_total)
     %td
-      %strong.font-18= @order.total
+      %strong.font-18= order.formatted_total

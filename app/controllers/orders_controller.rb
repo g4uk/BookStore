@@ -31,15 +31,15 @@ class OrdersController < ApplicationController
     redirect_to checkout_confirm_path if @order.may_confirm?
     redirect_to checkout_delivery_path if @order.may_fill_delivery?
     redirect_to checkout_payment_path if @order.may_fill_payment?
-    @order.assign_attributes(user: current_user, total: @cart.total_price)
-    @order.add_order_items_from_cart(@cart)
-    puts "++++++++++++++++++++++++"
-    p @order.invalid?
-    p @order.errors.messages
+    @cart = @cart.decorate
+    @order = FillOrderWithItemsService.call(cart: @cart, order: @order, user: current_user)
     if @order.save
-      session[:order_id] = @order.id
       @order.checkout! if @order.may_checkout?
+      session[:order_id] = @order.id
       redirect_to checkouts_path
+    else
+      flash[:notice] = @order.errors.messages
+      redirect_back(fallback_location: cart_path(@cart))
     end
   end
 
@@ -85,8 +85,8 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    @order = Order.find(session[:order_id])
-  rescue ActiveRecord::RecordNotFound
-    @order = Order.new
+    @order = Order.where('status < 5 AND user_id = ? ', current_user.id).last
+    return @order = Order.new if @order.nil?
+    @order
   end
 end

@@ -34,3 +34,14 @@ en:
     label:
       user:
         password: 'New Password'
+
+  invalid_name: 'Consists of a-z and A-Z only'
+  invalid_number: 'Consists of numbers only'
+  invalid_exp_date: 'Example 07/12'
+  invalid_phone: 'Consists of 0-9, ’+’ only'
+  invalid_address: 'Consists of a-z, A-Z, 0-9,’,’, ‘-’, ‘ ’ only'
+  invalid_zip: 'Consists of 0-9, ’-’ only'
+  card_hint: '3/4-digit security code on the back of your card'
+  invalid_code: 'Consists of A-Z, 0-9 only'
+  invalid_review: "Consists of a-z, A-Z, 0-9, or one of !#$%&\'*+-/=?^_`{|}~"
+

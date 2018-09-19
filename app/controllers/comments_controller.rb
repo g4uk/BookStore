@@ -30,8 +30,6 @@ class CommentsController < ApplicationController
         @comment_id = @comment.id
         format.js
       else
-        puts "+++++++++++++++++++++++++++++++++++++"
-        @errors = @comment.errors.messages
         format.js { render :new }
       end
     end

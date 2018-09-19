@@ -12,7 +12,7 @@ context.instance_eval do
     Admin::AdminUtilsService.authors_links(book.authors)
   end
   column :description do |book|
-    book.description.truncate(150).html_safe
+    book.description.truncate(150).html_safe unless book.description.blank?
   end
   column :price do |book|
     number_to_currency book.price

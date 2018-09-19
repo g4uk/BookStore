@@ -1,16 +1,18 @@
-.row
+.form-group
   = f.label(:number, class: 'control-label input-label')
-  = f.text_field :number, id: 'cardName', class: 'form-control', placeholder: true
+  = f.text_field :number, id: 'cardName', class: 'form-control', placeholder: true, title: t(:invalid_number), data: { regexp: INPUT_VALIDATIONS[:card_number] }
+.row
   .col-sm-6
     .form-group
       = f.label(:owner_name, class: 'control-label input-label')
-      = f.text_field :owner_name, id: 'cardName', class: 'form-control', placeholder: true
+      = f.text_field :owner_name, id: 'cardName', class: 'form-control', placeholder: true, title: t(:invalid_name), data: { regexp: INPUT_VALIDATIONS[:name] }
   .col-sm-3
     .form-group
       = f.label(:expiration_date, class: 'control-label input-label')
-      = f.text_field :expiration_date, id: 'firstName', class: 'form-control', placeholder: true
+      = f.text_field :expiration_date, id: 'firstName', class: 'form-control', placeholder: true, title: t(:invalid_exp_date), data: { regexp: INPUT_VALIDATIONS[:expiration_date] }
   .col-sm-3
     .form-group.relative
       = f.label(:cvv, class: 'control-label input-label')
       = f.text_field :cvv, id: 'cvc', class: 'form-control', placeholder: true
-      %i.fa.fa-question-circle.general-form-help
+      %i#info-icon.fa.fa-question-circle.general-form-help{ title: t(:card_hint) }
+      

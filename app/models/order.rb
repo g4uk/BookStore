@@ -1,6 +1,8 @@
 class Order < ApplicationRecord
   include AASM
 
+  attr_accessor :billing_flag
+
   belongs_to :user
   belongs_to :delivery, optional: true
 
@@ -17,16 +19,6 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :credit_card, update_only: true
 
   validates :total, numericality: { greater_than_or_equal_to: 0 }
-  validates :coupon_code, length: { maximum: 10 }, allow_blank: true
-  validates :coupon_code, format: { with: COUPON }, allow_blank: true
-  validates :coupon_price, numericality: { greater_than_or_equal_to: 0 }, allow_blank: true
-
-  def add_order_items_from_cart(cart)
-    cart.order_items.each do |item|
-      #item.cart_id = nil
-      order_items << item
-    end
-  end
 
   aasm column: 'status' do
     state :created, initial: true

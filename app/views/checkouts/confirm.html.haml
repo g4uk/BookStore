@@ -4,90 +4,64 @@
     .col-sm-3
       %h3.general-subtitle= t(:shipping_address)
       %p.general-address
-        = @order.shipping_address.first_name
+        = @order.formatted_shipping_address_name
         %span.general-edit= link_to t(:edit), wizard_path(:address)
         %br
         = @order.shipping_address.address
         %br
-        = @order.shipping_address.city
+        = @order.formatted_shipping_address_city
         %br
         = @order.shipping_address.country
         %br
-        = @order.shipping_address.phone
+        = @order.formatted_shipping_address_phone
     .col-sm-3
       %h3.general-subtitle= t(:billing_address)
       %p.general-address
-        = @order.billing_address.first_name
+        = @order.formatted_billing_address_name
         %span.general-edit= link_to t(:edit), wizard_path(:address)
         %br
         = @order.billing_address.address
         %br
-        = @order.billing_address.city
+        = @order.formatted_billing_address_city
         %br
         = @order.billing_address.country
         %br
-        = @order.billing_address.phone
+        = @order.formatted_billing_address_phone
     .col-sm-3
-      %h3.general-subtitle Shipments
+      %h3.general-subtitle= t(:shipments)
       %p.general-address
         = @order.delivery.duration
         %span.general-edit= link_to t(:edit), wizard_path(:delivery)
         %br
-        = @order.delivery.name
+        = @order.formatted_delivery_name
     .col-sm-3
       %h3.general-subtitle= t(:payment_information)
       %p.general-address
-        = @order.credit_card.number
+        = @order.formatted_credit_card_number
         %span.general-edit= link_to t(:edit), wizard_path(:payment)
-        %br
-        = @order.credit_card.expiration_date
   .visible-xs
-    .general-cart-item.divider-lg
-      .general-img-wrap-table
-        %img.cart-img-shadow{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
-      %p.title Android Programming for Beginners!!!
-      %P.in-grey-600.fw-300 A recipe-based book to help you efficiently create amazing PHP-based applications with Laravel 5.x
-      %table.table
-        %tr
-          %td
-            %span.in-grey-600 Price
-          %td
-            %span.font-16.in-gold-500 €28.50
-        %tr
-          %td.vertical-middle
-            %span.in-grey-600 Quantity
-          %td
-            %span 1
-        %tr
-          %td
-            %span.in-grey-600 SubTotal
-          %td
-            %span.font-16.in-gold-500 €32.90
-    .general-cart-item.divider-lg.mb-55
-      .general-img-wrap-table
-        %img.cart-img-shadow{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
-      %p.title Android Programming for Beginners???
-      %table.table
-        %tr
-          %td
-            %span.in-grey-600 Price
-          %td
-            %span.font-16.in-gold-500 €28.50
-        %tr
-          %td.vertical-middle
-            %span.in-grey-600 Quantity
-          %td
-            .input-group
-              %a.input-link{href: "#"}
-                %i.fa.fa-minus.line-heaght-40
-              %input.form-control.quantity-input{type: "text"}
-              %a.input-link{href: "#"}
-                %i.fa.fa-plus.line-heaght-40
-        %tr
-          %td
-            %span.in-grey-600 SubTotal
-          %td
-            %span.font-16.in-gold-500 €32.90
+    - @order_items.each do |order_item|
+      .general-cart-item.divider-lg
+        .general-img-wrap-table
+          = order_item.book_image('cart-img-shadow')
+        %p.title= order_item.book_name
+        %P.in-grey-600.fw-300= order_item.book_description
+        %table.table
+          %tr
+            %td
+              %span.in-grey-600= t(:price)
+            %td
+              %span.font-16.in-gold-500= order_item.formatted_book_price
+          %tr
+            %td.vertical-middle
+              %span.in-grey-600= t(:quantity)
+            %td
+              %span= order_item.quantity
+          %tr
+            %td
+              %span.in-grey-600= t(:subtotal)
+            %td
+              %span.font-16.in-gold-500= order_item.formatted_total
   .hidden-xs.divider-lg.pt-20
     %table.table.table-hover
       %thead
@@ -100,23 +74,23 @@
           %th
             %span.in-grey-600= t(:quantity)
           %th
-            %span.in-grey-600= t(:total)
+            %span.in-grey-600= t(:subtotal)
       %tbody
-        - @order.order_items.each do |order_item|
+        - @order_items.each do |order_item|
           %tr
             %td
               .general-img-wrap-table
-                = image_tag(order_item.book.try(:images).first, alt: 'design-book', class: 'cart-img-shadow pull-left')
+                = order_item.book_image('cart-img-shadow pull-left')
             %td
               %p.title= order_item.book_name
-              %p.in-grey-600.fw-300 Maximize the potential of Bootstrap with a collection of real-world site projects for better, faster, more responsive web applications
+              %p.in-grey-600.fw-300= order_item.book_description
             %td
-              %span.font-16.in-gold-500= order_item.book_price
+              %span.font-16.in-gold-500= order_item.formatted_book_price
             %td
               %span.ml-30= order_item.quantity
             %td
-              %span.font-16.in-gold-500= order_item.total
+              %span.font-16.in-gold-500= order_item.formatted_total
   .text-center.general-text-right
-    = render partial: 'order_summary'
+    = render 'order_summary', order: @order
   .text-center
     .btn.btn-default.mb-20= link_to(t(:place_order), wizard_path, method: :put)

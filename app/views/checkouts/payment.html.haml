@@ -1,11 +1,10 @@
 %main.container.mb-res-50
   = render partial: 'progress_bar'
-  %h3.general-subtitle Credit Card
+  %h3.general-subtitle= t(:credit_card)
   = form_for @order, url: wizard_path, html: { class: 'max-600 mb-80' } do |order_form|
     = order_form.fields_for :credit_card do |card_form|
       = render 'credit_cards/form', f: card_form
-    = order_form.submit class: 'btn btn-default mb-80'
-  .general-text-align
-    = render partial: 'order_summary'
-  .text-center
-    %button.btn.btn-default.mb-80 Save and Continue
+    .general-text-align
+      = render 'order_summary', order: @order
+    .text-center
+      .btn.btn-default.mb-80= order_form.submit

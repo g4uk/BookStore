@@ -1,0 +1,36 @@
+.row
+  .col-sm-6
+    .product-gallery
+      .mb-20
+        = book.main_image('img-responsive')
+      .images.clearfix
+        - @book.images.drop(1).each do |image|
+          = link_to '#', class: 'img-link', remote: true do
+            = image_tag image
+  .col-sm-6
+    %h1.mt-res-0= @book.title
+    %p.lead.small= @book.formatted_authors
+    .row
+      .col-xs-12.col-md-4
+        %p.h1.in-gold-500.mt-10= @book.formatted_price
+      = render 'order_items/form', order_item: @order_item
+    .general-info-wrap.divider-lg
+      %p= t(:description)
+      %p.lead.small.line-height-2
+        %span.short-descr= @book.short_description
+        %span.full-descr.hidden= @book.description
+        - unless @book.description.blank?
+          = link_to t(:read_more), '#', class: 'in-gold-500 ml-10 read-more', remote: true
+          = link_to t(:read_less), '#', class: 'in-gold-500 ml-10 read-less hidden', remote: true
+    .general-info-wrap.divider-lg
+      .clearfix
+        %p.pull-left= t(:published)
+        %p.lead.small.pull-right= @book.publishing_year
+    .general-info-wrap.divider-lg
+      .clearfix
+        %p.pull-left= t(:dimensions)
+        %p.lead.small.pull-right= @book.dimensions
+    .general-info-wrap.divider-lg
+      .clearfix
+        %p.pull-left= t(:materials)
+        %p.lead.small.pull-right= @book.materials

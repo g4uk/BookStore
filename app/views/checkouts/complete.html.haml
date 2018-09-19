@@ -1,12 +1,12 @@
 %main.container.general-main-wrap
   = render partial: 'progress_bar'
   .text-center.mb-40
-    %h3.general-subtitle Thank You for your Order!
-    %p.fw-300 An order confirmation has been has been sent to current_user.email
+    %h3.general-subtitle= t(:thank_you)
+    %p.fw-300= "#{t(:confirmation_sent)} #{current_user.email}"
   .row.mb-20
     .col-sm-6
       .visible-xs
-        %p.general-order-number.mb-0 Order #= @order.id
+        %p.general-order-number.mb-0= "#{t(:order)} ##{@order.id}"
         %p.general-address.mb-30= @order.created_at
       %p.general-address
         John Doe
@@ -92,6 +92,6 @@
           %td
             %span.font-16.in-gold-500 €32.90
   .text-center.general-text-right
-    = render partial: 'order_summary'
+    = render 'order_summary', order: @order
   .text-center
     %button.btn.btn-default.mb-20 Back to Store

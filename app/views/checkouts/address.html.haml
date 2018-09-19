@@ -1,36 +1,31 @@
 %main.container
   = render partial: 'progress_bar'
-  .res-mb-100
+  = form_for @order, url: wizard_path, html: { class: 'res-mb-100' } do |order_form|
     .hidden-xs.hidden-sm
       .row
         .col-md-5
           %h3.general-subtitle= t(:billing_address)
-          %p.general-info-text all fields are required
+          %p.general-info-text= t(:required)
         .col-md-5.col-md-offset-1
           %h3.general-subtitle= t(:shipping_address)
     .row
-      = form_for @order, url: wizard_path, html: { class: 'res-mb-100' } do |order_form|
-        .col-md-5.mb-40
-          = order_form.fields_for :billing_address do |billing_form|
-            - if @order.billing_address.errors.any?
-              #error_explanation
-                %h2
-                  = pluralize(@order.errors.count, "error")
-                  prohibited this order from being saved:
-                %ul
-                  - @order.errors.full_messages.each do |message|
-                    %li= message
-            = render 'addresses/form', f: billing_form
-        .col-md-5.col-md-offset-1.mb-60
-          = order_form.fields_for :shipping_address do |shipping_form|
-            = render 'addresses/form', f: shipping_form
-        = order_form.submit class: 'btn disabled center-block mb-20'
-        .form-group.checkbox
-          %label.checkbox-label
-            %input.checkbox-input{type: "checkbox", hidden: "true"}
-            %span.checkbox-icon
-              %i.fa.fa-check
-            %span.checkbox-text Use Billing Adress
+      .col-md-5.mb-40
+        .visible-xs.visible-sm
+          %h3.general-subtitle= t(:billing_address)
+          %p.general-info-text= t(:required)
+        = order_form.fields_for :billing_address do |billing_form|
+          = render 'addresses/form', f: billing_form, type: 'billing'
+      .col-md-5.col-md-offset-1.mb-60.shipping-address-form
+        .visible-xs.visible-sm
+          %h3.general-subtitle= t(:shipping_address)
+        = order_form.fields_for :shipping_address do |shipping_form|
+          = render 'addresses/form', f: shipping_form, type: 'shipping'
+          .form-group.checkbox
+            %label.checkbox-label
+              = order_form.check_box :billing_flag, class: 'checkbox-input billing-flag', hidden: true
+              %span.checkbox-icon
+                %i.fa.fa-check
+              %span.checkbox-text= t(:use_billing_adress)
     .general-text-align.mb-60
-      = render partial: 'order_summary'
-        
+      = render 'order_summary', order: @order
+      .btn.disabled.center-block.mb-20= order_form.submit

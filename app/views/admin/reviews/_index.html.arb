@@ -1,0 +1,13 @@
+context.instance_eval do
+  selectable_column
+  column :book
+  column :title
+  column :created_at
+  column :user do |review|
+    review.user.email
+  end
+  column :status
+  actions defaults: false, only: :show do |review|
+    link_to t(:show), view_admin_review_path(review), class: 'show_review', remote: true
+  end
+end

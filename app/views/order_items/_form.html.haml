@@ -1,0 +1,11 @@
+= form_with model: @order_item do |f|
+  .col-xs-5.col-md-3
+    .input-group.general-position
+      = link_to '#', class: 'input-link decrement', remote: true do
+        %i.fa.fa-minus.line-height-40
+      = f.text_field :quantity, value: 1, class: 'form-control quantity-input'
+      = link_to '#', class: 'input-link increment', remote: true do
+        %i.fa.fa-plus.line-height-40
+      = f.hidden_field :book_id
+  .col-xs-7.col-md-5
+    .btn.btn-default.pull-right.general-positio= f.submit

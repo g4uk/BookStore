@@ -14,6 +14,7 @@ class BooksController < ApplicationController
     end
     @categories = CategoryDecorator.decorate_collection(@categories_for_menu)
     @books_quantity = @books.size
+    @cart = @cart.decorate
   end
 
   # GET /books/1
@@ -21,8 +22,10 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @book = @book.decorate
-    @comment = Comment.new(book_id: @book.id, user_id: current_user.id, status: false)
+    @comment = Comment.new(book_id: @book.id, user_id: current_user.id)
     @order_item = OrderItem.new(book_id: @book.id)
+    @reviews = CommentDecorator.decorate_collection(@book.comments.approved)
+    @cart = @cart.decorate
   end
 
   def update

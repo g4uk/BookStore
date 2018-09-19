@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_31_124817) do
+ActiveRecord::Schema.define(version: 2018_09_14_124706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2018_08_31_124817) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "coupon_code"
+    t.decimal "coupon_price", precision: 8, scale: 2
   end
 
   create_table "categories", force: :cascade do |t|
@@ -109,7 +111,7 @@ ActiveRecord::Schema.define(version: 2018_08_31_124817) do
     t.string "title", null: false
     t.integer "rating", default: 0, null: false
     t.text "text", null: false
-    t.boolean "status"
+    t.integer "status", default: 0, null: false
     t.bigint "user_id"
     t.bigint "book_id"
     t.datetime "created_at", null: false
@@ -127,8 +129,6 @@ ActiveRecord::Schema.define(version: 2018_08_31_124817) do
 
   create_table "credit_cards", force: :cascade do |t|
     t.string "number", null: false
-    t.string "owner_name", null: false
-    t.string "expiration_date", null: false
     t.bigint "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -164,8 +164,6 @@ ActiveRecord::Schema.define(version: 2018_08_31_124817) do
     t.string "delivery_type"
     t.decimal "delivery_price", precision: 8, scale: 2
     t.string "delivery_duration"
-    t.string "coupon_code"
-    t.decimal "coupon_price", precision: 8, scale: 2
     t.integer "status", default: 0, null: false
     t.bigint "delivery_id"
     t.datetime "created_at", null: false

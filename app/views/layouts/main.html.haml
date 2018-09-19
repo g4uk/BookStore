@@ -40,7 +40,7 @@
                   - @categories_for_menu.each do |category|
                     -if category.books.size.positive?
                       %li
-                        %a.collapse-link{href: "#"}= category.name
+                        = link_to category.name, books_path(category.id), class: 'collapse-link'
               %li
                 %a{href: "#"} My account
           .hidden-xs
@@ -53,7 +53,7 @@
                   - @categories_for_menu.each do |category|
                     -if category.books.size.positive?
                       %li
-                        %a{href: "#"}= category.name
+                        = link_to category.name, books_path(category: category.id)
               - if user_signed_in?
                 %li.dropdown
                   = link_to t(:my_account), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
@@ -110,4 +110,3 @@
                 %a.nav-link{href: "#"}
                   %i.fa.fa-instagram{'aria-hidden': "true"}
     %script{src: "https://use.fontawesome.com/67602d7308.js"}
-

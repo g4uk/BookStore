@@ -9,11 +9,11 @@
           .row
             .col-sm-5
               .general-img-wrap
-                = image_tag book.main_image, class: 'img-shadow general-thumbnail-img', alt: 'design-book' unless book.images.blank? 
+                = image_tag book.main_image, class: 'img-shadow general-thumbnail-img', alt: 'design-book' if book.images.attached? 
             .col-sm-7
               .mb-60
                 %h1= book.title
-                %p.lead= book.description.truncate(150).html_safe
+                %p.lead= book.carousel_description
                 %p.lead.small= book.formatted_authors
                 .general-align
                   = link_to t(:buy_now), create_order_item_path(book_id: book), class: 'btn btn-primary', remote: true
@@ -37,7 +37,7 @@
           = render partial: 'books/book_photo', locals: {book: book}
           .mb-35
             .clearfix
-              %p.pull-right.font-16.in-gold-500= book.price_to_dollar(book.price)
+              %p.pull-right.font-16.in-gold-500= book.formatted_price
               %p.title.mr-55= book.title
             %span.divider-sm
             %p.lead.small= book.formatted_authors

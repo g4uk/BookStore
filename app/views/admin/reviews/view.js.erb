@@ -1,0 +1,36 @@
+ActiveAdmin.modal_view = function(message, inputs, callback){
+  let html = `<div id="dialog_confirm" title="${message}"><ul><%= @review.text %></ul></div>`;
+  reviewId = "<%= @review.id %>";
+  const form = $(html).appendTo('body');
+
+  $('body').trigger('modal_dialog:before_open', [form]);
+  form.dialog({
+    modal: true,
+    open(event, ui) {
+      $('body').trigger('modal_dialog:after_open', [form]);
+    },
+    dialogClass: 'active_admin_dialog',
+    buttons: {
+      Approve() {
+        update_status(reviewId, 'approved');
+        $(this).dialog('close').remove();
+      },
+      Reject() {
+        update_status(reviewId, 'rejected');
+        $(this).dialog('close').remove();
+      }
+    }
+  });
+};
+
+function update_status(id, status){
+  $.ajax({
+    url: '/admin/reviews/' + id,
+    type: 'PUT',
+    data: {
+      'id' : id,
+      'status' : status }
+  });
+}
+
+ActiveAdmin.modal_view("Review text", {text: 'textarea'});

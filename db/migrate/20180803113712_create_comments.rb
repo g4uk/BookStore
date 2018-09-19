@@ -4,7 +4,7 @@ class CreateComments < ActiveRecord::Migration[5.2]
       t.string :title, null: false
       t.integer :rating, null: false, default: 0
       t.text :text, null: false
-      t.boolean :status
+      t.integer :status, null: false, default: 0
       t.belongs_to :user, foreign_key: true
       t.belongs_to :book, foreign_key: true
 

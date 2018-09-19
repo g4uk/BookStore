@@ -16,7 +16,12 @@ Rails.application.routes.draw do
     resources :categories
     resources :authors
     resources :books, only: %i[index show update]
-    resources :order_items, only: %i[create update destroy]
+    resources :order_items, only: %i[create destroy] do
+      member do
+        put :decrement
+        put :increment
+      end
+    end
     resources :carts, only: %i[show update destroy]
     resources :checkouts
     resources :users, only: %i[edit update] do

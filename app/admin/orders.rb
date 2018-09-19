@@ -1,7 +1,7 @@
-ActiveAdmin.register Order do
-  STATUSES = %i[in_delivery delivered canceled]
+# frozen_string_literal: true
 
-  scope :all, default: true
+ActiveAdmin.register Order do
+  STATUSES = %i[in_delivery delivered canceled].freeze
 
   menu priority: 4
 
