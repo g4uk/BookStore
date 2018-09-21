@@ -9,7 +9,8 @@ class Admin::AdminUtilsService
     end
 
     def book_image(image)
-      image.variant(resize: '100x100')
+      photo = image&.photo
+      photo.variant(resize: '100x100')
     end
   end
 end

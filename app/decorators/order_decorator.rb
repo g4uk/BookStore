@@ -2,32 +2,10 @@ class OrderDecorator < Draper::Decorator
   include ActionView::Helpers::NumberHelper
   delegate_all
 
-  def formatted_billing_address_name
-    "#{billing_address.first_name} #{billing_address.last_name}"
-  end
-
-  def formatted_billing_address_city
-    "#{billing_address.city} #{billing_address.zip}"
-  end
-
-  def formatted_billing_address_phone
-    "Phone #{billing_address.phone}"
-  end
-
-  def formatted_shipping_address_name
-    "#{shipping_address.first_name} #{shipping_address.last_name}"
-  end
-
-  def formatted_shipping_address_city
-    "#{shipping_address.city} #{shipping_address.zip}"
-  end
-
-  def formatted_shipping_address_phone
-    "Phone #{shipping_address.phone}"
-  end
+  decorates_association :order_items
 
   def formatted_delivery_name
-    "#{delivery.name} #{delivery.price}"
+    "#{delivery.name} #{number_to_currency(delivery_price.to_i, precizion: 2)}"
   end
 
   def formatted_credit_card_number
@@ -43,7 +21,21 @@ class OrderDecorator < Draper::Decorator
   end
 
   def formatted_total
-    object.total += object.delivery_price.to_i
-    number_to_currency(object.total, precizion: 2)
+    total = object.total
+    total += object.delivery_price.to_i
+    number_to_currency(total, precizion: 2)
+  end
+
+  def formatted_date
+    created_at.strftime('%B %d, %Y')
+  end
+
+  def formatted_updated_at
+    created_at.strftime('%F')
+  end
+
+  def formatted_status
+    css_class = object.delivered? ? 'text-success' : 'in-grey-900'
+    h.content_tag(:span, h.t(status), class: "font-16 #{css_class} in-grey-900 fw-300")
   end
 end

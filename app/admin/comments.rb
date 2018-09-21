@@ -1,6 +1,7 @@
 ActiveAdmin.register Comment, :as => 'Reviews' do
-
   menu priority: 5
+
+  includes :book, :user
 
   filter :book
   filter :rating

@@ -1,0 +1,11 @@
+%p.general-address
+  = address.formatted_name
+  %span.general-edit= link_to t(:edit), wizard_path(:address) unless complete
+  %br
+  = address.formatted_address
+  %br
+  = address.formatted_city
+  %br
+  = address.country
+  %br
+  = address.formatted_phone

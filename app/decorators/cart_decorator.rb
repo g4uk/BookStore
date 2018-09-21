@@ -19,8 +19,7 @@ class CartDecorator < Draper::Decorator
   end
 
   def total_price
-    return subtotal - coupon_price if coupon_price
-    subtotal
+    coupon_price ? subtotal - coupon_price : subtotal
   end
 
   def total_quantity

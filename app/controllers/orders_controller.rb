@@ -3,11 +3,17 @@ class OrdersController < ApplicationController
   before_action :checkout_authentication, only: :create
   before_action :authenticate_user!, except: :create
   before_action :set_order, :ensure_cart_isnt_empty, only: [:create]
+  before_action :decorate_cart
+  before_action :decorate_objects, only: [:show]
+
+  decorates_assigned :order
 
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    @scopes = OrdersScopesService.call
+    @scope = params[:scope] ? params[:scope].to_sym : :all
+    @orders = @scopes[@scope].decorate
   end
 
   # GET /orders/1
@@ -16,23 +22,10 @@ class OrdersController < ApplicationController
     @user = current_user
   end
 
-  # GET /orders/new
-  def new
-    @order = Order.new
-  end
-
-  # GET /orders/1/edit
-  def edit
-  end
-
   # POST /orders
   # POST /orders.json
   def create
-    redirect_to checkout_confirm_path if @order.may_confirm?
-    redirect_to checkout_delivery_path if @order.may_fill_delivery?
-    redirect_to checkout_payment_path if @order.may_fill_payment?
-    @cart = @cart.decorate
-    @order = FillOrderWithItemsService.call(cart: @cart, order: @order, user: current_user)
+    @order = CopyInfoToOrderService.call(cart: @cart, order: @order, user: current_user)
     if @order.save
       @order.checkout! if @order.may_checkout?
       session[:order_id] = @order.id
@@ -69,6 +62,16 @@ class OrdersController < ApplicationController
 
   private
 
+  def decorate_objects
+    @cart = @cart.decorate
+    @order = Order.includes(order_items: [:book, image_attachment: :blob]).find(params[:id]).decorate
+    @countries_with_codes = CountriesListService.call
+    @deliveries = Delivery.all.decorate
+    @order_items = @order.order_items
+    @billing_address = AddressDecorator.decorate(@order.billing_address)
+    @shipping_address = AddressDecorator.decorate(@order.shipping_address)
+  end
+
   def order_params
     params.require(:order).permit(:user_id, :delivery_id, :credit_card_id, :coupon_id, :status)
   end
@@ -82,6 +85,10 @@ class OrdersController < ApplicationController
       flash[:notice] = 'You need to sign in or sign up before continuing.'
       redirect_to checkout_login_users_url
     end
+  end
+
+  def decorate_cart
+    @cart = @cart.decorate
   end
 
   def set_order

@@ -1,56 +1,18 @@
-.visible-xs
-  - @order_items.each do |order_item|
-    .general-cart-item.divider-lg-bottom.mb-30
-      = link_to order_item_path(order_item), method: :delete, class: 'close general-cart-close', remote: true do
-        %span{'aria-hidden': "true"} &times;
-      .general-img-wrap-table
-        = order_item.book_image('cart-img-shadow')
-      %p.title= order_item.book_name
-      %table.table
-        %tr
-          %td
-            %span.in-grey-600= t(:price)
-          %td
-            %span.font-16.in-gold-500= order_item.book_price
-        %tr
-          %td.vertical-middle
-            %span.in-grey-600= t(:quantity)
-          %td
-            = render 'carts/order_item_inputs', order_item: order_item
-        %tr
-          %td
-            %span.in-grey-600= t(:subtotal)
-          %td
-            %span.font-16.in-gold-500= order_item.formatted_total
+= render 'order_items/order_item_xs', order_items: @order_items, type: 'cart'
 .hidden-xs
   %table.table.table-hover
     %tr.no-hover
       %th.col-pic.pl-0
-        %span.in-grey-600= t(:product)
+        %span.in-grey-600= t(:book)
       %th.col-title
       %th.col-price
         %span.in-grey-600= t(:price)
       %th.col-quantity
         %span.in-grey-600= t(:quantity)
       %th.col-total
-        %span.in-grey-600= t(:subtotal)
+        %span.in-grey-600= t(:total)
       %th.col-close
-    - @order_items.each do |order_item|
-      %tr
-        %td
-          .general-img-wrap-table
-            = order_item.book_image('cart-img-shadow pull-left')
-        %td
-          %p.title= order_item.book_name
-        %td
-          %span.font-16.in-gold-500= order_item.formatted_book_price
-        %td
-          = render 'carts/order_item_inputs', order_item: order_item
-        %td
-          %span.font-16.in-gold-500= order_item.formatted_total
-        %td
-          = link_to order_item_path(order_item), method: :delete, class: 'close general-cart-close', remote: true do
-            %span{'aria-hidden': "true"} &times;
+    = render 'order_items/order_item', order_items: @order_items, type: 'cart'
 .general-order-wrap
   .row
     .col-sm-4

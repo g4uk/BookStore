@@ -4,9 +4,8 @@ class CartsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
   
   def show
-    @order_items = @cart.order_items.order(:created_at)
+    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.includes(image_attachment: :blob).order(:created_at))
     @cart = @cart.decorate
-    @order_items = OrderItemDecorator.decorate_collection(@order_items)
   end
 
   def update

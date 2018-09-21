@@ -1,24 +1,14 @@
 class OrderItemsController < ApplicationController
 
-  before_action :set_item, only: [:decrement, :increment, :destroy]
+  before_action :set_item, only: %i[decrement increment destroy]
+  before_action :check_params, only: :create
 
   def create
-    if params[:book_id].nil?
-      book = Book.find(order_item_params[:book_id])
-    else
-      book = Book.find(params[:book_id])
-    end
-    quantity = params[:order_item] ? order_item_params[:quantity] : 1
-    @order_item = NewOrderItemService.call(book: book, quantity: quantity,
-                                           order_items: @cart.order_items)
+    book = Book.find(@book_id)
+    NewOrderItemService.call(book: book, quantity: @quantity, cart: @cart)
     @cart = @cart.decorate
     respond_to do |format|
-      if @order_item.save
-        format.js
-      else
-        format.html { redirect_to @order_item.cart }
-        format.json { render json: @order_item.errors, status: :unprocessable_entity }
-      end
+      format.js
     end
   end
 
@@ -57,12 +47,16 @@ class OrderItemsController < ApplicationController
   end
 
   def recalculate
-    @order_items = @cart.order_items.order(:created_at)
-    @order_items = OrderItemDecorator.decorate_collection(@order_items)
+    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.order(:created_at))
     @total_price = @cart.total_price
   end
 
   def order_item_params
     params.require(:order_item).permit(:book_id, :quantity)
+  end
+
+  def check_params
+    @book_id = params[:book_id] ? params[:book_id] : order_item_params[:book_id]
+    @quantity = params[:order_item] ? order_item_params[:quantity] : 1
   end
 end

@@ -8,18 +8,15 @@ class CheckoutsController < ApplicationController
   steps :address, :delivery, :payment, :confirm, :complete
 
   def show
-    @order.build_billing_address if @order.billing_address.blank?
-    @order.build_shipping_address if @order.shipping_address.blank?
-    @order.build_credit_card if @order.credit_card.blank?
-    @deliveries = DeliveryDecorator.decorate_collection(Delivery.all)
-    @order_items = OrderItemDecorator.decorate_collection(@order.order_items)
+    build_associated_objects
     render_wizard
   end
 
   def update
+    already_paid = @order.payment?
     case step
     when :address
-      if @order.payment?
+      if already_paid
         jump_to(:confirm) if @order.update(order_params)
       end
       if @order.may_fill_address?
@@ -28,32 +25,24 @@ class CheckoutsController < ApplicationController
         @order.fill_address! if @order.save
       end
     when :delivery
-      delivery = Delivery.find(order_params[:delivery_id])
-      if @order.payment?
-        @order.update_attributes(delivery_id: delivery.id,
-                                 delivery_type: delivery.name,
-                                 delivery_price: delivery.price,
-                                 delivery_duration: delivery.duration)
+      if already_paid
+        update_delivery_info
         jump_to(:confirm)
       end
       if @order.may_fill_delivery?
-        @order.fill_delivery! if @order.update_attributes(delivery_id: delivery.id,
-                                                          delivery_type: delivery.name,
-                                                          delivery_price: delivery.price,
-                                                          delivery_duration: delivery.duration)
+        @order.fill_delivery! if update_delivery_info
       end
     when :payment
-      if @order.payment?
-        number = order_params[:credit_card_attributes][:number].last(4)
-        @order.assign_attributes(order_params)
-        @order.credit_card.number = number
+      @order.assign_attributes(order_params)
+      @order.credit_card.number = CreditCardNumberService.call(order_params)
+      if already_paid
         jump_to(:confirm) if @order.save
       end
       if @order.may_fill_payment?
-        number = order_params[:credit_card_attributes][:number].last(4)
-        @order.assign_attributes(order_params)
-        @order.credit_card.number = number
-        @order.fill_payment! if @order.save
+        if @order.save
+          @cart.destroy
+          @order.fill_payment!
+        end
       end
     when :confirm
       if @order.may_confirm?
@@ -83,5 +72,23 @@ class CheckoutsController < ApplicationController
     @cart = @cart.decorate
     @order = @order.decorate
     @countries_with_codes = CountriesListService.call
+    @deliveries = Delivery.all.decorate
+    @order_items = @order.order_items
+    @billing_address = AddressDecorator.decorate(@order.billing_address)
+    @shipping_address = AddressDecorator.decorate(@order.shipping_address)
+  end
+
+  def build_associated_objects
+    @order.build_billing_address if @order.billing_address.blank?
+    @order.build_shipping_address if @order.shipping_address.blank?
+    @order.build_credit_card if @order.credit_card.blank?
+  end
+
+  def update_delivery_info
+    delivery = Delivery.find(order_params[:delivery_id])
+    @order.update_attributes(delivery_id: delivery.id,
+                                 delivery_type: delivery.name,
+                                 delivery_price: delivery.price,
+                                 delivery_duration: delivery.duration)
   end
 end

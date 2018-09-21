@@ -3,10 +3,11 @@ class UsersController < ApplicationController
 
   before_action :authenticate_user!, except: %i[login signup forgot_password change_password 
                                                 checkout_login quick_signup]
-  before_action :set_user
-  before_action :set_addresses, only: %i[update_billing_address update_shipping_address edit]
+  before_action :set_user, :decorate_cart
+  before_action :set_addresses, :set_countries, only: %i[update_billing_address update_shipping_address edit]
 
-  def edit; end
+  def edit
+  end
 
   def update
     respond_to do |format|
@@ -80,11 +81,27 @@ class UsersController < ApplicationController
     @resource.reset_password_token = params[:reset_password_token]
   end
 
+  def destroy
+    @user.destroy
+    respond_to do |format|
+      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
+
+  def decorate_cart
+    @cart = @cart.decorate
+  end
 
   def set_addresses
     @user.build_billing_address if @user.billing_address.blank?
     @user.build_shipping_address if @user.shipping_address.blank?
+  end
+
+  def set_countries
+    @countries_with_codes = CountriesListService.call
   end
 
   def set_user

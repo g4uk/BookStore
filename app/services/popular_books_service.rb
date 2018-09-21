@@ -1,7 +1,7 @@
 class PopularBooksService
   class << self
     def call
-      books = Book.all.includes(:order_items)
+      books = Book.all.includes(:order_items, :authors, :books_authors, images: :photo_attachment)
       grouped_by_category = books.group_by(&:category_id)
       grouped_books = {}
       sorted_books = {}

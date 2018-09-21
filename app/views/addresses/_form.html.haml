@@ -16,7 +16,7 @@
 .form-group
   = f.label :country, class: 'control-label input-label'
   = f.select(:country, {}, { include_blank: true }, { prompt: t(:select_county), id: 'country', class: "form-control country-select #{type}"} ) do
-    - @countries_with_codes.each do |c|
+    - countries_with_codes.each do |c|
       = content_tag(:option, c.first, value: c.first, data: { code: c.last })
 .form-group
   = f.label :phone, class: 'control-label input-label'

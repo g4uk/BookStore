@@ -9,7 +9,7 @@ class Order < ApplicationRecord
   enum status: { created: 0, address: 1, shipping: 2, in_progress: 3,
                  payment: 4, in_queue: 5, in_delivery: 6, delivered: 7, canceled: 8 }
 
-  has_many :order_items, dependent: :destroy
+  has_many :order_items, as: :itemable, dependent: :destroy
   has_one :billing_address, as: :addressable, dependent: :destroy
   has_one :shipping_address, as: :addressable, dependent: :destroy, required: false
   has_one :credit_card, dependent: :destroy
@@ -17,6 +17,12 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :shipping_address, update_only: true
   accepts_nested_attributes_for :billing_address, update_only: true
   accepts_nested_attributes_for :credit_card, update_only: true
+
+  scope :in_progress, -> { where(status: 'in_queue') }
+  scope :in_delivery, -> { where(status: 'in_delivery') }
+  scope :delivered, -> { where(status: 'delivered') }
+  scope :canceled, -> { where(status: 'canceled') }
+  scope :paid, -> { where(status: ['in_queue', 'in_delivery', 'delivered', 'canceled']) }
 
   validates :total, numericality: { greater_than_or_equal_to: 0 }
 

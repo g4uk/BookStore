@@ -1,0 +1,26 @@
+%main.container.general-main-wrap
+  %h1.general-title-margin= "#{t(:order)} #{@order.id}"
+  .row.mb-20
+    .col-sm-3
+      %h3.general-subtitle.mt-0= t(:shipping_address)
+      = render 'addresses/address', address: @shipping_address, complete: true
+    .col-sm-3
+      %h3.general-subtitle.mt-0= t(:billing_address)
+      = render 'addresses/address', address: @billing_address, complete: true
+    .col-sm-3
+      %h3.general-subtitle.mt-0= t(:shipments)
+      %p.general-address
+        = @order.delivery.duration
+        %br
+        = @order.formatted_delivery_name
+    .col-sm-3
+      %h3.general-subtitle.mt-0= t(:payment_information)
+      %p.general-address
+        = @order.formatted_credit_card_number
+  = render 'order_items/order_item_xs', order_items: @order_items, type: 'order'
+  .hidden-xs.divider-lg.pt-20
+    %table.table.table-hover
+      = render 'checkouts/table_headers'
+      = render 'order_items/order_item', order_items: @order_items, type: 'order'
+  .text-center.general-text-right
+    =# render 'checkouts/order_summary', order: @order

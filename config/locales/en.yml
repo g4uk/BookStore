@@ -44,4 +44,13 @@ en:
   card_hint: '3/4-digit security code on the back of your card'
   invalid_code: 'Consists of A-Z, 0-9 only'
   invalid_review: "Consists of a-z, A-Z, 0-9, or one of !#$%&\'*+-/=?^_`{|}~"
+  confirmation_sent: 'An order confirmation has been sent to'
+  thank_you: 'Thank You for your Order!'
+  order: 'Order #'
+  in_queue: 'Waiting for processing'
 
+  users:
+    edit:
+      aggrement: 'I understand that all data will be lost'
+      remove_account: 'Remove account'
+      please_remove_account: 'Please, remove my account'

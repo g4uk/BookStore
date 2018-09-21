@@ -59,7 +59,7 @@
                   = link_to t(:my_account), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
                   %ul.dropdown-menu
                     %li
-                      %a{href: "#"} Orders
+                      = link_to t(:orders), orders_path
                     %li
                       = link_to t(:settings), settings_path(current_user)
                     %li.divider{role: "separator"}
@@ -71,7 +71,7 @@
                 %li
                   = link_to t(:sign_up), signup_users_path
     - flash.each do |name, msg|
-      = content_tag :div, :class => "alert #{name == :error ? "alert-error" : "alert-success" }" do
+      = content_tag :div, class: "alert alert-#{name == 'danger' ? name : 'success' }" do
         = msg
     = yield
     %footer.navbar-inverse
@@ -85,7 +85,7 @@
                 = link_to t(:shop), books_path, class: 'nav-link'
               - if user_signed_in?
                 %li
-                  %a.nav-link{href: "#"} Orders
+                  = link_to t(:orders), orders_path
                 %li
                   = link_to t(:settings), settings_path(current_user), class: 'nav-link'
               - else

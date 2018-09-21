@@ -19,7 +19,7 @@
             %h3.general-subtitle.mt-0 Billing Address000
           = form_for @user, url: setting_path(@user) do |user_form|
             = user_form.fields_for :billing_address do |billing_form|
-              = render 'addresses/form', f: billing_form
+              = render 'addresses/form', f: billing_form, type: 'billing'
             .text-center.general-text-align
               .btn.disabled= user_form.submit
         .col-md-5.col-md-offset-1.mb-25
@@ -27,7 +27,7 @@
             %h3.general-subtitle.mt-0 Shipping Address
           = form_for @user, url: setting_path(@user) do |user_form|
             = user_form.fields_for :shipping_address do |shipping_form|
-              = render 'addresses/form', f: shipping_form
+              = render 'addresses/form', f: shipping_form, type: 'shipping'
             .text-center.general-text-align
               .btn.disabled= user_form.submit
     .general-main-wrap

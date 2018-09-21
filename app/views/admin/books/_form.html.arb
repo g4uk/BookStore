@@ -5,10 +5,12 @@ f.inputs do
   f.input :authors, as: :check_boxes, collection: Admin::AdminUtilsService.authors_with_ids
 end
 f.inputs do
-  if f.object.images.blank?
-    f.input :images, as: :file, input_html: { multiple: true }
-  else
-    f.input :images, as: :file, input_html: { multiple: true }, hint: image_tag(Admin::AdminUtilsService.book_image(f.object.images.first))
+  f.has_many :images, heading: 'Images', allow_destroy: true do |image|
+    if image.object.photo.attached?
+      image.input :photo, as: :file, hint: image_tag(Admin::AdminUtilsService.book_image(image.object))
+    else
+      image.input :photo, as: :file
+    end
   end
 end
 f.actions

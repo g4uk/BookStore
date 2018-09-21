@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_14_124706) do
+ActiveRecord::Schema.define(version: 2018_09_21_124527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,19 +143,23 @@ ActiveRecord::Schema.define(version: 2018_09_14_124706) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "images", force: :cascade do |t|
+    t.bigint "book_id"
+    t.index ["book_id"], name: "index_images_on_book_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.bigint "book_id"
-    t.bigint "cart_id"
-    t.bigint "order_id"
     t.integer "quantity", default: 1, null: false
     t.string "book_name"
     t.decimal "book_price", precision: 8, scale: 2
     t.decimal "total", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "itemable_id"
+    t.string "itemable_type"
     t.index ["book_id"], name: "index_order_items_on_book_id"
-    t.index ["cart_id"], name: "index_order_items_on_cart_id"
-    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["itemable_id", "itemable_type"], name: "index_order_items_on_itemable_id_and_itemable_type"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -209,7 +213,5 @@ ActiveRecord::Schema.define(version: 2018_09_14_124706) do
   add_foreign_key "comments", "books"
   add_foreign_key "comments", "users"
   add_foreign_key "order_items", "books"
-  add_foreign_key "order_items", "carts"
-  add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "users"
 end

@@ -3,4 +3,4 @@ if ( <%= @order_items.size > 0 %>){
 }else{
   $('#cart-wrapper').html("<%= I18n.t(:empty_cart) %>");
 }
-$(".shop-icon").html("<%=j render @cart %>");
+$('.shop-icon').html("<%=j render @cart %>");

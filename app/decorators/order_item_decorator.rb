@@ -19,6 +19,6 @@ class OrderItemDecorator < Draper::Decorator
   end
 
   def book_image(css_class)
-    h.image_tag image, class: css_class if image.attached? 
+    h.image_tag image, class: css_class if image.attached?
   end
 end

@@ -2,7 +2,7 @@ class CommentDecorator < Draper::Decorator
   delegate_all
 
   def formatted_date
-    created_at.strftime("%m/%d/%y")
+    created_at.strftime('%m/%d/%y')
   end
 
   def email_first_letter

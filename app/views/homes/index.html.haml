@@ -9,7 +9,7 @@
           .row
             .col-sm-5
               .general-img-wrap
-                = image_tag book.main_image, class: 'img-shadow general-thumbnail-img', alt: 'design-book' if book.images.attached? 
+                = book.main_image('img-shadow general-thumbnail-img') 
             .col-sm-7
               .mb-60
                 %h1= book.title

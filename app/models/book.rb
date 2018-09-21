@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Book < ApplicationRecord
-  serialize :dimensions, Hash
-
   belongs_to :category
   has_many :books_authors, dependent: :destroy
   has_many :authors, through: :books_authors

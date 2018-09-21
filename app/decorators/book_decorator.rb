@@ -16,7 +16,7 @@ class BookDecorator < Draper::Decorator
   end
 
   def main_image(css_class)
-    h.image_tag images.first, class: css_class if images.attached? 
+    h.image_tag images.first.photo, class: css_class unless images.blank? 
   end
 
   def carousel_description

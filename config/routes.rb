@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
     resources :carts, only: %i[show update destroy]
     resources :checkouts
-    resources :users, only: %i[edit update] do
+    resources :users, only: %i[edit update destroy] do
       collection do
         patch :update_billing_address
         patch :update_shipping_address

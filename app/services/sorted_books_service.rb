@@ -1,6 +1,8 @@
 class SortedBooksService
   class << self
-    def call(sort_params:, books:)
+    def call(sort_params:, category_id:)
+      books = Book.all.includes(:authors, :books_authors, images: [photo_attachment: :blob])
+      books = books.where(category_id: category_id) if category_id
       if sort_params
         return sort_popular(books) if sort_params == 'popular'
         BookDecorator.decorate_collection(books.order(sort_params))
@@ -8,7 +10,7 @@ class SortedBooksService
         BookDecorator.decorate_collection(books.order('created_at desc'))
       end
     end
-    
+
     private
 
     def sort_popular(books)

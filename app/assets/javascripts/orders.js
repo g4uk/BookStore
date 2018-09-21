@@ -15,14 +15,12 @@ $(document).on('turbolinks:load', function() {
   });
 
   $('input').keyup(function() {
-    console.log(2);
     var input = $(this)
     var parent = input.closest('.form-group');
     if ( !parent.length ){
       parent = input.closest('.general-input-group');
     }
     var value = input.val();
-    console.log(input.data( 'regexp' ));
     var regexp = new RegExp(input.data( 'regexp' ));
     parent.removeClass('has-error');
     if(!regexp.test(value)) {
@@ -42,4 +40,11 @@ $(document).on('turbolinks:load', function() {
   $('.info-icon').hover(function() {
     $(this).tooltip();
   });
+  
+  $('tr[data-link]').click(function() {
+    window.location = $(this).data('link');
+  })
+  $('table[data-link]').click(function() {
+    window.location = $(this).data('link');
+  })
 });

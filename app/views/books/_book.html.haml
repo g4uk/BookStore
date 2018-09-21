@@ -6,7 +6,7 @@
       .images.clearfix
         - @book.images.drop(1).each do |image|
           = link_to '#', class: 'img-link', remote: true do
-            = image_tag image
+            = image_tag image.photo
   .col-sm-6
     %h1.mt-res-0= @book.title
     %p.lead.small= @book.formatted_authors

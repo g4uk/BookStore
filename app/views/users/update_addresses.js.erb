@@ -1,3 +1,6 @@
-$("#edit_billing_address_form_wrapper").html("<%= j render partial: 'form', locals: {address: :billing_address} %>")
-$("#edit_shipping_address_form_wrapper").html("<%= j render partial: 'form', locals: {address: :shipping_address} %>")
-$('.flashMessage').html("<%= j t(:updated_sucessfully) %>");
+billingAddressForm = $('#edit_billing_address_form_wrapper');
+shippinhAddressForm = $('#edit_shipping_address_form_wrapper');
+billingAddressForm.html("<%= j render partial: 'form', locals: {address: :billing_address} %>")
+shippinhAddressForm.html("<%= j render partial: 'form', locals: {address: :shipping_address} %>")
+billingAddressForm.find('.flash_message').html("<%= j t(:updated_sucessfully) %>");
+shippinhAddressForm.find('.flash_message').html("<%= j t(:updated_sucessfully) %>");

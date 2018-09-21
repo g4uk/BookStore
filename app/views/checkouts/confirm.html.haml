@@ -3,30 +3,10 @@
   .row.mb-20
     .col-sm-3
       %h3.general-subtitle= t(:shipping_address)
-      %p.general-address
-        = @order.formatted_shipping_address_name
-        %span.general-edit= link_to t(:edit), wizard_path(:address)
-        %br
-        = @order.shipping_address.address
-        %br
-        = @order.formatted_shipping_address_city
-        %br
-        = @order.shipping_address.country
-        %br
-        = @order.formatted_shipping_address_phone
+      = render 'addresses/address', address: @shipping_address, complete: false
     .col-sm-3
       %h3.general-subtitle= t(:billing_address)
-      %p.general-address
-        = @order.formatted_billing_address_name
-        %span.general-edit= link_to t(:edit), wizard_path(:address)
-        %br
-        = @order.billing_address.address
-        %br
-        = @order.formatted_billing_address_city
-        %br
-        = @order.billing_address.country
-        %br
-        = @order.formatted_billing_address_phone
+      = render 'addresses/address', address: @billing_address, complete: false
     .col-sm-3
       %h3.general-subtitle= t(:shipments)
       %p.general-address
@@ -39,57 +19,11 @@
       %p.general-address
         = @order.formatted_credit_card_number
         %span.general-edit= link_to t(:edit), wizard_path(:payment)
-  .visible-xs
-    - @order_items.each do |order_item|
-      .general-cart-item.divider-lg
-        .general-img-wrap-table
-          = order_item.book_image('cart-img-shadow')
-        %p.title= order_item.book_name
-        %P.in-grey-600.fw-300= order_item.book_description
-        %table.table
-          %tr
-            %td
-              %span.in-grey-600= t(:price)
-            %td
-              %span.font-16.in-gold-500= order_item.formatted_book_price
-          %tr
-            %td.vertical-middle
-              %span.in-grey-600= t(:quantity)
-            %td
-              %span= order_item.quantity
-          %tr
-            %td
-              %span.in-grey-600= t(:subtotal)
-            %td
-              %span.font-16.in-gold-500= order_item.formatted_total
+  = render 'order_items/order_item_xs', order_items: @order_items, type: 'order'
   .hidden-xs.divider-lg.pt-20
     %table.table.table-hover
-      %thead
-        %tr
-          %th
-            %span.in-grey-600= t(:book)
-          %th.col-method
-          %th
-            %span.in-grey-600= t(:price)
-          %th
-            %span.in-grey-600= t(:quantity)
-          %th
-            %span.in-grey-600= t(:subtotal)
-      %tbody
-        - @order_items.each do |order_item|
-          %tr
-            %td
-              .general-img-wrap-table
-                = order_item.book_image('cart-img-shadow pull-left')
-            %td
-              %p.title= order_item.book_name
-              %p.in-grey-600.fw-300= order_item.book_description
-            %td
-              %span.font-16.in-gold-500= order_item.formatted_book_price
-            %td
-              %span.ml-30= order_item.quantity
-            %td
-              %span.font-16.in-gold-500= order_item.formatted_total
+      = render 'table_headers'
+      = render 'order_items/order_item', order_items: @order_items, type: 'order'
   .text-center.general-text-right
     = render 'order_summary', order: @order
   .text-center
