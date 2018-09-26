@@ -2,11 +2,10 @@ class CartsController < ApplicationController
   layout 'main'
 
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
-  
-  def show
-    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.includes(image_attachment: :blob).order(:created_at))
-    @cart = @cart.decorate
-  end
+
+  before_action :decorate_cart
+
+  def show;end
 
   def update
     coupon = Coupon.where(code: cart_params[:coupon_code]).first
@@ -20,9 +19,6 @@ class CartsController < ApplicationController
     end
   end
 
-  def destroy
-  end
-
   private
 
   def invalid_cart
@@ -33,4 +29,10 @@ class CartsController < ApplicationController
   def cart_params
     params.require(:cart).permit(:coupon_code)
   end
+
+  def decorate_cart
+    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.includes(image_attachment: :blob).order(:created_at))
+    @cart = @cart.decorate
+  end
 end
+

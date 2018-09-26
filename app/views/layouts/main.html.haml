@@ -3,13 +3,12 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %meta{name: "viewport", content: "width=device-width"}
-    %title= t :bookstore
+    %title= t(:bookstore)
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Open+Sans"
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    %link{href: "../css/style.css", rel: "stylesheet"}
   %body
     %header.navbar.navbar-default
       .container
@@ -24,52 +23,18 @@
             %span.shop-icon
               = render @cart
         = link_to cart_path(@cart), class: 'shop-link pull-right hidden-xs' do
-          %span.shop-icon
-            = render @cart
+          - if @cart.total_quantity.positive?
+            %span.shop-icon
+              = render @cart
+          - else
+            %span.shop-icon
         #navbar.navbar-collapse.collapse.pl-30{'aria-expanded': "false"}
           .visible-xs
             %button.close{type: "button", 'aria-label': "Close"}
               %span{'aria-hidden': "true"} &times;
-            %ul.nav.navbar-nav
-              %li
-                = link_to t(:home), root_path
-              %li
-                = link_to t(:shop), '#menu', html_options = { type: 'button', 'data-toggle': 'collapse', 'aria-expanded': 'false', 'aria-controls': 'menu' }
-                %a{type: "button", 'data-toggle': "collapse", href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"} Shop
-                %ul#menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
-                  - @categories_for_menu.each do |category|
-                    -if category.books.size.positive?
-                      %li
-                        = link_to category.name, books_path(category.id), class: 'collapse-link'
-              %li
-                %a{href: "#"} My account
+            = render 'homes/menu', categories: @categories
           .hidden-xs
-            %ul.nav.navbar-nav
-              %li
-                = link_to t(:home), root_path
-              %li.dropdown
-                = link_to t(:shop), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
-                %ul.dropdown-menu
-                  - @categories_for_menu.each do |category|
-                    -if category.books.size.positive?
-                      %li
-                        = link_to category.name, books_path(category: category.id)
-              - if user_signed_in?
-                %li.dropdown
-                  = link_to t(:my_account), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
-                  %ul.dropdown-menu
-                    %li
-                      = link_to t(:orders), orders_path
-                    %li
-                      = link_to t(:settings), settings_path(current_user)
-                    %li.divider{role: "separator"}
-                    %li
-                      = link_to t(:log_out), destroy_user_session_path, method: :delete 
-              - else
-                %li
-                  = link_to t(:log_in), login_users_path
-                %li
-                  = link_to t(:sign_up), signup_users_path
+            = render 'homes/menu', categories: @categories
     - flash.each do |name, msg|
       = content_tag :div, class: "alert alert-#{name == 'danger' ? name : 'success' }" do
         = msg
@@ -85,9 +50,9 @@
                 = link_to t(:shop), books_path, class: 'nav-link'
               - if user_signed_in?
                 %li
-                  = link_to t(:orders), orders_path
+                  = link_to t(:orders_list), orders_path
                 %li
-                  = link_to t(:settings), settings_path(current_user), class: 'nav-link'
+                  = link_to t(:accout), settings_path(current_user), class: 'nav-link'
               - else
                 %li
                   = link_to t(:log_in), login_users_path, class: 'nav-link'

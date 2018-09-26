@@ -2,6 +2,6 @@
   .flash_message
   .form-group.mb-35
     = f.label :email, class: 'control-label input-label'
-    = f.email_field :email, id: 'email', placeholder: true, class: 'email form-control'
+    = f.email_field :email, id: 'email', placeholder: true, class: 'email form-control', title: t(:invalid_email), data: { regexp: INPUT_VALIDATIONS[:email] }
   .general-text-align
-    .btn.btn-default.mb-35= f.submit
+    .btn.btn-default.mb-35= f.submit t('.save')

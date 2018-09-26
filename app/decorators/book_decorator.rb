@@ -3,16 +3,16 @@ class BookDecorator < Draper::Decorator
 
   delegate_all
 
+  def self.collection_decorator_class
+    PaginatingDecorator
+  end
+
   def formatted_authors
     authors.map { |author| "#{author.first_name} #{author.last_name}" }.join(', ')
   end
 
   def formatted_price
     number_to_currency(price, precizion: 2)
-  end
-
-  def quantity
-    count
   end
 
   def main_image(css_class)

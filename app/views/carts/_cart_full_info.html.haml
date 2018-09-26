@@ -3,14 +3,14 @@
   %table.table.table-hover
     %tr.no-hover
       %th.col-pic.pl-0
-        %span.in-grey-600= t(:book)
+        %span.in-grey-600= t('.book')
       %th.col-title
       %th.col-price
-        %span.in-grey-600= t(:price)
+        %span.in-grey-600= t('.price')
       %th.col-quantity
-        %span.in-grey-600= t(:quantity)
+        %span.in-grey-600= t('.quantity')
       %th.col-total
-        %span.in-grey-600= t(:total)
+        %span.in-grey-600= t('.subtotal')
       %th.col-close
     = render 'order_items/order_item', order_items: @order_items, type: 'cart'
 .general-order-wrap
@@ -20,22 +20,23 @@
         = render 'carts/form'
     .col-sm-8
       .res-mr-200.text-center.general-text-right
-        %p.in-gold-500.font-18= t(:order_summary)
+        %p.in-gold-500.font-18= t('.order_summary')
         %table.general-summary-table.general-summary-table-right.general-text-right
           %tr
             %td
-              %p.font-16= t(:subtotal)
+              %p.font-16= t('.subtotal')
             %td
               %p.font-16= @cart.formatted_subtotal
           %tr
             %td
-              %p.font-16= t(:coupon)
+              %p.font-16= t('.coupon')
             %td
               %p.font-16= @cart.formatted_discount
           %tr
             %td
-              %strong.font-18= t(:order_total)
+              %strong.font-18= t('.total')
             %td
               %strong.font-18= @cart.formatted_total
         .btn.btn-default.mb-20.visible-xs-inline-block= link_to(t(:checkout), orders_path, method: :post)
-.btn.btn-default.mb-20.hidden-xs.center-block= link_to(t(:checkout), orders_path, method: :post, class: '')
+= link_to(orders_path, method: :post, class: '') do
+  .btn.btn-default.mb-20.hidden-xs.center-block= t('.checkout')

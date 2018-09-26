@@ -1,11 +1,10 @@
 class OrderItemsController < ApplicationController
 
   before_action :set_item, only: %i[decrement increment destroy]
-  before_action :check_params, only: :create
 
   def create
-    book = Book.find(@book_id)
-    NewOrderItemService.call(book: book, quantity: @quantity, cart: @cart)
+    check_params
+    NewOrderItemService.call(book: Book.find(@book_id), quantity: @quantity, cart: @cart)
     @cart = @cart.decorate
     respond_to do |format|
       format.js

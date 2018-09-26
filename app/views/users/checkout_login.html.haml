@@ -2,23 +2,23 @@
   .row
     .col-md-5.mb-40
       .text-center
-        %h3.general-subtitle Returning Customer
-        %a.general-login-icon{href: "#"}
+        %h3.general-subtitle= t('.returning')
+        = link_to user_facebook_omniauth_authorize_path, class: 'general-login-icon' do
           %i.fa.fa-facebook-official
         %p.general-login-text or
       = render partial: 'login_form'
     .col-md-5.col-md-offset-1.mb-60
       .text-center
-        %h3.general-subtitle New Customer
-        %a.general-login-icon{href: "#"}
+        %h3.general-subtitle= t('.new')
+        = link_to user_facebook_omniauth_authorize_path, class: 'general-login-icon' do
           %i.fa.fa-facebook-official
         %p.general-login-text or
       = form_for :user, url: quick_signup_users_path, html: { method: :put, class: 'general-form' } do |f|
         .mb-40
-          %p.mb-5 Quik Register
-          %p.general-info-text.font-12.mb-20 You’ll be able to create password later        
+          %p.mb-5= t('.quick_reg')
+          %p.general-info-text.font-12.mb-20= t('.create_later')        
           = render partial: 'flash'
           .form-group.mb-30
             = f.label :email, t(:enter_email), class: 'control-label input-label'
-            = f.text_field :email, class: 'form-control', placeholder: true
-        = f.submit class: 'btn disabled mb-20'
+            = f.text_field :email, class: 'form-control', placeholder: true, title: t(:invalid_email), data: { regexp: INPUT_VALIDATIONS[:email] }
+        .btn.btn-default.mb-20= f.submit t(:continue)

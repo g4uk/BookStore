@@ -63,14 +63,14 @@ class UsersController < ApplicationController
   def checkout_login; end
 
   def quick_signup
-    generated_password = Devise.friendly_token.first(8) + rand(10).to_s
+    generated_password = GeneratePasswordService.call
     user = User.create(email: user_params[:email], password: generated_password)
     if user.errors.empty?
       sign_in(:user, user)
       ApplicationMailer.welcome_email(user, generated_password).deliver
       redirect_to @cart
     else
-      flash[:notice] = flash[:notice].to_a.concat user.errors.full_messages
+      flash[:danger] = flash[:danger].to_a.concat user.errors.full_messages
       redirect_to checkout_login_users_path
     end
   end

@@ -1,6 +1,6 @@
 %main.container.general-main-wrap
   = render partial: 'progress_bar'
-  %h3.general-subtitle= t(:shipments)
+  %h3.general-subtitle= t('.shipments')
   = form_for @order, url: wizard_path do |form|
     .visible-xs
       .general-cart-item.divider-lg-bottom
@@ -8,7 +8,7 @@
           - @deliveries.each do |delivery|
             %tr
               %td.col-half
-                %span.in-grey-600= t(:method)
+                %span.in-grey-600= t('.method')
               %td.col-half
                 .form-group.radio.mt-0.mb-0
                   %label.radio-label
@@ -17,12 +17,12 @@
                     %span.radio-text= delivery.name
             %tr
               %td
-                %span.in-grey-600= t(:days)
+                %span.in-grey-600= t('.days')
               %td
                 %span.font-16.fw-300= delivery.duration
             %tr
               %td
-                %span.in-grey-600= t(:price)
+                %span.in-grey-600= t('.price')
               %td
                 %span.font-16.in-gold-500= delivery.formatted_price
     .hidden-xs.mb-res-50
@@ -30,11 +30,11 @@
         %thead
           %tr
             %th.col-method
-              %span.in-grey-600.ml-40= t(:method)
+              %span.in-grey-600.ml-40= t('.method')
             %th
-              %span.in-grey-600= t(:days)
+              %span.in-grey-600= t('.days')
             %th
-              %span.in-grey-600= t(:price)
+              %span.in-grey-600= t('.price')
         %tbody
           - @deliveries.each do |delivery|
             %tr
@@ -49,6 +49,6 @@
               %td
                 %span.font-16.in-gold-500= delivery.formatted_price
     .general-text-align
-      = render 'order_summary', order: @order
+      = render 'order_summary', order: @order, pull_right: false
     .text-center
-      .btn.btn-default.mb-20= form.submit
+      .btn.btn-default.mb-20= form.submit t(:continue)

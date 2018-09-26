@@ -3,12 +3,12 @@
   %p.lead.small.mb-10.visible-xs= t('.sort_by')
   .dropdowns.dropdown.general-order-dropdown
     %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-      = t(@scope)
+      = t(".#{@scope}")
       %i.fa.fa-angle-down.dropdown-icon.pull-right
     %ul.dropdown-menu
       - @scopes.each do |scope, _value|
         %li
-          = link_to t(scope), scope: scope
+          = link_to t(".#{scope}"), scope: scope
   .visible-xs
     - @orders.each do |order|
       .general-cart-item.divider-lg-bottom.pt-0

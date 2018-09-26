@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class Users::PasswordsController < Devise::PasswordsController
-  # GET /resource/password/new
-  # def new
-  #  super
-  # end
-
-  # POST /resource/password
   def create
     self.resource = resource_class.send_reset_password_instructions(resource_params)
     yield resource if block_given?
@@ -19,12 +13,6 @@ class Users::PasswordsController < Devise::PasswordsController
     end
   end
 
-  # GET /resource/password/edit?reset_password_token=abcdef
-  # def edit
-  #   super
-  # end
-
-  # PUT /resource/password
   def update
     self.resource = resource_class.reset_password_by_token(resource_params)
     yield resource if block_given?
@@ -59,5 +47,4 @@ class Users::PasswordsController < Devise::PasswordsController
   def error_notice
     flash[:danger] = flash[:danger].to_a.concat resource.errors.full_messages
   end
-
 end

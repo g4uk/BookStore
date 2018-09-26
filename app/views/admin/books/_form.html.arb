@@ -5,7 +5,7 @@ f.inputs do
   f.input :authors, as: :check_boxes, collection: Admin::AdminUtilsService.authors_with_ids
 end
 f.inputs do
-  f.has_many :images, heading: 'Images', allow_destroy: true do |image|
+  f.has_many :images, heading: 'Images. Only 4 allowed', allow_destroy: true do |image|
     if image.object.photo.attached?
       image.input :photo, as: :file, hint: image_tag(Admin::AdminUtilsService.book_image(image.object))
     else

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
-    Rails.application.routes.default_url_options[:locale]= I18n.locale
+    Rails.application.routes.default_url_options[:locale] = I18n.locale
   end
 
   def set_cart
@@ -31,6 +31,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_categories
-    @categories_for_menu = Category.all.includes(:books).order(:name)
+    @categories = Category.all.order(:name)
   end
 end

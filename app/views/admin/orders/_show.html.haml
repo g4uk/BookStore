@@ -1,6 +1,6 @@
 %table
   %tr
-    %th= t(:books)
+    %th= t(:books_list)
     %th= t(:total)
     %th= t(:delivery_type)
     %th= t(:billing_address)
@@ -14,15 +14,15 @@
     %td= order.delivery_type
     %td
       - unless order.shipping_address.blank?
-        = order.formatted_shipping_address_name
+        = order.shipping_address.formatted_name
         %br
-        = order.formatted_shipping_address_city
+        = order.shipping_address.formatted_city
         %br
-        = order.formatted_shipping_address_phone
+        = order.shipping_address.formatted_phone
     %td
       - unless order.billing_address.blank?
-        = order.formatted_billing_address_name
+        = order.billing_address.formatted_name
         %br
-        = order.formatted_billing_address_city
+        = order.billing_address.formatted_city
         %br
-        = order.formatted_billing_address_phone
+        = order.billing_address.formatted_phone

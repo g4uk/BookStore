@@ -1,0 +1,27 @@
+%ul.nav.navbar-nav
+  %li
+    = link_to t(:home), root_path
+  %li.dropdown
+    = link_to t(:shop), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
+    %ul.dropdown-menu
+      - categories.each do |category|
+        -if category.books.size.positive?
+          %li
+            = link_to books_path(category: category.id), class: 'collapse-link' do
+              = "#{category.name} (#{category.books_count})"
+  - if user_signed_in?
+    %li.dropdown
+      = link_to t(:my_account), '#', html_options = { class: 'dropdown-toggle', 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false" }
+      %ul.dropdown-menu
+        %li
+          = link_to t(:orders_list), orders_path
+        %li
+          = link_to t(:accout), settings_path(current_user)
+        %li.divider{role: "separator"}
+        %li
+          = link_to t(:log_out), destroy_user_session_path, method: :delete 
+  - else
+    %li
+      = link_to t(:log_in), login_users_path
+    %li
+      = link_to t(:sign_up), signup_users_path

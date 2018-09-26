@@ -8,15 +8,15 @@
     = render partial: 'flash'
     .form-group.mb-30
       = f.label :email, t(:enter_email), class: 'control-label input-label'
-      = f.text_field :email, class: 'form-control', placeholder: true
+      = f.text_field :email, class: 'form-control', placeholder: true, title: t(:invalid_email), data: { regexp: INPUT_VALIDATIONS[:email] }
     .form-group.mb-30
       = f.label :password, class: 'control-label input-label'
-      = f.password_field :password, class: 'form-control', placeholder: true
+      = f.password_field :password, class: 'form-control', placeholder: true, title: t(:invalid_password), data: { regexp: INPUT_VALIDATIONS[:password] }
     .form-group.mb-30
       = f.label :password_confirmation, class: 'control-label input-label'
-      = f.password_field :password_confirmation, class: 'form-control', placeholder: true
+      = f.password_field :password_confirmation, class: 'form-control', placeholder: true, title: t(:invalid_password), data: { regexp: INPUT_VALIDATIONS[:password] }
     .text-center
-      = f.submit class: 'btn btn-default mb-20'
+      .btn.btn-default.mb-20= f.submit t(:sign_up)
   %p.general-sign-text.text-center
     have an Account?
     = link_to t(:log_in), login_users_path, class: 'in-gold-500'

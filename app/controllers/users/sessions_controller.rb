@@ -17,15 +17,10 @@ class Users::SessionsController < Devise::SessionsController
       yield resource if block_given?
       respond_with resource, location: after_sign_in_path_for(resource)
     else
-      flash[:danger] = 'Invalid Email or password.'
+      flash[:danger] = I18n.t(:invalid_login)
       redirect_to login_users_url
     end
   end
-
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
 
   protected
 

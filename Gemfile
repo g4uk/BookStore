@@ -12,6 +12,7 @@ gem 'draper'
 gem 'file_validators'
 gem 'haml'
 gem 'haml-rails', '~> 1.0'
+gem 'kaminari'
 gem 'mini_magick', '~> 4.8'
 gem 'omniauth-facebook'
 gem 'pg'
@@ -45,6 +46,7 @@ gem 'wicked'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'bullet'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
   gem 'ffaker'
@@ -54,7 +56,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'bullet'
   gem 'letter_opener'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'listen', '>= 3.0.5', '< 3.2'

@@ -2,7 +2,7 @@
   .flash_message
   .col-sm-4
     .input-group.general-input-group
-      = f.label :coupon_code, class: 'input-label'
+      = f.label :coupon_code, t('.enter_code'), class: 'input-label'
       = f.text_field :coupon_code, class: 'form-control mb-30', placeholder: true, title: t(:invalid_code), data: { regexp: INPUT_VALIDATIONS[:code] }
       %div
         .btn.btn-primary.mr-5.mb-15= f.submit

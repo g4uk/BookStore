@@ -24,7 +24,7 @@ class Order < ApplicationRecord
   scope :canceled, -> { where(status: 'canceled') }
   scope :paid, -> { where(status: ['in_queue', 'in_delivery', 'delivered', 'canceled']) }
 
-  validates :total, numericality: { greater_than_or_equal_to: 0 }
+  validates :total, numericality: { greater_than_or_equal_to: 0.01 }
 
   aasm column: 'status' do
     state :created, initial: true

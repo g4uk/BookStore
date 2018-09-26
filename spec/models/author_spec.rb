@@ -4,13 +4,14 @@ require 'rails_helper'
 
 RSpec.describe Author, type: :model do
   let(:valid_name) { FFaker::String.from_regexp(NAME) }
-  let(:invalid_name) { FFaker::String.from_regexp(PHONE) }
+  let(:invalid_name) { FFaker::PhoneNumber.phone_number }
   let(:name_length) { 50 }
+  let(:author) { FactoryBot.create :author }
 
   context 'validations' do
     it { should validate_presence_of(:first_name) }
     it { should validate_presence_of(:last_name) }
-    it { should validate_uniqueness_of(:first_name).scoped_to(:last_name) }
+    it { expect(author).to validate_uniqueness_of(:first_name).scoped_to(:last_name) }
     it { should allow_value(valid_name).for(:first_name) }
     it { should allow_value(valid_name).for(:last_name) }
     it { should_not allow_value(invalid_name).for(:first_name) }

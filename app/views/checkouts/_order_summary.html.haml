@@ -1,5 +1,5 @@
 %p.in-gold-500.font-18= t(:order_summary)
-%table.general-summary-table{class: ('general-summary-table-right general-text-right' if (current_step?(:confirm) || current_step?(:complete))) }
+%table.general-summary-table{class: ('general-summary-table-right general-text-right' if pull_right) }
   %tr
     %td
       %p.font-16= t(:item_total)

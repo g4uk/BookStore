@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_21_124527) do
+ActiveRecord::Schema.define(version: 2018_09_24_101633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,10 +80,11 @@ ActiveRecord::Schema.define(version: 2018_09_21_124527) do
     t.text "description"
     t.decimal "price", precision: 8, scale: 2
     t.integer "publishing_year", default: 2018, null: false
-    t.text "dimensions", default: "--- {}"
+    t.text "dimensions"
     t.string "materials"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "comments_count", default: 0
     t.index ["category_id"], name: "index_books_on_category_id"
   end
 
@@ -105,6 +106,7 @@ ActiveRecord::Schema.define(version: 2018_09_21_124527) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "books_count", default: 0
   end
 
   create_table "comments", force: :cascade do |t|

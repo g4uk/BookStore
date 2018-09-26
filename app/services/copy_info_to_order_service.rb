@@ -1,22 +1,26 @@
 class CopyInfoToOrderService
-  class << self
-    def call(cart:, order:, user:)
-      order.assign_attributes(user: user, total: cart.total_price)
-      fill_with_items(order, cart)
-      order.billing_address = user.billing_address.dup
-      order.shipping_address = user.shipping_address.dup
-      order
-    end
+  def initialize(cart:, order:, user:)
+    @cart = cart
+    @order = order
+    @user = user
+  end
 
-    private
+  def call
+    @order.assign_attributes(user: @user, total: @cart.total_price)
+    fill_with_items
+    @order.billing_address = @user.billing_address.dup
+    @order.shipping_address = @user.shipping_address.dup
+    @order
+  end
 
-    def fill_with_items(order, cart)
-      order.order_items.clear
-      cart.order_items.each do |item|
-        order_item = item.dup
-        order_item.image.attach(item.image.blob) if item.image.attached?
-        order.order_items << order_item
-      end
+  private
+
+  def fill_with_items
+    @order.order_items.clear
+    @cart.order_items.each do |item|
+      order_item = item.dup
+      order_item.image.attach(item.image.blob) if item.image.attached?
+      @order.order_items << order_item
     end
   end
 end

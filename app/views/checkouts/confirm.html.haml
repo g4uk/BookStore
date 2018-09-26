@@ -25,6 +25,6 @@
       = render 'table_headers'
       = render 'order_items/order_item', order_items: @order_items, type: 'order'
   .text-center.general-text-right
-    = render 'order_summary', order: @order
+    = render 'order_summary', order: @order, pull_right: true
   .text-center
     .btn.btn-default.mb-20= link_to(t(:place_order), wizard_path, method: :put)

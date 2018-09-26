@@ -1,34 +1,3 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
   helpers:
     label:
@@ -44,13 +13,154 @@ en:
   card_hint: '3/4-digit security code on the back of your card'
   invalid_code: 'Consists of A-Z, 0-9 only'
   invalid_review: "Consists of a-z, A-Z, 0-9, or one of !#$%&\'*+-/=?^_`{|}~"
-  confirmation_sent: 'An order confirmation has been sent to'
-  thank_you: 'Thank You for your Order!'
-  order: 'Order #'
+  invalid_email: 'Invalid Email'
+  invalid_password: 'Should be min 8 letters, at list 1 uppercase, 1 lowercase, 1 number'
+  invalid_login: 'Invalid Email or password.'
+  bookstore: 'Bookstore'
+  home: 'Home'
+  shop: 'Shop'
+  orders_list: 'Orders'
+  accout: 'Settings'
+  log_in: 'Log In'
+  sign_up: 'Sign Up'
+  log_out: 'Log Out'
+  all: 'All'
+  view_more: 'View more'
+  shipping_address: 'Shipping Address'
+  billing_address: 'Billing Address'
+  empty_cart: 'Cart Is Empty :('
+  continue: 'Save and Continue'
+  address: 'Address'
+  delivery: 'Delivery'
+  payment: 'Payment'
+  confirm: 'Confirm'
+  complete: 'Complete'
   in_queue: 'Waiting for processing'
+  enter_email: 'Enter Email'
+
+  homes:
+    index:
+      welcome: 'Welcome to our amazing Bookstore'
+      decription: 'We pore through hundreds of new books each month and select the five best we can find to share with our members.'
+    carousel:
+      previous: 'Previous'
+      next: 'Next'
+  
+  books:
+    sort_links:
+      price asc: 'Price Low To High'
+      price desc: 'Price High To Low'
+      title asc: 'Title A - Z'
+      title desc: 'Title Z - A'
+      popular: 'Popular First'
+      created_at desc: 'Newest First'
+    index:
+      catalog: 'Catalog'
+      category_filter: 'Filter by category'
+      sort_by: 'Sort by'
+    show:
+      reviews: 'Reviews'
+      write_a_review: 'Write A Review'
+      score: 'Score'
+    book:
+      description: 'Description'
+      read_more: 'Read more'
+      read_less: 'Read less'
+      published: 'Year of publication'
+      dimensions: 'Dimensions'
+      materials: 'Materials'
+
+  order_items:
+    form:
+      to_cart: 'Add to Cart'
+
+  comments:
+    form:
+      add_comment: 'Add Comment'
+
+  orders:
+    index:
+      my_orders: 'My Orders'
+      sort_by: 'Sort by'
+      number: 'Number'
+      completed_at: 'Completed at'
+      status: 'Status'
+      total: 'Total'
+      in_progress: 'Waiting for processing'
+      all: 'All'
+      in_delivery: 'In Delivery'
+      delivered: 'Delivered'
+      canceled: 'Canceled'
+    show:
+      order: 'Order #'
+      shipments: 'Shipments'
+      payment_information: 'Payment Information'
+
+  carts:
+    show:
+      cart: 'Cart'
+    cart_full_info: 
+      book: 'Book'
+      price: 'Price'
+      quantity: 'Quantity'
+      subtotal: 'Subtotal'
+      order_summary: 'Order Summary'
+      coupon: 'Coupon'
+      total: 'Order Total'
+      checkout: 'Checkout'
+    form:
+      enter_code: 'Enter Your Coupon Code'
+    
+  checkouts:
+    address:
+      required: 'all fields are required'
+    delivery:
+      shipments: 'Shipping Method'
+      method: 'Method'
+      days: 'Days'
+      price: 'Price'
+    payment:
+      credit_card: 'Credit Card'
+    confirm:
+      shipments: 'Shipments'
+      edit: 'edit'
+      payment_info: 'Payment Information'
+      place_order: 'Place Order'
+    table_headers:
+      book: 'Book'
+      price: 'Price'
+      quantity: 'Quantity'
+      total: 'Total'
+    complete:
+      confirmation_sent: 'An order confirmation has been sent to'
+      thank_you: 'Thank You for your Order!'
+      order: 'Order #'
+      back_to_store: 'Back to Store'
 
   users:
+    login_form:
+      forgot_password: 'Forgot password?'
+    checkout_login:
+      create_later: 'You’ll be able to create password later'
+      quick_reg: 'Quick Registration'
+      new: 'New Customer'
+      returning: 'Returning Customer'
+    form:
+      save: 'Save'
     edit:
+      email: 'Email'
+      password: 'Password'
       aggrement: 'I understand that all data will be lost'
       remove_account: 'Remove account'
       please_remove_account: 'Please, remove my account'
+    email_form:
+      save: 'Update Email'
+    password_form:
+      save: 'Update Password'
+
+
+
+
+
+
+

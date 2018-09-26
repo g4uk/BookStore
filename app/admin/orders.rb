@@ -22,6 +22,8 @@ ActiveAdmin.register Order do
 
   member_action :view, method: :get do
     @order = OrderDecorator.decorate(Order.find(params[:id]))
+    @order.shipping_address = @order.shipping_address.decorate
+    @order.billing_address = @order.billing_address.decorate
     respond_to do |format|
       format.js
     end

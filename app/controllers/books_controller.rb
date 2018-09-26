@@ -1,16 +1,16 @@
 class BooksController < ApplicationController
   layout 'main'
 
-  before_action :sort_params, only: :index
   before_action :decorate_cart
+
+  respond_to :html, :js, only: [:index]
 
   # GET /books
   # GET /books.json
   def index
-    @sorted_books = SortedBooksService.call(sort_params: @sort_params, category_id: @category_id)
-    @categories = CategoryDecorator.decorate_collection(@categories_for_menu)
-    @books_quantity = @sorted_books.size
-    
+    sort_params
+    sorted_books = SortedBooksService.new(sort_params: @sort_params, category_id: @category_id, page: params[:page]).call
+    @books = BookDecorator.decorate_collection(sorted_books)
   end
 
   # GET /books/1
@@ -30,8 +30,11 @@ class BooksController < ApplicationController
   end
 
   def sort_params
-    @sort_params = params[:sort]
+    @sort_params = params[:sort] ? params[:sort] : :all
     @category_id = params[:category]
+    @category_name = @category_id ? Category.find(@category_id).name : :all
+    @sort_conditions = BooksSortContitionsService.call
+    @books_quantity = Book.all.size
   end
 
   def book_params

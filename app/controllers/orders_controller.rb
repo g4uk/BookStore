@@ -1,17 +1,15 @@
 class OrdersController < ApplicationController
   layout 'main'
-  before_action :checkout_authentication, only: :create
   before_action :authenticate_user!, except: :create
-  before_action :set_order, :ensure_cart_isnt_empty, only: [:create]
+  before_action :checkout_authentication, :set_order, :ensure_cart_isnt_empty, only: [:create]
   before_action :decorate_cart
-  before_action :decorate_objects, only: [:show]
 
   decorates_assigned :order
 
   # GET /orders
   # GET /orders.json
   def index
-    @scopes = OrdersScopesService.call
+    @scopes = OrdersScopesService.call(current_user)
     @scope = params[:scope] ? params[:scope].to_sym : :all
     @orders = @scopes[@scope].decorate
   end
@@ -19,13 +17,14 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    decorate_objects
     @user = current_user
   end
 
   # POST /orders
   # POST /orders.json
   def create
-    @order = CopyInfoToOrderService.call(cart: @cart, order: @order, user: current_user)
+    @order = CopyInfoToOrderService.new(cart: @cart, order: @order, user: current_user).call
     if @order.save
       @order.checkout! if @order.may_checkout?
       session[:order_id] = @order.id

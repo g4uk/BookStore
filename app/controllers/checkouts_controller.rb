@@ -8,6 +8,12 @@ class CheckoutsController < ApplicationController
   steps :address, :delivery, :payment, :confirm, :complete
 
   def show
+    case step
+    when :confirm
+      set_order_with_items
+    when :complete
+      set_order_with_items
+    end
     build_associated_objects
     render_wizard
   end
@@ -16,34 +22,14 @@ class CheckoutsController < ApplicationController
     already_paid = @order.payment?
     case step
     when :address
-      if already_paid
-        jump_to(:confirm) if @order.update(order_params)
-      end
-      if @order.may_fill_address?
-        @order.assign_attributes(order_params)
-        @order.shipping_address.assign_attributes(order_params[:billing_address_attributes]) if order_params[:billing_flag]
-        @order.fill_address! if @order.save
-      end
+      jump_to(:confirm) if already_paid && @order.update(order_params)
+      FillAddressesService.call(order: @order, order_params: order_params)
     when :delivery
-      if already_paid
-        update_delivery_info
-        jump_to(:confirm)
-      end
-      if @order.may_fill_delivery?
-        @order.fill_delivery! if update_delivery_info
-      end
+      UpdateOrdersDeliveryInfoService.call(order: @order, order_params: order_params)
+      jump_to(:confirm) if already_paid
     when :payment
-      @order.assign_attributes(order_params)
-      @order.credit_card.number = CreditCardNumberService.call(order_params)
-      if already_paid
-        jump_to(:confirm) if @order.save
-      end
-      if @order.may_fill_payment?
-        if @order.save
-          @cart.destroy
-          @order.fill_payment!
-        end
-      end
+      @order = PaymentService.call(order: @order, order_params: order_params, cart: @cart)
+      jump_to(:confirm) if already_paid && @order.save
     when :confirm
       if @order.may_confirm?
         @order.confirm!
@@ -68,6 +54,10 @@ class CheckoutsController < ApplicationController
     @order = Order.new
   end
 
+  def set_order_with_items
+    @order = Order.includes(order_items: [:book, image_attachment: :blob]).find(session[:order_id]).decorate
+  end
+
   def decorate_objects
     @cart = @cart.decorate
     @order = @order.decorate
@@ -82,13 +72,5 @@ class CheckoutsController < ApplicationController
     @order.build_billing_address if @order.billing_address.blank?
     @order.build_shipping_address if @order.shipping_address.blank?
     @order.build_credit_card if @order.credit_card.blank?
-  end
-
-  def update_delivery_info
-    delivery = Delivery.find(order_params[:delivery_id])
-    @order.update_attributes(delivery_id: delivery.id,
-                                 delivery_type: delivery.name,
-                                 delivery_price: delivery.price,
-                                 delivery_duration: delivery.duration)
   end
 end

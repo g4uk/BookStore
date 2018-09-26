@@ -1,11 +1,11 @@
 class OrdersScopesService
   class << self
-    def call
-      { all: Order.paid,
-        in_progress: Order.in_progress,
-        in_delivery: Order.in_delivery,
-        delivered: Order.delivered,
-        canceled: Order.canceled }
+    def call(user)
+      { all: user.orders.paid,
+        in_progress: user.orders.in_progress,
+        in_delivery: user.orders.in_delivery,
+        delivered: user.orders.delivered,
+        canceled: user.orders.canceled }
     end
   end
 end

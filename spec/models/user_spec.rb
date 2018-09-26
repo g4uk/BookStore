@@ -3,20 +3,20 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:valid_password) { FFaker::String.from_regexp(PASSWORD_REGEXP) }
-  let(:invalid_password) { '89%^%$%^#' }
+  let(:invalid_value) { FFaker::PhoneNumber.phone_calling_code }
   let(:valid_email) { FFaker::Internet.email }
-  let(:invalid_email) { FFaker::Lorem.word }
 
   context 'relations' do
     it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:orders).dependent(:nullify) }
-    it { should have_many(:addresses).dependent(:destroy) }
+    it { should have_one(:billing_address).dependent(:destroy) }
+    it { should have_one(:shipping_address).dependent(:destroy) }
   end
   context 'validations' do
     it { should allow_value(valid_password).for(:password) }
-    it { should_not allow_value(invalid_password).for(:password) }
+    it { should_not allow_value(invalid_value).for(:password) }
     it { should allow_value(valid_email).for(:email) }
-    it { should_not allow_value(invalid_email).for(:email) }
+    it { should_not allow_value(invalid_value).for(:email) }
   end
   context 'attributes' do
     it { should have_db_column(:email).of_type(:string) }
@@ -24,5 +24,9 @@ RSpec.describe User, type: :model do
     it { should have_db_column(:reset_password_token).of_type(:string) }
     it { should have_db_column(:reset_password_sent_at).of_type(:datetime) }
     it { should have_db_column(:remember_created_at).of_type(:datetime) }
+    it { should have_db_column(:provider).of_type(:string) }
+    it { should have_db_column(:uid).of_type(:string) }
+    it { should have_db_column(:name).of_type(:string) }
+    it { should have_db_column(:image).of_type(:text) }
   end
 end

@@ -3,4 +3,4 @@
   = user_form.fields_for address do |form|
     = render 'addresses/form', f: form, type: address.to_s.split('_').first, countries_with_codes: @countries_with_codes
   .text-center.general-text-align
-    .btn.btn-default= user_form.submit
+    .btn.btn-default= user_form.submit t('.save')

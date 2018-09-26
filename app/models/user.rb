@@ -13,7 +13,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :shipping_address,
                                 reject_if: :all_blank
 
-  validate :password_complexity
+  validates :password, password: true
 
   after_create :assign_default_role
 

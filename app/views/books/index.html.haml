@@ -1,76 +1,38 @@
 %main.container
-  %h1.general-title-margin= t :catalog
+  %h1.general-title-margin= t('.catalog')
   .hidden-xs.clearfix
     .dropdowns.pull-right
       .dropdown.width-240
-        %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-          - if @sort_params
-            = t(@sort_params)
-          - else
-            = t(:newest_first)
-          %i.fa.fa-angle-down.dropdown-icon.pull-right
-        %ul.dropdown-menu
-          %li
-            = link_to t(:newest_first), sort: 'created_at desc', category: @category_id
-          %li
-            = link_to t(:popular_first), sort: 'popular', category: @category_id
-          %li
-            = link_to t(:price_low_to_high), sort: 'price asc', category: @category_id
-          %li
-            = link_to t(:price_high_to_low), sort: 'price desc', category: @category_id
-          %li
-            = link_to t(:title_a_z), sort: 'title asc', category: @category_id
-          %li
-            = link_to t(:title_z_a), sort: 'title desc', category: @category_id
+        = render 'sort_links', sort_params: @sort_params, sort_conditions: @sort_conditions, category_id: @category_id
     %ul.list-inline.pt-10.mb-25.mr-240
       %li.mr-35
         = link_to books_path, class: 'filter-link' do
           = t(:all)
           %span.badge.general-badge= @books_quantity
       - @categories.each do |category|
-        -if category.books.size.positive?
+        -if category.books_count.positive?
           %li.mr-35
             = link_to url_options = { category: category.id }, html_options = { class: 'filter-link' } do
               = category.name
-              %span.badge.general-badge= category.books_quantity
+              %span.badge.general-badge= category.books_count
   .dropdowns.mb-25.visible-xs
-    %p.lead.small.mb-10 Filter by category
+    %p.lead.small.mb-10= t('.category_filter')
     .dropdown
       %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-        Newest first
+        = t(".#{@category_name}")
         %i.fa.fa-angle-down.dropdown-icon.pull-right
       %ul.dropdown-menu
-        %li
-          %a{href: "#"} Newest first
-        %li
-          %a{href: "#"} Popular first
-        %li
-          %a{href: "#"} Price: Low to hight
-        %li
-          %a{href: "#"} Price: Hight to low
-    %p.lead.small.mb-10 Sort by
+        - @categories.each do |category|
+          -if category.books_count.positive?
+            %li
+              = link_to url_options = { category: category.id }, html_options = { class: 'filter-link' } do
+                = "#{category.name} (#{category.books_count})"
+    %p.lead.small.mb-10= t('.sort_by')
     .dropdown
-      %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-        Newest first
-        %i.fa.fa-angle-down.dropdown-icon.pull-right
-      %ul.dropdown-menu
-        %li
-          %a{href: "#"} Newest first
-        %li
-          %a{href: "#"} Popular first
-        %li
-          %a{href: "#"} Price: Low to hight
-        %li
-          %a{href: "#"} Price: Hight to low
+      = render 'sort_links', sort_params: @sort_params, sort_conditions: @sort_conditions, category_id: @category_id
   .mb-120
     .row
-      - @sorted_books.each do |book|
-        .col-sm-6.col-md-3
-          = render partial: 'book_photo', locals: {book: book}
-          .general-thumb-info
-            %p.title= book.title
-            %p.font-16.in-gold-500= book.formatted_price
-            %span.divider-sm
-            %p.lead.small= book.formatted_authors
+      #books-container
+        = render 'books', books: @books
     .text-center
-      %button.btn.btn-primary View More
+      = @books.view_more_link

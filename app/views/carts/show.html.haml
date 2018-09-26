@@ -1,5 +1,5 @@
 %main.container.general-main-wrap
-  %h1.general-title-margin= t(:cart)
+  %h1.general-title-margin= t('.cart')
   #cart-wrapper
     - if @cart.total_quantity.positive?
       = render 'cart_full_info'
