@@ -13,7 +13,8 @@ class OrderItemsController < ApplicationController
 
   def destroy
     @order_item.destroy
-    recalculate
+    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.includes(image_attachment: :blob).order(:created_at))
+    @cart = @cart.decorate
     respond_to do |format|
       format.js
     end
@@ -22,7 +23,6 @@ class OrderItemsController < ApplicationController
   def decrement
     @order_item.decrement(:quantity)
     recalculate
-    @order_item.total = @order_item.total_price
     respond_to do |format|
       format.js if @order_item.save
     end
@@ -31,7 +31,6 @@ class OrderItemsController < ApplicationController
   def increment
     @order_item.increment(:quantity)
     recalculate
-    @order_item.total = @order_item.total_price
     respond_to do |format|
       format.js if @order_item.save
     end
@@ -40,14 +39,13 @@ class OrderItemsController < ApplicationController
   private
 
   def set_item
-    @order_item = OrderItem.find(params[:id])
-    @order_item = @order_item.decorate
-    @cart = @cart.decorate
+    @order_item = OrderItem.find(params[:id]).decorate
   end
 
   def recalculate
-    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.order(:created_at))
-    @total_price = @cart.total_price
+    @order_item.total = CartUtilsService.item_total_price(@order_item)
+    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.includes(image_attachment: :blob).order(:created_at))
+    @cart = @cart.decorate
   end
 
   def order_item_params

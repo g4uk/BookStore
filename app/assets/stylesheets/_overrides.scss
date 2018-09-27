@@ -1,12 +1,18 @@
 .hidden{
   display: none;
 }
+
 .flash_message{
   color: red;
   padding-left: 15px;
   font-size: 18px;
 }
+
 tr[data-link]:hover,
 table[data-link]:hover{
   cursor: pointer;
+}
+
+#loading-indicator{
+  display: none;
 }

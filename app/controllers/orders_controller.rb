@@ -1,10 +1,11 @@
 class OrdersController < ApplicationController
   layout 'main'
+
+  load_and_authorize_resource except: :create
+
   before_action :authenticate_user!, except: :create
   before_action :checkout_authentication, :set_order, :ensure_cart_isnt_empty, only: [:create]
   before_action :decorate_cart
-
-  decorates_assigned :order
 
   # GET /orders
   # GET /orders.json
@@ -49,20 +50,9 @@ class OrdersController < ApplicationController
     end
   end
 
-  # DELETE /orders/1
-  # DELETE /orders/1.json
-  def destroy
-    @order.destroy
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
 
   def decorate_objects
-    @cart = @cart.decorate
     @order = Order.includes(order_items: [:book, image_attachment: :blob]).find(params[:id]).decorate
     @countries_with_codes = CountriesListService.call
     @deliveries = Delivery.all.decorate

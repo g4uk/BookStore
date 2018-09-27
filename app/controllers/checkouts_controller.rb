@@ -3,6 +3,7 @@ class CheckoutsController < ApplicationController
 
   layout 'main'
 
+  before_action :authenticate_user!
   before_action :set_order, :decorate_objects
 
   steps :address, :delivery, :payment, :confirm, :complete

@@ -37,6 +37,9 @@ en:
   complete: 'Complete'
   in_queue: 'Waiting for processing'
   enter_email: 'Enter Email'
+  verified_reviewer: 'Verified Reviewer'
+  my_account: 'My account'
+  created_review: 'Thanks for Review. It will be published as soon as Admin will approve it.'
 
   homes:
     index:
@@ -140,6 +143,7 @@ en:
   users:
     login_form:
       forgot_password: 'Forgot password?'
+      password: 'Password'
     checkout_login:
       create_later: 'You’ll be able to create password later'
       quick_reg: 'Quick Registration'

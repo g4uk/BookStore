@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :comments
     resources :categories
     resources :authors
-    resources :books, only: %i[index show update]
+    resources :books, only: %i[index show]
     resources :order_items, only: %i[create destroy] do
       member do
         put :decrement

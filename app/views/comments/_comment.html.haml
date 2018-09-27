@@ -5,7 +5,7 @@
       %div
         .general-message-date.hidden-xs= review.formatted_date
         .max-240
-          .general-message-verified= t(:verified_reviewer)
+          .general-message-verified= review.verified_reviewer
           .general-message-name= review.email_first_letter
       .mb-15
         - review.rating.times do 

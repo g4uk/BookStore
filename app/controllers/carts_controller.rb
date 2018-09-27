@@ -35,4 +35,3 @@ class CartsController < ApplicationController
     @cart = @cart.decorate
   end
 end
-

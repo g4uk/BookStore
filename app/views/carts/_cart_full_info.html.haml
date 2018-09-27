@@ -1,4 +1,4 @@
-= render 'order_items/order_item_xs', order_items: @order_items, type: 'cart'
+= render 'order_items/order_item_xs', order_items: order_items, type: 'cart'
 .hidden-xs
   %table.table.table-hover
     %tr.no-hover
@@ -12,7 +12,7 @@
       %th.col-total
         %span.in-grey-600= t('.subtotal')
       %th.col-close
-    = render 'order_items/order_item', order_items: @order_items, type: 'cart'
+    = render 'order_items/order_item', order_items: order_items, type: 'cart'
 .general-order-wrap
   .row
     .col-sm-4
@@ -26,17 +26,17 @@
             %td
               %p.font-16= t('.subtotal')
             %td
-              %p.font-16= @cart.formatted_subtotal
+              %p.font-16= cart.formatted_subtotal
           %tr
             %td
               %p.font-16= t('.coupon')
             %td
-              %p.font-16= @cart.formatted_discount
+              %p.font-16= cart.formatted_discount
           %tr
             %td
               %strong.font-18= t('.total')
             %td
-              %strong.font-18= @cart.formatted_total
+              %strong.font-18= cart.formatted_total
         .btn.btn-default.mb-20.visible-xs-inline-block= link_to(t(:checkout), orders_path, method: :post)
 = link_to(orders_path, method: :post, class: '') do
   .btn.btn-default.mb-20.hidden-xs.center-block= t('.checkout')

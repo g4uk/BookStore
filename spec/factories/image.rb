@@ -1,6 +1,5 @@
 FactoryBot.define do
-  factory :books_author do
+  factory :image do
     book
-    author
   end
 end

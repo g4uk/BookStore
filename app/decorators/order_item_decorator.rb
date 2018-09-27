@@ -2,12 +2,8 @@ class OrderItemDecorator < Draper::Decorator
   include ActionView::Helpers::NumberHelper
   delegate_all
 
-  def total_price
-    book_price * quantity
-  end
-
   def formatted_total
-    number_to_currency(total_price, precizion: 2)
+    number_to_currency(total, precizion: 2)
   end
 
   def formatted_book_price

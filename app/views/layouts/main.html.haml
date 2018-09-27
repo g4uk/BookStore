@@ -38,6 +38,7 @@
     - flash.each do |name, msg|
       = content_tag :div, class: "alert alert-#{name == 'danger' ? name : 'success' }" do
         = msg
+    #loading-indicator= image_tag("#{Rails.public_path}/loader.gif")
     = yield
     %footer.navbar-inverse
       .container

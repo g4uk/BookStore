@@ -8,4 +8,8 @@ class CommentDecorator < Draper::Decorator
   def email_first_letter
     user.email.slice(0, user.email.index('@'))
   end
+
+  def verified_reviewer
+    I18n.t(:verified_reviewer) if user.orders.size.positive?
+  end
 end

@@ -1,17 +1,18 @@
 %main.container
   %a.general-back-link{href: "#"}
     %i.fa.fa-long-arrow-left.mr-15
-    = link_to t(:back_to_results), books_path(sort: @sort_params, category: @category_id)
+    = link_to t('.back_to_results'), books_path(sort: @sort_params, category: @category_id)
   = render @book
-  .mb-80
-    %h3= t('.write_a_review')
-    .rating_wrapper
-      %p.general-info-text= t('.score')
-      .rating.mb-15
-        - 5.times do |index|
-          %i.fa.fa-star.rate-empty{ class: index }
-    #comment_form_wrapper
-      = render 'comments/form', comment: @comment
+  - if user_signed_in?
+    .mb-80
+      %h3= t('.write_a_review')
+      .rating_wrapper
+        %p.general-info-text= t('.score')
+        .rating.mb-15
+          - 5.times do |index|
+            %i.fa.fa-star.rate-empty{ class: index }
+      #comment_form_wrapper
+        = render 'comments/form', comment: @comment
   .mb-80
     %h3.in-gold-500.mb-25= "#{ t('.reviews') } (#{ @reviews.size })"
     - @reviews.each do |review|

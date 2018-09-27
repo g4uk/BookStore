@@ -1,13 +1,15 @@
 class UsersController < ApplicationController
   layout 'main'
 
+  load_and_authorize_resource except: %i[login signup forgot_password change_password 
+                                         checkout_login quick_signup]
+
   before_action :authenticate_user!, except: %i[login signup forgot_password change_password 
                                                 checkout_login quick_signup]
   before_action :set_user, :decorate_cart
   before_action :set_addresses, :set_countries, only: %i[update_billing_address update_shipping_address edit]
 
-  def edit
-  end
+  def edit; end
 
   def update
     respond_to do |format|

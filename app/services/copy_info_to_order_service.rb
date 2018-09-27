@@ -8,8 +8,8 @@ class CopyInfoToOrderService
   def call
     @order.assign_attributes(user: @user, total: @cart.total_price)
     fill_with_items
-    @order.billing_address = @user.billing_address.dup
-    @order.shipping_address = @user.shipping_address.dup
+    @order.billing_address = @user.billing_address.dup if @user.billing_address
+    @order.shipping_address = @user.shipping_address.dup if @user.shipping_address
     @order
   end
 
