@@ -4,15 +4,25 @@ FactoryBot.define do
     delivery_type { FFaker::Lorem.word }
     delivery_duration { FFaker::Lorem.word }
     delivery_price { rand(0..20.1).round(2) }
-
-    status
-
     total { rand(10.1..1000).round(2) }
-    factory :order_with_addresses do
-      after(:create) do |order|
-        create(:billing_address, order: order)
-        create(:shipping_address, order: order)
-        create(:credit_card, order: order)
+
+    transient do
+      status { rand(0..8) }
+    end
+
+    after(:create) do |order|
+      create(:billing_address, addressable: order)
+      create(:shipping_address, addressable: order)
+      create(:credit_card, order: order)
+    end
+
+    factory :order_with_items do
+      transient do
+        order_items_count { 4 }
+      end
+
+      after(:create) do |order, evaluator|
+        create_list(:order_item, evaluator.order_items_count, itemable: order)
       end
     end
   end

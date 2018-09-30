@@ -8,30 +8,10 @@ FactoryBot.define do
     zip { FFaker::String.from_regexp(ZIP) }
     phone { FFaker::PhoneNumber.phone_calling_code }
 
-    factory :billing_address do
-      type { 'BillingAddress' }
-      association :order, factory: :order
-
-      factory :user_billing_address do
-        association :user, factory: :user
-      end
-
-      factory :order_billing_address do
-        association :order, factory: :order
-      end
+    factory :billing_address, class: 'BillingAddress' do
     end
 
-    factory :shipping_address do
-      type { 'ShippingAddress' }
-      association :order, factory: :order
-
-      factory :user_shipping_address do
-        association :user, factory: :user
-      end
-
-      factory :order_shipping_address do
-        association :order, factory: :order
-      end
+    factory :shipping_address, class: 'ShippingAddress' do
     end
   end
 end

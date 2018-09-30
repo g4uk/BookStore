@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :book do
-    title { FFaker::Book.title }
+    title { FFaker::String.from_regexp(NAME) }
     price { rand(10.1..100).round(2) }
     description { FFaker::Book.description }
     category

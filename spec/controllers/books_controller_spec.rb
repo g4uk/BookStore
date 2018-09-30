@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe BooksController, type: :controller do
 
-  let(:sort_consitions) { BooksSortContitionsService.call }
-  let(:sort_params) { sort_consitions.sample }
+  let(:sort_conditions) { BooksSortContitionsService.call }
+  let(:sort_params) { sort_conditions.sample }
   let(:category_id) { FactoryBot.create(:category).id }
   let(:page) { '1' }
   let(:book) { FactoryBot.create(:book) }
@@ -19,10 +19,15 @@ RSpec.describe BooksController, type: :controller do
       expect(response).to render_template(:index)
     end
 
+    it 'renders js' do
+      get 'index', xhr: true, params: { sort: sort_params, category: category_id, page: page }
+      expect(response.code).to eql('200')
+    end
+
     context 'assigns' do
       it 'assigns @sort_conditions' do
         get :index
-        assert_equal sort_consitions, assigns(:sort_conditions)
+        assert_equal sort_conditions, assigns(:sort_conditions)
       end
 
       it 'assigns @books_quantity' do

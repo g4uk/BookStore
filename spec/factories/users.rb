@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
     email { FFaker::Internet.email }
-    password { FFaker::String.from_regexp(PASSWORD) }
+    password { FFaker::String.from_regexp(PASSWORD_REGEXP) }
     password_confirmation { password }
 
     factory :user_with_comments do

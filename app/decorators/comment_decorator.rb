@@ -10,6 +10,6 @@ class CommentDecorator < Draper::Decorator
   end
 
   def verified_reviewer
-    I18n.t(:verified_reviewer) if user.orders.size.positive?
+    I18n.t(:verified_reviewer) if user.orders.paid.size.positive?
   end
 end
