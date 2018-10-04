@@ -24,12 +24,9 @@ FactoryBot.define do
       end
     end
 
-    factory :user_with_billing_address do
-      user_billing_address
-    end
-
-    factory :user_with_shipping_address do
-      user_shipping_address
+    after(:create) do |user|
+      create(:billing_address, addressable: user)
+      create(:shipping_address, addressable: user)
     end
   end
 end

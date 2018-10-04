@@ -8,7 +8,7 @@ FactoryBot.define do
       end
 
       after(:create) do |category, evaluator|
-        create_list(:book, evaluator.books_count, categories: category)
+        create_list(:book, evaluator.books_count, category: category)
       end
     end
   end

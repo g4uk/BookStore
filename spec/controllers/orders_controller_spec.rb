@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
-  let(:user) { FactoryBot.create(:user) }
-  let(:order) { FactoryBot.create(:order, status: 5, user: user) }
-  let(:cart) { FactoryBot.create(:cart) }
+  let(:user) { create(:user) }
+  let(:order) { create(:order, status: 5, user: user) }
+  let(:cart) { create(:cart) }
   let(:scopes) { OrdersScopesService.call(user) }
   let(:scope_param) { scopes.keys.sample }
   let(:countries_with_codes) { CountriesListService.call }
@@ -12,12 +12,12 @@ RSpec.describe OrdersController, type: :controller do
   let(:shipping_address) { AddressDecorator.decorate(order.shipping_address) }
   let(:order_items) { order.order_items.decorate }
 
-  describe 'GET #index' do
-    before do
-      sign_in user
-      allow(controller).to receive(:current_user).and_return user
-    end
+  before do
+    sign_in user
+    allow(controller).to receive(:current_user).and_return user
+  end
 
+  describe 'GET #index' do
     it 'returns http success' do
       get :index
       expect(response).to have_http_status(:success)
@@ -59,11 +59,6 @@ RSpec.describe OrdersController, type: :controller do
   end
 
   describe 'GET #show' do
-    before do
-      sign_in user
-      allow(controller).to receive(:current_user).and_return user
-    end
-
     it 'returns http success' do
       get :show, params: { id: order.id }
       expect(response).to have_http_status(:success)
@@ -131,6 +126,37 @@ RSpec.describe OrdersController, type: :controller do
 
       it 'decorates order_items' do
         expect(assigns(:order_items)).to be_decorated_with Draper::CollectionDecorator
+      end
+    end
+  end
+
+  describe 'GET #create' do
+    let(:order) { FactoryBot.create(:order, status: 0, user: user) }
+
+    before do
+      allow(controller).to receive(:decorate_cart).and_return cart.decorate
+      allow(controller).to receive(:set_order).and_return order
+      allow(controller).to receive(:ensure_cart_isnt_empty).and_return true
+      allow_any_instance_of(CopyInfoToOrderService).to receive(:call).and_return order
+    end
+
+    context 'with valid attributes' do
+      before do
+        post :create
+      end
+
+      it 'redirects to checkout' do
+        allow(order).to receive(:save).and_return true
+        expect(response).to redirect_to('/en/checkouts')
+      end
+
+      it 'sets session[:order_id]' do
+        assert_equal order.id, session[:order_id]
+      end
+
+      it 'changes status' do
+        allow(order).to receive(:save).and_return true
+        assert_equal 'address', assigns(:order).status
       end
     end
   end

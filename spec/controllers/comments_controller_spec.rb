@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
-  let(:user) { FactoryBot.create(:user) }
-  let(:book) { FactoryBot.create(:book) }
-  let(:comment) { FactoryBot.build_stubbed(:comment, status: 0) }
-  let(:comment_params) { FactoryBot.attributes_for(:comment) }
+  let(:user) { create(:user) }
+  let(:book) { create(:book) }
+  let(:comment) { build_stubbed(:comment, status: 0) }
+  let(:comment_params) { attributes_for(:comment) }
 
   describe 'POST #create' do
     before do
@@ -27,6 +27,11 @@ RSpec.describe CommentsController, type: :controller do
         expect(response.code).to eql('200')
         expect(response).to render_template('comments/create')
       end
+
+      it 'returns http success' do
+        post :create, xhr: true, params: { comment: comment_params }
+        expect(response.code).to eql('200')
+      end
     end
 
     context 'with forbidden attributes' do
@@ -36,15 +41,33 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      before do
-        post :create, xhr: true, params: { comment: { book_id: nil } }
-      end
-
       it 'renders new.js' do
+        post :create, xhr: true, params: { comment: { book_id: nil } }
         allow(comment).to receive(:save).and_return false
         expect(response.code).to eql('200')
         expect(response).to render_template('comments/new')
       end
+    end
+  end
+
+  describe 'POST #update' do
+    before do
+      sign_in user
+      allow(Comment).to receive(:find).and_return comment
+      allow(comment).to receive(:update).and_return true
+      post :update, xhr: true, params: { id: comment.id, rating: comment.rating }
+    end
+
+    it 'renders update.js' do
+      expect(response).to render_template('comments/update')
+    end
+
+    it 'returns http success' do
+      expect(response.code).to eql('200')
+    end
+
+    it 'assigns @comment' do
+      assert_equal comment, assigns(:comment)
     end
   end
 end

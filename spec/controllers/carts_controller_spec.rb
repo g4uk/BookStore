@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CartsController, type: :controller do
-  let(:cart) { FactoryBot.create(:cart) }
+  let(:cart) { create(:cart) }
   let(:order_items) { OrderItemDecorator.decorate_collection(cart.order_items.order(:created_at)) }
-  let(:coupon) { FactoryBot.create(:coupon) }
+  let(:coupon) { create(:coupon) }
 
   describe 'GET #show' do
     before do
@@ -59,13 +59,13 @@ RSpec.describe CartsController, type: :controller do
 
     context 'with forbidden attributes' do
       it 'generates ParameterMissing error without cart params' do
-        expect { put :update, xhr: true, params: { id: cart.id} }.to raise_error(ActionController::ParameterMissing)
+        expect { put :update, xhr: true, params: { id: cart.id } }.to raise_error(ActionController::ParameterMissing)
       end
     end
 
     context 'with invalid attributes' do
       before do
-        put :update, xhr: true, params: { id: cart.id, cart: { coupon_code: nil} }
+        put :update, xhr: true, params: { id: cart.id, cart: { coupon_code: nil } }
         allow(Coupon).to receive_message_chain(:where, :first).and_return nil
       end
 

@@ -16,14 +16,12 @@ FactoryBot.define do
       create(:credit_card, order: order)
     end
 
-    factory :order_with_items do
-      transient do
-        order_items_count { 4 }
-      end
+    transient do
+      order_items_count { 4 }
+    end
 
-      after(:create) do |order, evaluator|
-        create_list(:order_item, evaluator.order_items_count, itemable: order)
-      end
+    after(:create) do |order, evaluator|
+      create_list(:order_item, evaluator.order_items_count, itemable: order)
     end
   end
 end

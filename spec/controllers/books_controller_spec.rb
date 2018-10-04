@@ -4,9 +4,9 @@ RSpec.describe BooksController, type: :controller do
 
   let(:sort_conditions) { BooksSortContitionsService.call }
   let(:sort_params) { sort_conditions.sample }
-  let(:category_id) { FactoryBot.create(:category).id }
+  let(:category_id) { create(:category).id }
   let(:page) { '1' }
-  let(:book) { FactoryBot.create(:book) }
+  let(:book) { create(:book) }
 
   describe 'GET #index' do
     it 'returns http success' do

@@ -21,8 +21,7 @@ class OrderDecorator < Draper::Decorator
   end
 
   def formatted_total
-    total = object.total
-    total += object.delivery_price.to_i
+    total = object.total + object.delivery_price.to_i
     number_to_currency(total, precizion: 2)
   end
 

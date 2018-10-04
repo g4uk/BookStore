@@ -69,6 +69,5 @@ class OrdersController < ApplicationController
   def set_order
     @order = Order.where('status < 5 AND user_id = ? ', current_user.id).last
     return @order = Order.new if @order.nil?
-    @order
   end
 end
