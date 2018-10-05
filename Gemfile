@@ -5,6 +5,7 @@ ruby '2.5.1'
 gem 'aasm'
 gem 'activeadmin'
 gem 'activeadmin_quill_editor'
+gem "aws-sdk-s3", require: false
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'cancancan'
 gem 'devise'
@@ -20,6 +21,7 @@ gem 'puma'
 gem 'rails'
 gem 'rolify'
 gem 'sass-rails'
+gem 'sidekiq'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 # See https://github.com/rails/execjs#readme for more supported runtimes

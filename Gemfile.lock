@@ -72,6 +72,21 @@ GEM
     ast (2.4.0)
     autoprefixer-rails (9.1.4)
       execjs
+    aws-eventstream (1.0.1)
+    aws-partitions (1.105.0)
+    aws-sdk-core (3.30.0)
+      aws-eventstream (~> 1.0)
+      aws-partitions (~> 1.0)
+      aws-sigv4 (~> 1.0)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.9.0)
+      aws-sdk-core (~> 3, >= 3.26.0)
+      aws-sigv4 (~> 1.0)
+    aws-sdk-s3 (1.21.0)
+      aws-sdk-core (~> 3, >= 3.26.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.0)
+    aws-sigv4 (1.0.3)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -114,6 +129,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    connection_pool (2.2.2)
     crass (1.0.4)
     database_cleaner (1.7.0)
     descendants_tracker (0.0.4)
@@ -182,6 +198,7 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jmespath (1.4.0)
     jquery-rails (4.3.3)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -264,6 +281,8 @@ GEM
     public_suffix (3.0.2)
     puma (3.11.4)
     rack (2.0.5)
+    rack-protection (2.0.4)
+      rack
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
     rails (5.2.0)
@@ -305,6 +324,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    redis (4.0.2)
     reek (5.0.2)
       codeclimate-engine-rb (~> 0.4.0)
       kwalify (~> 0.7.0)
@@ -354,6 +374,10 @@ GEM
     sexp_processor (4.11.0)
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
+    sidekiq (5.2.2)
+      connection_pool (~> 2.2, >= 2.2.2)
+      rack-protection (>= 1.5.0)
+      redis (>= 3.3.5, < 5)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -405,6 +429,7 @@ DEPENDENCIES
   aasm
   activeadmin
   activeadmin_quill_editor
+  aws-sdk-s3
   bootsnap (>= 1.1.0)
   bootstrap-sass (~> 3.3.7)
   bullet
@@ -440,6 +465,7 @@ DEPENDENCIES
   sass-rails
   selenium-webdriver
   shoulda-matchers (~> 3.1)
+  sidekiq
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks

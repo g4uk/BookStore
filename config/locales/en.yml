@@ -161,8 +161,15 @@ en:
       save: 'Update Email'
     password_form:
       save: 'Update Password'
-
-
+    forgot_password:
+      forgot_password: 'Forgot your password?'
+      send_email: 'Send Instructions'
+      cancel: 'Cancel'
+      instructions: "We'll email you instructions on how to reset it"
+    change_password:
+      set_new_password: 'Set New Password'
+      characters_minimum: 'characters minimum'
+      change_password: 'Change Password'
 
 
 

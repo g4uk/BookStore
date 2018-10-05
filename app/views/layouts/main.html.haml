@@ -6,7 +6,7 @@
     %title= t(:bookstore)
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Open+Sans"
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
@@ -38,7 +38,6 @@
     - flash.each do |name, msg|
       = content_tag :div, class: "alert alert-#{name == 'danger' ? name : 'success' }" do
         = msg
-    #loading-indicator= image_tag("#{Rails.public_path}/loader.gif")
     = yield
     %footer.navbar-inverse
       .container

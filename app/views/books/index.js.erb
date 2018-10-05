@@ -1,7 +1,7 @@
 $('#books-container').append("<%= j(render 'books', books: @books) %>");
 
 <% if @books.last_page? %>
-  $('#load-more-posts').hide();
+  $(".text-center").hide();
 <% else %>
-  $("#load-more-posts").attr("href", "<%= books_path(page: (@books.current_page + 1)) %>");
+  $(".text-center").html("<%= paginate @books, remote: true %>");
 <% end %>

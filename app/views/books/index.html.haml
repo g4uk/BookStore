@@ -35,4 +35,4 @@
       #books-container
         = render 'books', books: @books
     .text-center
-      = @books.view_more_link
+      = paginate @books, remote: true
