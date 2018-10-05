@@ -22,8 +22,8 @@ RSpec.describe 'homes/index.html.haml', type: :feature do
   it 'has link to book page', js: true do
     first('.general-thumb-wrap').hover
     expect(page).to have_selector('.link-to-book')
-    #click_link first('.link-to-book')
-    #expect(current_path).to eq book_path(book.id)
+    click_link first('.link-to-book')
+    expect(current_path).to eq book_path(book.id)
   end
 
   describe 'header menu' do
