@@ -10,7 +10,7 @@ class SortedBooksService
     return sort_popular if @sort_params.eql?('popular')
     books = Book.all.includes(:authors, :books_authors, images: [photo_attachment: :blob])
     books = books.where(category_id: @category_id) if @category_id
-    return books.order('created_at desc').page(@page).per(@books_on_page) if @sort_params.eql?(:all)
+    return books.order('created_at desc').page(@page).per(@books_on_page) if @sort_params.eql?(:all) || @sort_params.eql?('all')
     books.order(@sort_params).page(@page).per(@books_on_page)
   end
 

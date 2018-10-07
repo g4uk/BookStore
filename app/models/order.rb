@@ -18,11 +18,11 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :billing_address, update_only: true
   accepts_nested_attributes_for :credit_card, update_only: true
 
-  scope :in_progress, -> { where(status: 'in_queue') }
-  scope :in_delivery, -> { where(status: 'in_delivery') }
-  scope :delivered, -> { where(status: 'delivered') }
-  scope :canceled, -> { where(status: 'canceled') }
-  scope :paid, -> { where(status: ['in_queue', 'in_delivery', 'delivered', 'canceled']) }
+  scope :in_progress, -> { where(status: 'in_queue').order('created_at desc') }
+  scope :in_delivery, -> { where(status: 'in_delivery').order('created_at desc') }
+  scope :delivered, -> { where(status: 'delivered').order('created_at desc') }
+  scope :canceled, -> { where(status: 'canceled').order('created_at desc') }
+  scope :paid, -> { where(status: ['in_queue', 'in_delivery', 'delivered', 'canceled']).order('created_at desc') }
 
   validates :total, numericality: { greater_than_or_equal_to: 0.01 }
 
@@ -35,6 +35,7 @@ class Order < ApplicationRecord
     state :in_progress
     state :in_queue
     state :in_delivery
+    state :delivered
     state :canceled
 
     event :checkout do

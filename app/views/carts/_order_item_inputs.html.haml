@@ -1,6 +1,6 @@
 .input-group
-  = link_to decrement_order_item_path(order_item), method: :put, class: 'input-link', remote: true do
+  = link_to decrement_order_item_path(order_item), method: :put, class: 'input-link decrement', remote: true do
     %i.fa.fa-minus.line-heaght-40
   = text_field_tag 'quantity', order_item.quantity, class: 'form-control quantity-input'
-  = link_to increment_order_item_path(order_item), method: :put, class: 'input-link', remote: true do
+  = link_to increment_order_item_path(order_item), method: :put, class: 'input-link increment', remote: true do
     %i.fa.fa-plus.line-heaght-40

@@ -6,7 +6,6 @@ ActiveAdmin.register Order do
   menu priority: 4
 
   filter :created_at
-  filter :status, as: :select
 
   scope('In Progress') { |order| order.where(status: %i[in_progress in_queue in_delivery]) }
   scope('Delivered') { |order| order.where(status: :delivered) }

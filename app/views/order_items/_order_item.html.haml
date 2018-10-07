@@ -15,7 +15,7 @@
         = render 'carts/order_item_inputs', order_item: order_item if cart
         %span.ml-30= order_item.quantity if order
       %td
-        %span.font-16.in-gold-500= order_item.formatted_total
+        %span.font-16.in-gold-500.item-subtotal= order_item.formatted_total
       - if cart
         %td
           = link_to order_item_path(order_item), method: :delete, class: 'close general-cart-close', remote: true do

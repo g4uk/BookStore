@@ -70,7 +70,7 @@ class UsersController < ApplicationController
     if user.errors.empty?
       sign_in(:user, user)
       ApplicationMailer.welcome_email(user, generated_password).deliver
-      redirect_to @cart
+      redirect_to @cart, notice: 'Signed up successfully'
     else
       flash[:danger] = flash[:danger].to_a.concat user.errors.full_messages
       redirect_to checkout_login_users_path
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: 'Your account was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

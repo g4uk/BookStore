@@ -40,6 +40,8 @@ en:
   verified_reviewer: 'Verified Reviewer'
   my_account: 'My account'
   created_review: 'Thanks for Review. It will be published as soon as Admin will approve it.'
+  saved: 'Saved'
+  invalid_status: 'Invalid status'
 
   homes:
     index:

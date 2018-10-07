@@ -1,6 +1,6 @@
 order_tr = $("#order_<%= @order.id.to_s %>");
 order_tr.find('.change_state').hide();
-order_tr.find('.col-status').html("<%= j select_tag('statuses', options_for_select(@statuses), id: @order.id, onchange: 'update_status(this.id, this.value);') %>");
+order_tr.find('.col-status').html("<%= j select_tag('statuses', options_for_select(@statuses), include_blank: 'select status', id: @order.id, onchange: 'update_status(this.id, this.value);') %>");
 
 function update_status(id, status){
   $.ajax({
