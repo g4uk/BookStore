@@ -42,6 +42,8 @@ en:
   created_review: 'Thanks for Review. It will be published as soon as Admin will approve it.'
   saved: 'Saved'
   invalid_status: 'Invalid status'
+  edited: 'Edited successfully'
+  created: 'Created successfully'
 
   homes:
     index:

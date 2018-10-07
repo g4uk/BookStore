@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_categories
-    @categories = Category.all.order(:name)
+    @categories_for_menu = Category.all.order(:name)
   end
 
   rescue_from CanCan::AccessDenied do |exception|

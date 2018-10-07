@@ -9,7 +9,7 @@
         = link_to books_path, class: 'filter-link' do
           = t(:all)
           %span.badge.general-badge= @books_quantity
-      - @categories.each do |category|
+      - @categories_for_menu.each do |category|
         -if category.books_count.positive?
           %li.mr-35
             = link_to url_options = { category: category.id }, html_options = { class: 'filter-link' } do
@@ -22,7 +22,7 @@
         = t(".#{@category_name}")
         %i.fa.fa-angle-down.dropdown-icon.pull-right
       %ul.dropdown-menu
-        - @categories.each do |category|
+        - @categories_for_menu.each do |category|
           -if category.books_count.positive?
             %li
               = link_to url_options = { category: category.id }, html_options = { class: 'filter-link' } do
