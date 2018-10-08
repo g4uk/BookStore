@@ -87,7 +87,7 @@ RSpec.describe OrdersController, type: :controller do
       end
 
       it 'assigns @order_items' do
-        assert_equal order_items, assigns(:order_items)
+        assert_equal order.order_items.order('id desc'), assigns(:order_items)
       end
 
       it 'assigns @billing_address' do
