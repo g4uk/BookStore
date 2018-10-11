@@ -67,7 +67,7 @@ class OrdersController < ApplicationController
   end
 
   def set_order
-    @order = Order.where('status < 5 AND user_id = ? ', current_user.id).last
+    @order = Order.where('status < 4 AND user_id = ? ', current_user.id).last
     return @order = Order.new if @order.nil?
   end
 end

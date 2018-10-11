@@ -74,4 +74,9 @@ class CheckoutsController < ApplicationController
     @order.build_shipping_address if @order.shipping_address.blank?
     @order.build_credit_card if @order.credit_card.blank?
   end
+
+  rescue_from(ActionController::ParameterMissing) do
+    flash[:notice] = 'You should to choose shipping method'
+    redirect_to wizard_path
+  end
 end
