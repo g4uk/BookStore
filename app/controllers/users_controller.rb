@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  layout 'main'
-
   load_and_authorize_resource except: %i[login signup forgot_password change_password 
                                          checkout_login quick_signup]
 

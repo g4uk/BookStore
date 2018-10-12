@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
-  
+  load_and_authorize_resource
   before_action :authenticate_user!
-  
+
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
@@ -17,9 +17,12 @@ class CommentsController < ApplicationController
 
   def update
     @comment = Comment.find(params[:id])
-    @comment.update(rating: params[:rating])
     respond_to do |format|
-      format.js
+      if @comment.update(rating: params[:rating])
+        format.js
+      else
+        format.js { render :new }
+      end
     end
   end
 

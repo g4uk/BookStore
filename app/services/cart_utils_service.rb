@@ -6,7 +6,8 @@ class CartUtilsService
 
     def total_price(cart)
       coupon_price = cart.coupon_price
-      coupon_price ? subtotal(cart.order_items) - coupon_price : subtotal(cart.order_items)
+      subtotal = subtotal(cart.order_items)
+      coupon_price ? subtotal - coupon_price : subtotal
     end
 
     def total_quantity(order_items)

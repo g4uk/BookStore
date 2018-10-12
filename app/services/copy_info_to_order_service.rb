@@ -1,8 +1,8 @@
 class CopyInfoToOrderService
-  def initialize(cart:, order:, user:)
-    @cart = cart
-    @order = order
-    @user = user
+  def initialize(options = {})
+    options.each_pair do |key, value|
+      instance_variable_set("@#{key}", value)
+    end
   end
 
   def call
@@ -10,7 +10,7 @@ class CopyInfoToOrderService
     fill_with_items
     @order.billing_address = @user.billing_address.dup if @user.billing_address
     @order.shipping_address = @user.shipping_address.dup if @user.shipping_address
-    @order
+    @order.save
   end
 
   private

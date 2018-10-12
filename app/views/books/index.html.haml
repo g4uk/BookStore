@@ -3,13 +3,13 @@
   .hidden-xs.clearfix
     .dropdowns.pull-right
       .dropdown.width-240
-        = render 'sort_links', sort_params: @sort_params, sort_conditions: @sort_conditions, category_id: @category_id
+        = render 'sort_links', sort_params: @sort_presenter.sort_param, sort_conditions: @sort_presenter.sort_conditions, category_id: @sort_presenter.category_id
     %ul.list-inline.pt-10.mb-25.mr-240
       %li.mr-35
         = link_to books_path, class: 'filter-link' do
           = t(:all)
-          %span.badge.general-badge= @books_quantity
-      - @categories_for_menu.each do |category|
+          %span.badge.general-badge= books_number
+      - categories.each do |category|
         -if category.books_count.positive?
           %li.mr-35
             = link_to url_options = { category: category.id }, html_options = { class: 'filter-link' } do
@@ -19,17 +19,16 @@
     %p.lead.small.mb-10= t('.category_filter')
     .dropdown
       %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-        = t(".#{@category_name}")
         %i.fa.fa-angle-down.dropdown-icon.pull-right
       %ul.dropdown-menu
-        - @categories_for_menu.each do |category|
+        - categories.each do |category|
           -if category.books_count.positive?
             %li
               = link_to url_options = { category: category.id }, html_options = { class: 'filter-link' } do
                 = "#{category.name} (#{category.books_count})"
     %p.lead.small.mb-10= t('.sort_by')
     .dropdown
-      = render 'sort_links', sort_params: @sort_params, sort_conditions: @sort_conditions, category_id: @category_id
+      = render 'sort_links', sort_params: @sort_presenter.sort_param, sort_conditions: @sort_presenter.sort_conditions, category_id: @sort_presenter.category_id
   .mb-120
     .row
       #books-container

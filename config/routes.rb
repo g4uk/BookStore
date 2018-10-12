@@ -7,14 +7,12 @@ Rails.application.routes.draw do
                                       sessions: 'users/sessions',
                                       passwords: 'users/passwords',
                                       omniauth_callbacks: 'users/omniauth_callbacks' }
-    root to: 'homes#index'
-    get 'homes/index', to: 'homes#index', as: :home
+    root to: 'pages#home'
+    get 'pages/home', to: 'pages#home', as: :home
     get 'order_items/new/:book_id', to: 'order_items#create', as: :create_order_item
     get 'users/edit/:id', to: 'users#edit', as: :settings
     resources :orders
     resources :comments
-    resources :categories
-    resources :authors
     resources :books, only: %i[index show]
     resources :order_items, only: %i[create destroy] do
       member do

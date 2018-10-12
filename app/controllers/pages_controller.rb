@@ -1,9 +1,7 @@
-class HomesController < ApplicationController
-  layout 'main'
-
-  def index
+class PagesController < ApplicationController
+  def home
     @books = PopularBooksService.new.call
-    @latest_books = LatestBooksService.call
+    @latest_books = Book.newest.limit(3).decorate
     @cart = @cart.decorate
     respond_to do |format|
       format.html.haml

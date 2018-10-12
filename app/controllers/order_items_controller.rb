@@ -1,11 +1,11 @@
 class OrderItemsController < ApplicationController
-
+  DEFAULT_QUANTITY = 1
   before_action :set_item, only: %i[decrement increment destroy]
+  before_action :decorate_cart
 
   def create
     check_params
     NewOrderItemService.call(book: Book.find(@book_id), quantity: @quantity, cart: @cart)
-    @cart = @cart.decorate
     respond_to do |format|
       format.js
     end
@@ -13,8 +13,7 @@ class OrderItemsController < ApplicationController
 
   def destroy
     @order_item.destroy
-    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.includes(image_attachment: :blob).order(:created_at))
-    @cart = @cart.decorate
+    decorate_items
     respond_to do |format|
       format.js
     end
@@ -22,7 +21,8 @@ class OrderItemsController < ApplicationController
 
   def decrement
     @order_item.decrement(:quantity)
-    recalculate
+    @order_item.total = CartUtilsService.item_total_price(@order_item)
+    decorate_items
     respond_to do |format|
       format.js if @order_item.save
     end
@@ -30,7 +30,8 @@ class OrderItemsController < ApplicationController
 
   def increment
     @order_item.increment(:quantity)
-    recalculate
+    @order_item.total = CartUtilsService.item_total_price(@order_item)
+    decorate_items
     respond_to do |format|
       format.js if @order_item.save
     end
@@ -42,10 +43,12 @@ class OrderItemsController < ApplicationController
     @order_item = OrderItem.find(params[:id]).decorate
   end
 
-  def recalculate
-    @order_item.total = CartUtilsService.item_total_price(@order_item)
-    @order_items = OrderItemDecorator.decorate_collection(@cart.order_items.includes(image_attachment: :blob).order(:created_at))
+  def decorate_cart
     @cart = @cart.decorate
+  end
+
+  def decorate_items
+    @order_items = @cart.order_items.includes(image_attachment: :blob).order(:created_at).decorate
   end
 
   def order_item_params

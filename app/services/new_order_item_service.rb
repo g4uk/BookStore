@@ -8,7 +8,7 @@ class NewOrderItemService
         current_item = cart.order_items.new(book_id: book.id, book_name: book.title,
                                             book_price: book.price, total: book.price, 
                                             quantity: quantity)
-        current_item.image.attach(book.images.first.photo.blob) unless book.images.blank?
+        current_item.image.attach(book.images.first.photo.blob) if book.images.present?
       end
       current_item.save
     end

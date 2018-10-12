@@ -44,6 +44,7 @@ en:
   invalid_status: 'Invalid status'
   edited: 'Edited successfully'
   created: 'Created successfully'
+  sign_in: 'You need to sign in or sign up before continuing.'
 
   homes:
     index:

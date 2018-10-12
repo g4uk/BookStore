@@ -14,4 +14,12 @@ module ApplicationHelper
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
+
+  def categories
+    Category.order(:name)
+  end
+
+  def books_number
+    Book.count
+  end
 end

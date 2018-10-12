@@ -8,6 +8,7 @@ class Ability
         can :manage, CreditCard, user_id: user.id
         can :manage, Address, user_id: user.id
         can :manage, User, id: user.id
+        can :manage, Comment
       end
       can :manage, :all if user.has_role? :admin
     end

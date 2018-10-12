@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
-  before_action :set_locale, :set_categories, :set_cart
+  layout 'main'
+
+  before_action :locale, :cart
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
@@ -9,12 +11,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_locale
+  def locale
     I18n.locale = params[:locale] || I18n.default_locale
     Rails.application.routes.default_url_options[:locale] = I18n.locale
   end
 
-  def set_cart
+  def cart
     @cart = ::Cart.find(session[:cart_id])
   rescue ActiveRecord::RecordNotFound
     @cart = ::Cart.create
@@ -33,20 +35,7 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       super(options)
     else
-      flash[:notice] = 'You need to sign in or sign up before continuing.'
-      redirect_to login_users_url
-    end
-  end
-
-  def set_categories
-    @categories_for_menu = Category.all.order(:name)
-  end
-
-  rescue_from CanCan::AccessDenied do |exception|
-    respond_to do |format|
-      format.json { head :forbidden, content_type: 'text/html' }
-      format.html { redirect_to root_url, notice: exception.message }
-      format.js   { head :forbidden, content_type: 'text/html' }
+      redirect_to login_users_path, notice: I18n.t(:sign_in)
     end
   end
 end

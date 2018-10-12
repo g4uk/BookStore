@@ -15,5 +15,7 @@ class Book < ApplicationRecord
   validates :publishing_year, inclusion: { in: 1902..Date.today.year }
   validates :images, image_number: true
 
+  scope :newest, -> { order('created_at desc') }
+
   accepts_nested_attributes_for :images, update_only: true
 end

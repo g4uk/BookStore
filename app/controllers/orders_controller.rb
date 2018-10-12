@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-  layout 'main'
-
   load_and_authorize_resource except: :create
 
   before_action :authenticate_user!, except: :create
@@ -25,8 +23,7 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = CopyInfoToOrderService.new(cart: @cart, order: @order, user: current_user).call
-    if @order.save
+    if CopyInfoToOrderService.new(cart: @cart, order: @order, user: current_user).call
       @order.checkout! if @order.may_checkout?
       session[:order_id] = @order.id
       redirect_to checkouts_path
