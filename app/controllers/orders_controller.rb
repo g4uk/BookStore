@@ -1,70 +1,42 @@
 class OrdersController < ApplicationController
+  ORDERS_SCOPES = %i[paid in_progress in_delivery delivered canceled].freeze
+
   load_and_authorize_resource except: :create
 
   before_action :authenticate_user!, except: :create
-  before_action :checkout_authentication, :set_order, :ensure_cart_isnt_empty, only: [:create]
-  before_action :decorate_cart
 
-  # GET /orders
-  # GET /orders.json
+  before_action :checkout_authentication, only: :create
+
   def index
-    @scopes = OrdersScopesService.call(current_user)
-    @scope = params[:scope] ? params[:scope].to_sym : :all
-    @orders = @scopes[@scope].decorate
+    @scopes = ORDERS_SCOPES
+    @scope = params[:scope] ? params[:scope].to_sym : :paid
+    @orders = current_user.orders.send(@scope).decorate
   end
 
-  # GET /orders/1
-  # GET /orders/1.json
   def show
-    decorate_objects
+    @order = Order.includes(order_items: [:book, image_attachment: :blob]).find(params[:id]).decorate
+    @order_presenter = OrderPresenter.new(@order)
     @user = current_user
   end
 
-  # POST /orders
-  # POST /orders.json
   def create
-    if CopyInfoToOrderService.new(cart: @cart, order: @order, user: current_user).call
-      @order.checkout! if @order.may_checkout?
+    @order = current_user.orders.not_paid.last || Order.new
+    created_order = CreateOrderService.new(cart: @cart, user: current_user, order: @order).call
+    if created_order
       session[:order_id] = @order.id
-      redirect_to checkouts_path
+      redirect_to checkouts_path 
     else
-      flash[:notice] = @order.errors.messages
-      redirect_back(fallback_location: cart_path(@cart))
+      redirect_back(fallback_location: cart_path(@cart), notice: created_order.errors.full_messages)
     end
   end
 
   private
 
-  def decorate_objects
-    @order = Order.includes(order_items: [:book, image_attachment: :blob]).find(params[:id]).decorate
-    @countries_with_codes = CountriesListService.call
-    @deliveries = Delivery.all.decorate
-    @order_items = @order.order_items
-    @billing_address = AddressDecorator.decorate(@order.billing_address)
-    @shipping_address = AddressDecorator.decorate(@order.shipping_address)
-  end
-
   def order_params
     params.require(:order).permit(:user_id, :delivery_id, :credit_card_id, :coupon_id, :status)
   end
 
-  def ensure_cart_isnt_empty
-    redirect_to root_url, notice: 'Your cart is empty' if @cart.order_items.empty?
-  end
-
   def checkout_authentication
-    unless user_signed_in?
-      flash[:notice] = 'You need to sign in or sign up before continuing.'
-      redirect_to checkout_login_users_url
-    end
-  end
-
-  def decorate_cart
-    @cart = @cart.decorate
-  end
-
-  def set_order
-    @order = Order.where('status < 4 AND user_id = ? ', current_user.id).last
-    return @order = Order.new if @order.nil?
+    redirect_to checkout_login_users_path, notice: t('notice.login') unless user_signed_in?
   end
 end

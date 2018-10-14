@@ -24,6 +24,5 @@ class CartsController < ApplicationController
 
   def decorate_order_items
     @order_items = @cart.order_items.includes(image_attachment: :blob).order(:created_at).decorate
-    @cart = @cart.decorate
   end
 end

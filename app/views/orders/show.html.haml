@@ -3,10 +3,10 @@
   .row.mb-20
     .col-sm-3
       %h3.general-subtitle.mt-0= t('.shipping_address')
-      = render 'addresses/address', address: @shipping_address, complete: true
+      = render 'addresses/address', address: @order_presenter.shipping_address, complete: true
     .col-sm-3
       %h3.general-subtitle.mt-0= t('.billing_address')
-      = render 'addresses/address', address: @billing_address, complete: true
+      = render 'addresses/address', address: @order_presenter.billing_address, complete: true
     .col-sm-3
       %h3.general-subtitle.mt-0= t('.shipments')
       %p.general-address
@@ -17,10 +17,10 @@
       %h3.general-subtitle.mt-0= t('.payment_information')
       %p.general-address
         = @order.formatted_credit_card_number
-  = render 'order_items/order_item_xs', order_items: @order_items, type: 'order'
+  = render 'order_items/order_item_xs', order_items: @order_presenter.order_items, type: 'order'
   .hidden-xs.divider-lg.pt-20
     %table.table.table-hover
       = render 'checkouts/table_headers'
-      = render 'order_items/order_item', order_items: @order_items, type: 'order'
+      = render 'order_items/order_item', order_items: @order_presenter.order_items, type: 'order'
   .text-center.general-text-right
     = render 'checkouts/order_summary', order: @order, pull_right: true

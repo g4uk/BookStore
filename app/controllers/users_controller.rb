@@ -4,8 +4,9 @@ class UsersController < ApplicationController
 
   before_action :authenticate_user!, except: %i[login signup forgot_password change_password 
                                                 checkout_login quick_signup]
-  before_action :set_user, :decorate_cart
-  before_action :set_addresses, :set_countries, only: %i[update_billing_address update_shipping_address edit]
+  before_action :set_user
+
+  before_action :set_addresses, only: %i[update_billing_address update_shipping_address edit]
 
   def edit; end
 
@@ -14,7 +15,6 @@ class UsersController < ApplicationController
       if @user.update_without_password(user_params)
         format.js
       else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
         format.js { render :edit }
       end
     end
@@ -25,7 +25,6 @@ class UsersController < ApplicationController
       if @user.billing_address.update(user_params[:billing_address_attributes])
         format.js { render :update_addresses }
       else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
         format.js { render :edit_addresses }
       end
     end
@@ -36,7 +35,6 @@ class UsersController < ApplicationController
       if @user.shipping_address.update(user_params[:shipping_address_attributes])
         format.js { render :update_addresses }
       else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
         format.js { render :edit_addresses }
       end
     end
@@ -48,7 +46,6 @@ class UsersController < ApplicationController
         bypass_sign_in(@user)
         format.js { render :update_password }
       else
-        format.json { render json: @user.errors, status: :unprocessable_entity }
         format.js { render :edit_password }
       end
     end
@@ -63,15 +60,12 @@ class UsersController < ApplicationController
   def checkout_login; end
 
   def quick_signup
-    generated_password = GeneratePasswordService.call
-    user = User.create(email: user_params[:email], password: generated_password)
+    user = QuickRegistrationService.new(user_params).call
     if user.errors.empty?
       sign_in(:user, user)
-      ApplicationMailer.welcome_email(user, generated_password).deliver
-      redirect_to @cart, notice: 'Signed up successfully'
+      redirect_to @cart, notice: t('notice.signed_up')
     else
-      flash[:danger] = flash[:danger].to_a.concat user.errors.full_messages
-      redirect_to checkout_login_users_path
+      redirect_to checkout_login_users_path, flash: { danger: user.errors.full_messages }
     end
   end
 
@@ -84,24 +78,15 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to root_url, notice: 'Your account was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to root_url, notice: t('notice.destroyed') }
     end
   end
 
   private
 
-  def decorate_cart
-    @cart = @cart.decorate
-  end
-
   def set_addresses
     @user.build_billing_address if @user.billing_address.blank?
     @user.build_shipping_address if @user.shipping_address.blank?
-  end
-
-  def set_countries
-    @countries_with_codes = CountriesListService.call
   end
 
   def set_user

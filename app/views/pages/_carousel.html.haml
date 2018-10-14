@@ -12,7 +12,7 @@
           .col-sm-7
             .mb-60
               %h1= book.title
-              %p.lead= book.carousel_description
+              %p.lead= book.short_description(150)
               %p.lead.small= book.formatted_authors
               .general-align
                 = link_to t(:buy_now), create_order_item_path(book_id: book), class: 'btn btn-primary', remote: true

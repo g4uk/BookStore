@@ -3,6 +3,13 @@ en:
     label:
       user:
         password: 'New Password'
+  
+  notice:
+    login: 'You need to sign in or sign up before continuing.'
+    empty_cart: 'Your cart is empty'
+    signed_up: 'Signed up successfully'
+    exists: 'Account already exists'
+    destroyed: 'Your account was successfully destroyed.'
 
   invalid_name: 'Consists of a-z and A-Z only'
   invalid_number: 'Consists of numbers only'
@@ -95,7 +102,7 @@ en:
       status: 'Status'
       total: 'Total'
       in_progress: 'Waiting for processing'
-      all: 'All'
+      paid: 'All'
       in_delivery: 'In Delivery'
       delivered: 'Delivered'
       canceled: 'Canceled'
@@ -118,6 +125,7 @@ en:
       checkout: 'Checkout'
     form:
       enter_code: 'Enter Your Coupon Code'
+      apply_coupon: 'Apply Coupon'
     
   checkouts:
     address:

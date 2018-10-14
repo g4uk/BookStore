@@ -6,14 +6,23 @@ class CopyInfoToOrderService
   end
 
   def call
-    @order.assign_attributes(user: @user, total: CartUtilsService.total_price(@cart))
+    assign_order_attributes
     fill_with_items
-    @order.billing_address = @user.billing_address.dup if @user.billing_address
-    @order.shipping_address = @user.shipping_address.dup if @user.shipping_address
+    copy_addresses
     @order.save
   end
 
   private
+
+  def assign_order_attributes
+    total = CartUtilsService.total_price(@cart)
+    @order.assign_attributes(user: @user, total: total)
+  end
+
+  def copy_addresses
+    @order.billing_address = @user.billing_address.dup if @user.billing_address
+    @order.shipping_address = @user.shipping_address.dup if @user.shipping_address
+  end
 
   def fill_with_items
     @order.order_items.clear

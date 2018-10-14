@@ -17,9 +17,9 @@ class ApplicationController < ActionController::Base
   end
 
   def cart
-    @cart = ::Cart.find(session[:cart_id])
+    @cart = ::Cart.find(session[:cart_id]).decorate
   rescue ActiveRecord::RecordNotFound
-    @cart = ::Cart.create
+    @cart = ::Cart.create.decorate
     session[:cart_id] = @cart.id
   end
 

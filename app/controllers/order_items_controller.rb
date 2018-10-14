@@ -1,13 +1,17 @@
 class OrderItemsController < ApplicationController
   DEFAULT_QUANTITY = 1
-  before_action :set_item, only: %i[decrement increment destroy]
-  before_action :decorate_cart
+
+  before_action :set_item, except: :create
 
   def create
-    check_params
-    NewOrderItemService.call(book: Book.find(@book_id), quantity: @quantity, cart: @cart)
+    @item_presenter = OrderItemPresenter.new(presenter_params)
+    book = Book.find(@item_presenter.book_id)
     respond_to do |format|
-      format.js
+      if NewOrderItemService.new(book: book, quantity: @item_presenter.quantity, cart: @cart).call
+        format.js
+      else
+        redirect_back(fallback_location: cart_path(@cart), flash: { danger: t('danger.not_saved')})
+      end
     end
   end
 
@@ -21,8 +25,7 @@ class OrderItemsController < ApplicationController
 
   def decrement
     @order_item.decrement(:quantity)
-    @order_item.total = CartUtilsService.item_total_price(@order_item)
-    decorate_items
+    recalculate_total
     respond_to do |format|
       format.js if @order_item.save
     end
@@ -30,8 +33,7 @@ class OrderItemsController < ApplicationController
 
   def increment
     @order_item.increment(:quantity)
-    @order_item.total = CartUtilsService.item_total_price(@order_item)
-    decorate_items
+    recalculate_total
     respond_to do |format|
       format.js if @order_item.save
     end
@@ -43,8 +45,9 @@ class OrderItemsController < ApplicationController
     @order_item = OrderItem.find(params[:id]).decorate
   end
 
-  def decorate_cart
-    @cart = @cart.decorate
+  def recalculate_total
+    @order_item.total = CartUtilsService.item_total_price(@order_item)
+    decorate_items
   end
 
   def decorate_items
@@ -55,8 +58,7 @@ class OrderItemsController < ApplicationController
     params.require(:order_item).permit(:book_id, :quantity)
   end
 
-  def check_params
-    @book_id = params[:book_id] ? params[:book_id] : order_item_params[:book_id]
-    @quantity = params[:order_item] ? order_item_params[:quantity] : 1
+  def presenter_params
+    { book_id: params[:book_id], item_params: params[:order_item] }
   end
 end

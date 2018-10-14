@@ -19,11 +19,7 @@ class BookDecorator < Draper::Decorator
     h.image_tag images.first.photo, class: css_class unless images.blank? 
   end
 
-  def carousel_description
-    description.truncate(150).html_safe unless description.blank?
-  end
-
-  def short_description
-    description.truncate(350).html_safe unless description.blank?
+  def short_description(length)
+    description.truncate(length).html_safe unless description.blank?
   end
 end

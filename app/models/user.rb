@@ -10,17 +10,11 @@ class User < ApplicationRecord
   has_one :shipping_address, as: :addressable, dependent: :destroy
 
   accepts_nested_attributes_for :billing_address, update_only: true
-  accepts_nested_attributes_for :shipping_address,
-                                reject_if: :all_blank
+  accepts_nested_attributes_for :shipping_address, reject_if: :all_blank
 
   validates :password, password: true
 
   after_create :assign_default_role
-
-  def password_complexity
-    return if password.blank? || password =~ PASSWORD_REGEXP
-    errors.add :password, PASSWORD_ERROR
-  end
 
   def assign_default_role
     add_role(:customer) if roles.blank?
@@ -38,7 +32,7 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
-      user.password = Devise.friendly_token.first(8) + rand(10).to_s
+      user.password = Devise.friendly_token(10) + rand(10).to_s
       user.name = auth.info.name
       user.image = auth.info.image
     end

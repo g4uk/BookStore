@@ -21,19 +21,16 @@ class CheckoutsController < ApplicationController
     already_paid = @order.payment?
     case step
     when :address
-      jump_to(:confirm) if already_paid && @order.update(order_params)
-      FillAddressesService.call(order: @order, order_params: order_params)
+      FillAddressesService.new(order: @order, order_params: order_params).call
+      jump_to(:confirm) if already_paid
     when :delivery
-      UpdateOrdersDeliveryInfoService.call(order: @order, order_params: order_params)
+      UpdateOrdersDeliveryInfoService.new(order: @order, order_params: order_params).call
       jump_to(:confirm) if already_paid
     when :payment
-      @order = PaymentService.call(order: @order, order_params: order_params, cart: @cart)
-      jump_to(:confirm) if already_paid && @order.save
+      PaymentService.new(order: @order, order_params: order_params, cart: @cart).call
+      jump_to(:confirm) if already_paid
     when :confirm
-      if @order.may_confirm?
-        @order.confirm!
-        ApplicationMailer.order_email(current_user.email, @order.id).deliver
-      end
+      ConfirmOrderService.new(user: current_user, order: @order).call
     end
     render_wizard @order
   end
@@ -48,9 +45,7 @@ class CheckoutsController < ApplicationController
   end
 
   def set_order
-    @order = Order.find(session[:order_id])
-  rescue ActiveRecord::RecordNotFound
-    @order = Order.new
+    @order = Order.find_or_initialize_by(id: session[:order_id]).decorate
   end
 
   def set_order_with_items
@@ -58,9 +53,7 @@ class CheckoutsController < ApplicationController
   end
 
   def decorate_objects
-    @cart = @cart.decorate
     @order = @order.decorate
-    @countries_with_codes = CountriesListService.call
     @deliveries = Delivery.all.decorate
     @order_items = @order.order_items
     @billing_address = AddressDecorator.decorate(@order.billing_address)
@@ -74,7 +67,6 @@ class CheckoutsController < ApplicationController
   end
 
   rescue_from(ActionController::ParameterMissing) do
-    flash[:notice] = 'You should to choose shipping method'
-    redirect_to wizard_path
+    redirect_to wizard_path, notice: 'You should to choose shipping method'
   end
 end

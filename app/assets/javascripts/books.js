@@ -1,6 +1,4 @@
 $(document).on('turbolinks:load', function() {
-
-  var starsWrapper = $('.rating > .fa-star');
   var quantityInput = $('.quantity-input');
   var buttonPlus  = $('.increment');
   var buttonMinus = $('.decrement');
@@ -9,33 +7,6 @@ $(document).on('turbolinks:load', function() {
   var readLessLink = $('.read-less');
   var fullDescription = $('.full-descr');
   var shortDescription = $('.short-descr');
-
-  if (starsWrapper.length) {
-    var checked = 'rate-star'
-    var empty = 'rate-empty'
-    var starsHover = starsWrapper.hover(function() { 
-      var last_index = $(this).attr('class').split(' ')[0];
-      starsWrapper.each(function(idx, obj){
-        if (idx <= last_index) {
-          if (!$(obj).hasClass(checked)) {
-            $(obj).toggleClass(empty);
-          }
-        }
-      })
-    });
-
-    starsWrapper.click(function() {
-      starsWrapper.removeClass(checked);
-      var last_index = $(this).attr('class').split(' ')[0];
-      starsWrapper.each(function(idx, obj){
-        if (idx <= last_index) {
-          $(obj).addClass(checked);
-        }else{
-          $(obj).addClass(empty);
-        }
-      })
-    });
-  }
 
   imageLink.click(function() {
     var image = $(this).html();

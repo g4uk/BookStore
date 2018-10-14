@@ -15,10 +15,7 @@
   = f.text_field :zip, id: 'zip', class: 'form-control', placeholder: true, title: t(:invalid_zip), data: { regexp: INPUT_VALIDATIONS[:zip] }
 .form-group
   = f.label :country, class: 'control-label input-label'
-  = f.select(:country, { }, { include_blank: true, prompt: t(:select_county)}, { id: 'country', class: "form-control country-select #{type}"} ) do
-    - countries_with_codes.each do |country|
-      - flag = country['name'].eql?(f.object.country)
-      = content_tag(:option, country['name'], value: country['name'], selected: flag, data: { code: country['dial_code'] })
+  = f.country_select :country, id: 'country', class: "form-control country-select #{type}"
 .form-group
   = f.label :phone, class: 'control-label input-label'
   = f.text_field :phone, id: 'phone', class: "form-control phone-code #{type}", type: 'tel', placeholder: true, title: t(:invalid_phone), data: { regexp: INPUT_VALIDATIONS[:phone] }

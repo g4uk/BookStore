@@ -1,12 +1,12 @@
 class PopularBooksService
   def initialize
     @grouped_by_category = {}
+    @books = load_books
   end
 
   def call
-    books = Book.includes(:order_items, :authors, :books_authors, images: [photo_attachment: :blob])
-    group_by_category(books)
-    BookDecorator.decorate_collection(@grouped_by_category.values.first(4))
+    group_by_category(@books)
+    decorate_books
   end
 
   def group_by_order_items_quantity(books)
@@ -23,5 +23,13 @@ class PopularBooksService
       sorted_books = group_by_order_items_quantity(books_in_category)
       @grouped_by_category[category_id] = sorted_books.keys.first
     end
+  end
+
+  def load_books
+    Book.includes(:order_items, :authors, :books_authors, images: [photo_attachment: :blob])
+  end
+
+  def decorate_books
+    BookDecorator.decorate_collection(@grouped_by_category.values.first(4))
   end
 end

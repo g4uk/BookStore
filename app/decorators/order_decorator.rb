@@ -5,7 +5,7 @@ class OrderDecorator < Draper::Decorator
   decorates_association :order_items
 
   def formatted_delivery_name
-    "#{delivery_type} #{number_to_currency(delivery_price.to_i, precizion: 2)}"
+    "#{delivery_type} #{formatted_delivery_price}"
   end
 
   def formatted_credit_card_number
@@ -17,11 +17,11 @@ class OrderDecorator < Draper::Decorator
   end
 
   def formatted_delivery_price
-    number_to_currency(delivery_price.to_i, precizion: 2)
+    number_to_currency(delivery_price, precizion: 2)
   end
 
   def formatted_total
-    number_to_currency(total + delivery_price.to_i, precizion: 2)
+    number_to_currency((total + delivery_price), precizion: 2) if delivery_price.present?
   end
 
   def formatted_date
