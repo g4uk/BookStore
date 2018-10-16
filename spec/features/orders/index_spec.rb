@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'orders/index.html.haml', type: :feature do
+RSpec.describe 'index', type: :feature do
   let(:user) { create(:user) }
   let(:waiting_order) { create(:order, status: 5).decorate }
   let(:canceled_order) { create(:order, status: 8).decorate }
@@ -31,7 +31,7 @@ RSpec.describe 'orders/index.html.haml', type: :feature do
   it 'has link to order page', js: true do
     within('tbody') do
       first('tr').click
-      expect(current_path).to eq order_path(id: user.orders.paid.first.id, locale: locale)
+      expect(current_path).to eq order_path(id: user.orders.sorted_paid.first.id, locale: locale)
     end
   end
 

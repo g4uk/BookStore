@@ -5,7 +5,7 @@
     .visible-xs
       .general-cart-item.divider-lg-bottom
         %table.table
-          - @deliveries.each do |delivery|
+          - @order_presenter.deliveries.each do |delivery|
             %tr
               %td.col-half
                 %span.in-grey-600= t('.method')
@@ -36,7 +36,7 @@
             %th
               %span.in-grey-600= t('.price')
         %tbody
-          - @deliveries.each do |delivery|
+          - @order_presenter.deliveries.each do |delivery|
             %tr
               %td
                 .form-group.radio.mt-0.mb-0

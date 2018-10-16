@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
+  ORDERS_SCOPES = %i[sorted_paid in_progress in_delivery delivered canceled].freeze
+
   let(:user) { create(:user) }
   let(:order) { create(:order, status: 5, user: user) }
   let(:cart) { create(:cart) }
-  let(:scopes) { OrdersScopesService.call(user) }
-  let(:scope_param) { scopes.keys.sample }
-  let(:countries_with_codes) { CountriesListService.call }
+  let(:scopes) { ORDERS_SCOPES }
+  let(:scope_param) { scopes.sample }
   let(:deliveries) { Delivery.all.decorate }
   let(:billing_address) { AddressDecorator.decorate(order.billing_address) }
   let(:shipping_address) { AddressDecorator.decorate(order.shipping_address) }
@@ -20,7 +21,7 @@ RSpec.describe OrdersController, type: :controller do
   describe 'GET #index' do
     it 'returns http success' do
       get :index
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status('200')
     end
 
     it 'renders index template' do
@@ -32,11 +33,6 @@ RSpec.describe OrdersController, type: :controller do
       it 'assigns @scopes' do
         get :index
         assert_equal scopes, assigns(:scopes)
-      end
-
-      it 'assigns @orders' do
-        get :index, params: { scope: scope_param }
-        assert_equal scopes[scope_param].decorate, assigns(:orders)
       end
 
       it 'assigns @scope' do
@@ -61,7 +57,7 @@ RSpec.describe OrdersController, type: :controller do
   describe 'GET #show' do
     it 'returns http success' do
       get :show, params: { id: order.id }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status('200')
     end
 
     it 'renders show template' do
@@ -74,28 +70,16 @@ RSpec.describe OrdersController, type: :controller do
         get :show, params: { id: order.id }
       end
 
+      it 'assigns @order_presenter' do
+        expect(assigns(:order_presenter)).to be_a OrderPresenter
+      end
+
       it 'assigns @order' do
         assert_equal order.decorate, assigns(:order)
       end
 
-      it 'assigns @countries_with_codes' do
-        assert_equal countries_with_codes, assigns(:countries_with_codes)
-      end
-
-      it 'assigns @deliveries' do
-        assert_equal deliveries, assigns(:deliveries)
-      end
-
-      it 'assigns @order_items' do
-        assert_equal order.order_items.order('id desc'), assigns(:order_items)
-      end
-
-      it 'assigns @billing_address' do
-        assert_equal billing_address, assigns(:billing_address)
-      end
-
-      it 'assigns @shipping_address' do
-        assert_equal shipping_address, assigns(:shipping_address)
+      it 'assigns @user' do
+        assert_equal user, assigns(:user)
       end
     end
 
@@ -107,46 +91,24 @@ RSpec.describe OrdersController, type: :controller do
       it 'decorates cart' do
         expect(assigns(:cart)).to be_decorated_with CartDecorator
       end
-
-      it 'decorates order' do
-        expect(assigns(:order)).to be_decorated_with OrderDecorator
-      end
-
-      it 'decorates deliveries' do
-        expect(assigns(:deliveries)).to be_decorated_with Draper::CollectionDecorator
-      end
-
-      it 'decorates billing_address' do
-        expect(assigns(:billing_address)).to be_decorated_with AddressDecorator
-      end
-
-      it 'decorates shipping_address' do
-        expect(assigns(:shipping_address)).to be_decorated_with AddressDecorator
-      end
-
-      it 'decorates order_items' do
-        expect(assigns(:order_items)).to be_decorated_with Draper::CollectionDecorator
-      end
     end
   end
 
   describe 'GET #create' do
     let(:order) { FactoryBot.create(:order, status: 0, user: user) }
 
-    before do
-      allow(controller).to receive(:decorate_cart).and_return cart.decorate
-      allow(controller).to receive(:set_order).and_return order
-      allow(controller).to receive(:ensure_cart_isnt_empty).and_return true
-      allow_any_instance_of(CopyInfoToOrderService).to receive(:call).and_return order
-    end
-
     context 'with valid attributes' do
       before do
+        allow(CopyInfoToOrderService).to receive_message_chain(:new, :call).and_return order
+        post :create
+      end
+
+      it 'creates order' do
+        expect(CreateOrderService).to receive_message_chain(:new, :call).and_return true
         post :create
       end
 
       it 'redirects to checkout' do
-        allow(order).to receive(:save).and_return true
         expect(response).to redirect_to('/en/checkouts')
       end
 
@@ -155,7 +117,6 @@ RSpec.describe OrdersController, type: :controller do
       end
 
       it 'changes status' do
-        allow(order).to receive(:save).and_return true
         assert_equal 'address', assigns(:order).status
       end
     end

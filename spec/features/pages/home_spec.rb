@@ -1,13 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe 'homes/index.html.haml', type: :feature do
+RSpec.describe 'home', type: :feature do
   let(:category) { create(:category) }
-  let(:book) { create(:book) }
+  let!(:book) { create(:book) }
   let(:user) { create(:user) }
   let(:locale) { 'en' }
 
   before do
-    book
     visit root_path
   end
 

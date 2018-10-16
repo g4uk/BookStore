@@ -7,6 +7,14 @@ RSpec.describe OrderItemsController, type: :controller do
   let(:order_item_params) { attributes_for(:order_item) }
 
   describe 'POST #create' do
+    context 'assigns' do
+      it 'assigns @item_presenter' do
+        allow(Book).to receive(:find).and_return book
+        post :create, xhr: true, params: { order_item: order_item_params }
+        expect(assigns(:item_presenter)).to be_a OrderItemPresenter
+      end
+    end
+
     context 'with valid attributes' do
       before do
         allow(Book).to receive(:find).and_return book
@@ -20,11 +28,10 @@ RSpec.describe OrderItemsController, type: :controller do
       it 'returns http success' do
         expect(response.code).to eql('200')
       end
-    end
 
-    context 'with forbidden attributes' do
-      it 'generates ParameterMissing error without comment params' do
-        expect { post :create, xhr: true }.to raise_error(ActionController::ParameterMissing)
+      it 'creates new item' do
+        expect(NewOrderItemService).to receive_message_chain(:new, :call).and_return true
+        post :create, xhr: true, params: { order_item: order_item_params }
       end
     end
   end

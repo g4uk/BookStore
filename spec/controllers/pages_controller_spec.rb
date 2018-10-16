@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe HomesController, type: :controller do
+RSpec.describe PagesController, type: :controller do
   describe 'GET #index' do
     before do
-      get :index
+      get :home
     end
 
     it 'returns http success' do
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status('200')
     end
 
     it 'decorates cart' do
@@ -15,7 +15,7 @@ RSpec.describe HomesController, type: :controller do
     end
 
     it 'renders index template' do
-      expect(response).to render_template(:index)
+      expect(response).to render_template(:home)
     end
 
     context 'assigns' do
@@ -24,7 +24,7 @@ RSpec.describe HomesController, type: :controller do
       end
 
       it 'assigns @latest_books' do
-        assert_equal LatestBooksService.call, assigns(:latest_books)
+        assert_equal Book.newest.limit(3).decorate, assigns(:latest_books)
       end
     end
   end

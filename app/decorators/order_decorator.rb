@@ -21,7 +21,8 @@ class OrderDecorator < Draper::Decorator
   end
 
   def formatted_total
-    number_to_currency((total + delivery_price), precizion: 2) if delivery_price.present?
+    total_sum = delivery_price.present? ? (total + delivery_price) : total
+    number_to_currency(total_sum, precizion: 2)
   end
 
   def formatted_date

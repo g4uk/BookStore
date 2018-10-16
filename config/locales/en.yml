@@ -10,6 +10,7 @@ en:
     signed_up: 'Signed up successfully'
     exists: 'Account already exists'
     destroyed: 'Your account was successfully destroyed.'
+    choose_delivery: 'You should to choose shipping method'
 
   invalid_name: 'Consists of a-z and A-Z only'
   invalid_number: 'Consists of numbers only'
@@ -102,7 +103,7 @@ en:
       status: 'Status'
       total: 'Total'
       in_progress: 'Waiting for processing'
-      paid: 'All'
+      sorted_paid: 'All'
       in_delivery: 'In Delivery'
       delivered: 'Delivered'
       canceled: 'Canceled'

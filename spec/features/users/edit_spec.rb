@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'users/edit.html.haml', type: :feature do
+RSpec.describe 'edit', type: :feature do
   let(:user) { create(:user) }
   let(:billing_address) { user.billing_address }
   let(:shipping_address) { user.shipping_address }
@@ -17,6 +17,7 @@ RSpec.describe 'users/edit.html.haml', type: :feature do
       it 'shows error messages', js: true do
         addresses.each do |type, _address|
           within(first("#edit_#{type}_form_wrapper")) do
+            fill_in 'address', with: ''
             first('input[name="commit"]').click
           end
           expect(first('.flash_message')).to have_content('Fix Errors')

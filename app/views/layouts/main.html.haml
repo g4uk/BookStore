@@ -21,11 +21,11 @@
           %a.navbar-brand= t(:bookstore)
           = link_to cart_path(@cart), class: 'shop-link pull-right visible-xs' do
             %span.shop-icon
-              = render @cart
+              = render 'carts/cart'
         = link_to cart_path(@cart), class: 'shop-link pull-right hidden-xs' do
           - if @cart.total_quantity.positive?
             %span.shop-icon
-              = render @cart
+              = render 'carts/cart'
           - else
             %span.shop-icon
         #navbar.navbar-collapse.collapse.pl-30{'aria-expanded': "false"}

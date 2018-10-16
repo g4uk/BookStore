@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'users/login.html.haml', type: :feature do
+RSpec.describe 'login', type: :feature do
   let(:user) { create(:user) }
   let(:locale) { 'en' }
   let(:submit) { first('input[name="commit"]') }

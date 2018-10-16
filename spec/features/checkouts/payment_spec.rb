@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'checkout/address', type: :feature do
+RSpec.describe 'payment', type: :feature do
   let(:user) { create(:user) }
   let(:order) { create(:order) }
   let(:book) { create(:book) }

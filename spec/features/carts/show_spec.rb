@@ -2,7 +2,7 @@ require 'rails_helper'
 
 include ActionView::Helpers::NumberHelper
 
-RSpec.describe 'carts/show.html.haml', type: :feature do
+RSpec.describe 'show', type: :feature do
   let(:coupon) { create(:coupon) }
   let(:user) { create(:user) }
   let(:locale) { 'en' }

@@ -26,6 +26,12 @@ RSpec.describe 'checkout/address', type: :feature do
     expect(current_path).to include('delivery')
   end
 
+  it 'shows error message', js: true do
+    submit.click
+    expect(current_path).to eq '/en/checkouts/delivery'
+    expect(page).to have_content('You should to choose shipping method')
+  end
+
   it 'goes to next step', js: true do
     first('.radio-icon').click
     submit.click

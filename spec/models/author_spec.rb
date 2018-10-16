@@ -9,23 +9,23 @@ RSpec.describe Author, type: :model do
   let(:author) { FactoryBot.create :author }
 
   context 'validations' do
-    it { should validate_presence_of(:first_name) }
-    it { should validate_presence_of(:last_name) }
+    it { is_expected.to validate_presence_of(:first_name) }
+    it { is_expected.to validate_presence_of(:last_name) }
     it { expect(author).to validate_uniqueness_of(:first_name).scoped_to(:last_name) }
-    it { should allow_value(valid_name).for(:first_name) }
-    it { should allow_value(valid_name).for(:last_name) }
-    it { should_not allow_value(invalid_name).for(:first_name) }
-    it { should_not allow_value(invalid_name).for(:last_name) }
-    it { should validate_length_of(:first_name).is_at_most(name_length) }
-    it { should validate_length_of(:last_name).is_at_most(name_length) }
+    it { is_expected.to allow_value(valid_name).for(:first_name) }
+    it { is_expected.to allow_value(valid_name).for(:last_name) }
+    it { is_expected.not_to allow_value(invalid_name).for(:first_name) }
+    it { is_expected.not_to allow_value(invalid_name).for(:last_name) }
+    it { is_expected.to validate_length_of(:first_name).is_at_most(name_length) }
+    it { is_expected.to validate_length_of(:last_name).is_at_most(name_length) }
   end
   context 'attributes' do
-    it { should have_db_column(:first_name).of_type(:string) }
-    it { should have_db_column(:last_name).of_type(:string) }
-    it { should have_db_column(:description).of_type(:text) }
+    it { is_expected.to have_db_column(:first_name).of_type(:string) }
+    it { is_expected.to have_db_column(:last_name).of_type(:string) }
+    it { is_expected.to have_db_column(:description).of_type(:text) }
   end
   context 'relations' do
-    it { should have_many(:books_authors).dependent(:destroy) }
-    it { should have_many(:books).through(:books_authors) }
+    it { is_expected.to have_many(:books_authors).dependent(:destroy) }
+    it { is_expected.to have_many(:books).through(:books_authors) }
   end
 end

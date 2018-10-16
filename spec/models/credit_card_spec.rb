@@ -6,15 +6,15 @@ RSpec.describe CreditCard, type: :model do
   let(:invalid_number) { FFaker::Lorem.word }
 
   context 'validations' do
-    it { should validate_presence_of(:number) }
-    it { should allow_value(valid_number).for(:number) }
-    it { should_not allow_value(invalid_number).for(:number) }
+    it { is_expected.to validate_presence_of(:number) }
+    it { is_expected.to allow_value(valid_number).for(:number) }
+    it { is_expected.not_to allow_value(invalid_number).for(:number) }
   end
   context 'relations' do
-    it { should belong_to(:order) }
+    it { is_expected.to belong_to(:order) }
   end
   context 'attributes' do
-    it { should have_db_column(:number).of_type(:string) }
-    it { should have_db_column(:order_id).of_type(:integer) }
+    it { is_expected.to have_db_column(:number).of_type(:string) }
+    it { is_expected.to have_db_column(:order_id).of_type(:integer) }
   end
 end

@@ -12,7 +12,7 @@ RSpec.describe CartsController, type: :controller do
     end
 
     it 'returns http success' do
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status('200')
     end
 
     it 'renders show template' do
@@ -34,7 +34,7 @@ RSpec.describe CartsController, type: :controller do
         expect(assigns(:cart)).to be_decorated_with CartDecorator
       end
 
-      it 'decorates book' do
+      it 'decorates order_items' do
         expect(assigns(:order_items)).to be_decorated
       end
     end

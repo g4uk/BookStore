@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'users/forgot_password', type: :feature do
+RSpec.describe 'forgot_password', type: :feature do
   let(:user) { create(:user) }
   let(:locale) { 'en' }
   let(:submit) { first('input[name="commit"]') }

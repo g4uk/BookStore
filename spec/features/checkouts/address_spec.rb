@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'checkout/address', type: :feature do
+RSpec.describe 'address', type: :feature do
   let(:user) { create(:user) }
   let(:order) { create(:order) }
   let(:delivery) { create(:delivery) }
@@ -37,6 +37,9 @@ RSpec.describe 'checkout/address', type: :feature do
 
     context 'invalid address' do
       it 'shows error messages', js: true do
+        within(first('.mb-40')) do
+          fill_in 'address', with: ''
+        end
         submit.click
         expect(page).to have_content('is invalid')
       end
@@ -54,9 +57,9 @@ RSpec.describe 'checkout/address', type: :feature do
     end
 
     context 'valid billing, invalid shipping' do
-      it 'shows success message', js: true do
-        within(first('.mb-40')) do
-          fill_address_form
+      it 'shows error message', js: true do
+        within(first('.mb-60')) do
+          fill_in 'address', with: ''
         end
         submit.click
         expect(page).to have_content('is invalid')

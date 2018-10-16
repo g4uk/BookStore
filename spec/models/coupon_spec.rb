@@ -7,14 +7,14 @@ RSpec.describe Coupon, type: :model do
   let(:invalid_code) { FFaker::Internet.disposable_email }
 
   context 'validations' do
-    it { should validate_presence_of(:code) }
-    it { should validate_length_of(:code).is_at_most(coupon_length) }
-    it { should validate_numericality_of(:discount) }
-    it { should allow_value(valid_code).for(:code) }
-    it { should_not allow_value(invalid_code).for(:code) }
+    it { is_expected.to validate_presence_of(:code) }
+    it { is_expected.to validate_length_of(:code).is_at_most(coupon_length) }
+    it { is_expected.to validate_numericality_of(:discount) }
+    it { is_expected.to allow_value(valid_code).for(:code) }
+    it { is_expected.not_to allow_value(invalid_code).for(:code) }
   end
   context 'attributes' do
-    it { should have_db_column(:code).of_type(:string) }
-    it { should have_db_column(:discount).of_type(:integer) }
+    it { is_expected.to have_db_column(:code).of_type(:string) }
+    it { is_expected.to have_db_column(:discount).of_type(:integer) }
   end
 end

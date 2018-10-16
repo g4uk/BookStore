@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'orders/show.html.haml', type: :feature do
   let(:user) { create(:user) }
-  let(:order) { create(:order).decorate }
+  let(:order) { create(:order, status: 6).decorate }
   let(:credit_card) { create(:credit_card) }
   let(:locale) { 'en' }
 

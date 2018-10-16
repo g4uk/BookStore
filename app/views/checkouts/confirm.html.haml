@@ -3,14 +3,14 @@
   .row.mb-20
     .col-sm-3
       %h3.general-subtitle= t(:shipping_address)
-      = render 'addresses/address', address: @shipping_address, complete: false
+      = render 'addresses/address', address: @order_presenter.shipping_address, complete: false
     .col-sm-3
       %h3.general-subtitle= t(:billing_address)
-      = render 'addresses/address', address: @billing_address, complete: false
+      = render 'addresses/address', address: @order_presenter.billing_address, complete: false
     .col-sm-3
       %h3.general-subtitle= t(:shipments)
       %p.general-address
-        = @order.delivery.duration
+        = @order.delivery_duration
         %span.general-edit= link_to t(:edit), wizard_path(:delivery)
         %br
         = @order.formatted_delivery_name
@@ -19,11 +19,11 @@
       %p.general-address
         = @order.formatted_credit_card_number
         %span.general-edit= link_to t(:edit), wizard_path(:payment)
-  = render 'order_items/order_item_xs', order_items: @order_items, type: 'order'
+  = render 'order_items/order_item_xs', order_items: @order_presenter.order_items, type: 'order'
   .hidden-xs.divider-lg.pt-20
     %table.table.table-hover
       = render 'table_headers'
-      = render 'order_items/order_item', order_items: @order_items, type: 'order'
+      = render 'order_items/order_item', order_items: @order_presenter.order_items, type: 'order'
   .text-center.general-text-right
     = render 'order_summary', order: @order, pull_right: true
   .text-center

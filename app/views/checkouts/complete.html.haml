@@ -8,15 +8,15 @@
       .visible-xs
         %p.general-order-number.mb-0= "#{t('.order')} #{@order.id}"
         %p.general-address.mb-30= @order.formatted_date
-      = render 'addresses/address', address: @shipping_address, complete: true
+      = render 'addresses/address', address: @order_presenter.shipping_address, complete: true
     .col-sm-6.hidden-xs.text-right
       %p.general-order-number.mb-0= "#{t('.order')} #{@order.id}"
       %p.general-address.mb-30= @order.formatted_date
-  = render 'order_items/order_item_xs', order_items: @order_items, type: 'order'
+  = render 'order_items/order_item_xs', order_items: @order_presenter.order_items, type: 'order'
   .hidden-xs.divider-lg.pt-20
     %table.table.table-hover
       = render 'table_headers'
-      = render 'order_items/order_item', order_items: @order_items, type: 'order'
+      = render 'order_items/order_item', order_items: @order_presenter.order_items, type: 'order'
   .text-center.general-text-right
     = render 'order_summary', order: @order, pull_right: true
   .text-center

@@ -8,8 +8,7 @@ class Users::PasswordsController < Devise::PasswordsController
     if successfully_sent?(resource)
       super
     else
-      error_notice
-      redirect_to forgot_password_users_url
+      redirect_to forgot_password_users_path, flash: { danger: resource.errors.full_messages }
     end
   end
 
@@ -29,8 +28,7 @@ class Users::PasswordsController < Devise::PasswordsController
       respond_with resource, location: after_resetting_password_path_for(resource)
     else
       set_minimum_password_length
-      error_notice
-      redirect_to change_password_users_url(reset_password_token: resource.reset_password_token)
+      redirect_to change_password_users_path(reset_password_token: resource.reset_password_token), flash: { danger: resource.errors.full_messages }
     end
   end
 
@@ -42,9 +40,5 @@ class Users::PasswordsController < Devise::PasswordsController
 
   def after_sending_reset_password_instructions_path_for(resource_name)
     login_users_path if is_navigational_format?
-  end
-
-  def error_notice
-    flash[:danger] = flash[:danger].to_a.concat resource.errors.full_messages
   end
 end

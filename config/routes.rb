@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     get 'pages/home', to: 'pages#home', as: :home
     get 'order_items/new/:book_id', to: 'order_items#create', as: :create_order_item
     get 'users/edit/:id', to: 'users#edit', as: :settings
-    resources :orders
-    resources :comments
+    resources :orders, only: %i[index show create]
+    resources :comments, only: %i[create update]
     resources :books, only: %i[index show]
     resources :order_items, only: %i[create destroy] do
       member do
@@ -20,8 +20,8 @@ Rails.application.routes.draw do
         put :increment
       end
     end
-    resources :carts, only: %i[show update destroy]
-    resources :checkouts
+    resources :carts, only: %i[show update]
+    resources :checkouts, only: %i[index show update]
     resources :users, only: %i[edit update destroy] do
       collection do
         patch :update_billing_address

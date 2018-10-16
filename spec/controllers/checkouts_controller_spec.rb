@@ -30,30 +30,14 @@ RSpec.describe CheckoutsController, type: :controller do
         expect(assigns(:order)).to be_a(Order)
       end
 
-      it 'assignes @countries_with_codes' do
-        expect(assigns(:countries_with_codes)).to eql(countries_with_codes)
-      end
-
-      it 'assignes @billing_address' do
-        expect(assigns(:billing_address)).to eql(billing_address)
-      end
-
-      it 'assignes @shipping_address' do
-        expect(assigns(:shipping_address)).to eql(shipping_address)
+      it 'assigns @order_presenter' do
+        expect(assigns(:order_presenter)).to be_a(OrderPresenter)
       end
     end
 
     context 'decorators' do
-      it 'decorates @billing_address' do
-        expect(assigns(:billing_address)).to be_decorated_with AddressDecorator
-      end
-
-      it 'decorates @deliveries' do
-        expect(assigns(:deliveries)).to be_decorated_with Draper::CollectionDecorator
-      end
-
-      it 'decorates @order_items' do
-        expect(assigns(:order_items)).to be_decorated_with Draper::CollectionDecorator
+      it 'decorates @order' do
+        expect(assigns(:order)).to be_decorated_with OrderDecorator
       end
     end
 
@@ -76,7 +60,6 @@ RSpec.describe CheckoutsController, type: :controller do
 
   describe 'PUT #update' do
     before do
-      order.status = :payment
       order_params[:credit_card_attributes] = { number: credit_card.number }
       allow(order).to receive(:update).and_return true
       allow(order).to receive(:save).and_return true
@@ -84,35 +67,41 @@ RSpec.describe CheckoutsController, type: :controller do
     end
 
     context 'already paid' do
-      let(:steps) { %i[address delivery payment confirm] }
+      it 'checkouts' do
+        order.status = :payment
+        expect(CheckoutService).to receive_message_chain(:new, :call).and_return order
+        put :update, params: { order_id: order.id, id: :address, order: order_params }
+        expect(response).to redirect_to checkout_path(id: :confirm)
+      end
+    end
 
-      it 'jumps to :confirm' do
-        steps.each do |step|
-          put :update, params: { order_id: order.id, id: step, order: order_params }
-          expect(response).to redirect_to checkout_path(id: :confirm)
-        end
+    context 'confirmation' do
+      it 'confirms an order' do
+        expect(ConfirmOrderService).to receive_message_chain(:new, :call).and_return true
+        put :update, params: { order_id: order.id, id: :confirm, order: order_params }
       end
     end
 
     context 'not paid yet' do
       it 'fills address info' do
-        expect(FillAddressesService).to receive(:call).and_return true
+        expect(FillAddressesService).to receive_message_chain(:new, :call).and_return true
         put :update, params: { order_id: order.id, id: :address, order: order_params }
       end
 
       it 'fills delivery info' do
-        expect(UpdateOrdersDeliveryInfoService).to receive(:call).and_return true
+        expect(UpdateOrdersDeliveryInfoService).to receive_message_chain(:new, :call).and_return true
         put :update, params: { order_id: order.id, id: :delivery, order: order_params }
       end
 
       it 'makes payment' do
-        expect(PaymentService).to receive(:call).and_return order
+        expect(PaymentService).to receive_message_chain(:new, :call).and_return order
         put :update, params: { order_id: order.id, id: :payment, order: order_params }
       end
     end
 
     context 'order may be confirmed' do
       it 'confirms an order' do
+        order.status = :payment
         expect(ApplicationMailer).to receive_message_chain(:order_email, :deliver)
         put :update, params: { order_id: order.id, id: :confirm, order: order_params }
         expect(order.in_queue?).to eql true

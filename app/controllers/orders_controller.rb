@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  ORDERS_SCOPES = %i[paid in_progress in_delivery delivered canceled].freeze
+  ORDERS_SCOPES = %i[sorted_paid in_progress in_delivery delivered canceled].freeze
 
   load_and_authorize_resource except: :create
 
@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
 
   def index
     @scopes = ORDERS_SCOPES
-    @scope = params[:scope] ? params[:scope].to_sym : :paid
+    @scope = params[:scope] ? params[:scope].to_sym : :sorted_paid
     @orders = current_user.orders.send(@scope).decorate
   end
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CommentsController, type: :controller do
   let(:user) { create(:user) }
   let(:book) { create(:book) }
-  let(:comment) { build_stubbed(:comment, status: 0) }
+  let(:comment) { create(:comment, status: 0) }
   let(:comment_params) { attributes_for(:comment) }
 
   describe 'POST #create' do

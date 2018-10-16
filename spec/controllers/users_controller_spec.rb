@@ -2,15 +2,12 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   let(:user) { create(:user) }
-  let(:countries_with_codes) { CountriesListService.call }
   let(:cart) { create(:cart).decorate }
   let(:user_params) { attributes_for(:user) }
   let(:address_params) { attributes_for(:address) }
-  
+
   before do
     allow(controller).to receive(:current_user).and_return user
-    allow(controller).to receive(:set_countries).and_return countries_with_codes
-    allow(controller).to receive(:decorate_cart).and_return cart
   end
 
   describe 'GET #login' do

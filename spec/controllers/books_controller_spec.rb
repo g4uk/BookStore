@@ -1,8 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe BooksController, type: :controller do
+  SORT_CONDITIONS = ['created_at desc',
+                     'popular',
+                     'price asc',
+                     'price desc',
+                     'title asc',
+                     'title desc'].freeze
 
-  let(:sort_conditions) { BooksSortContitionsService.call }
+  let(:sort_conditions) { SORT_CONDITIONS }
   let(:sort_params) { sort_conditions.sample }
   let(:category_id) { create(:category).id }
   let(:page) { '1' }
@@ -25,36 +31,15 @@ RSpec.describe BooksController, type: :controller do
     end
 
     context 'assigns' do
-      it 'assigns @sort_conditions' do
-        get :index
-        assert_equal sort_conditions, assigns(:sort_conditions)
-      end
-
-      it 'assigns @books_quantity' do
-        get :index
-        assert_equal Book.all.size, assigns(:books_quantity)
-      end
-
       it 'assigns @books' do
         get :index, params: { sort: sort_params, category: category_id, page: page }
-        books = SortedBooksService.new(sort_params: sort_params, category_id: category_id, page: page).call
+        books = SortBooksQuery.new(sort_params: sort_params, category_id: category_id, page: page).call
         assert_equal BookDecorator.decorate_collection(books), assigns(:books)
       end
 
-      it 'assigns @category_id' do
-        get :index, params: { category: category_id }
-        assert_equal category_id.to_s, assigns(:category_id)
-      end
-
-      it 'assigns @category_name' do
-        get :index, params: { category: category_id }
-        assert_equal Category.find(category_id).name, assigns(:category_name)
-      end
-
-      it 'assigns @sort_params' do
-        sort_by = sort_params.first
-        get :index, params: { sort: sort_by }
-        assert_equal sort_by, assigns(:sort_params)
+      it 'assigns @sort_presenter' do
+        get :show, params: { id: book.id }
+        expect(assigns(:sort_presenter)).to be_a SortPresenter
       end
     end
 
@@ -78,7 +63,7 @@ RSpec.describe BooksController, type: :controller do
 
     it 'returns http success' do
       get :show, params: { id: book.id }
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status('200')
     end
 
     it 'renders show template' do
@@ -91,41 +76,41 @@ RSpec.describe BooksController, type: :controller do
     end
 
     context 'assigns' do
-      it 'assigns @book' do
+      before do
         get :show, params: { id: book.id }
+      end
+
+      it 'assigns @book' do
         assert_equal book, assigns(:book)
       end
 
-      it 'assigns @category_id' do
-        get :show, params: { id: book.id, category: category_id }
-        assert_equal category_id.to_s, assigns(:category_id)
-      end
-
-      it 'assigns @sort_params' do
-        sort_by = sort_params.first
-        get :show, params: { id: book.id, sort: sort_by }
-        assert_equal sort_by, assigns(:sort_params)
-      end
-
       it 'assigns @comment' do
-        get :show, params: { id: book.id }
         expect(assigns(:comment)).not_to be_nil
       end
-      
+
+      it 'assigns @reviews' do
+        expect(assigns(:reviews)).not_to be_nil
+      end
+
       it 'assigns @order_item' do
-        get :show, params: { id: book.id }
-        expect(assigns(:comment)).not_to be_nil
+        expect(assigns(:order_item)).not_to be_nil
+      end
+
+      it 'assigns @sort_presenter' do
+        expect(assigns(:sort_presenter)).to be_a(SortPresenter)
       end
     end
 
     context 'decorators' do
-      it 'decorates cart' do
+      before do
         get :show, params: { id: book.id }
+      end
+
+      it 'decorates cart' do
         expect(assigns(:cart)).to be_decorated_with CartDecorator
       end
 
       it 'decorates book' do
-        get :show, params: { id: book.id }
         expect(assigns(:reviews)).to be_decorated
       end
     end

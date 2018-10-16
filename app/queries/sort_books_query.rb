@@ -11,7 +11,7 @@ class SortBooksQuery
   def call
     return by_popularity if @sort_param.eql?('popular')
     books_without_order_items
-    by_category if @category_id
+    by_category
     return by_creation if ['created_at desc', nil].include?(@sort_param)
     by_title_and_price
   end
@@ -19,7 +19,7 @@ class SortBooksQuery
   private
 
   def by_category
-    @books = @books.where(category_id: @category_id)
+    @books = @books.where(category_id: @category_id) if @category_id
   end
 
   def by_popularity

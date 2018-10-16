@@ -2,19 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'books/show.html.haml', type: :feature do
   let(:category) { create(:category) }
-  let(:book) { create(:book) }
+  let!(:book) { create(:book) }
   let(:user) { create(:user) }
   let(:locale) { 'en' }
   let(:comment_form_wrapper) { first('#comment_form_wrapper') }
   let(:submit) { first('input[name="commit"]') }
   let(:comment) { create(:comment) }
-  let(:approved_comment) { create(:comment, status: 1) }
 
   before do
-    approved_comment.status = 1
-    book.comments << approved_comment
+    book.comments << comment
     login_as user
-    book
     visit book_path(id: book.id, locale: locale)
   end
 
@@ -29,7 +26,7 @@ RSpec.describe 'books/show.html.haml', type: :feature do
   end
 
   it 'shows approved comments' do
-    expect(page).to have_content(approved_comment.text)
+    expect(page).to have_content(comment.text)
   end
 
   describe 'order_item form' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'users/signup', type: :feature do
+RSpec.describe 'signup', type: :feature do
   let(:user) { User.new(email: FFaker::Internet.email, password: FFaker::String.from_regexp(PASSWORD_REGEXP)) }
   let(:customer) { create(:user) }
   let(:locale) { 'en' }
