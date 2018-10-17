@@ -13,8 +13,8 @@ class UpdateOrdersDeliveryInfoService
 
   def update_delivery_info
     @order.update(delivery_id: @delivery.id,
-                 delivery_type: @delivery.name,
-                 delivery_price: @delivery.price,
-                 delivery_duration: @delivery.duration)
+                  delivery_type: @delivery.name,
+                  delivery_price: @delivery.price,
+                  delivery_duration: @delivery.duration)
   end
 end
