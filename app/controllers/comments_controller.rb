@@ -15,17 +15,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  def update
-    @comment = Comment.find(params[:id])
-    respond_to do |format|
-      if @comment.update(rating: params[:rating])
-        format.js
-      else
-        format.js { render :new }
-      end
-    end
-  end
-
   private
 
   def comment_params

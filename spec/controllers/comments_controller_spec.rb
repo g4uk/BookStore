@@ -49,25 +49,4 @@ RSpec.describe CommentsController, type: :controller do
       end
     end
   end
-
-  describe 'POST #update' do
-    before do
-      sign_in user
-      allow(Comment).to receive(:find).and_return comment
-      allow(comment).to receive(:update).and_return true
-      post :update, xhr: true, params: { id: comment.id, rating: comment.rating }
-    end
-
-    it 'renders update.js' do
-      expect(response).to render_template('comments/update')
-    end
-
-    it 'returns http success' do
-      expect(response.code).to eql('200')
-    end
-
-    it 'assigns @comment' do
-      assert_equal comment, assigns(:comment)
-    end
-  end
 end

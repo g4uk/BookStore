@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
     created_order = CreateOrderService.new(cart: @cart, user: current_user, order: @order).call
     if created_order
       session[:order_id] = @order.id
-      redirect_to checkouts_path 
+      redirect_to checkouts_path
     else
       redirect_back(fallback_location: cart_path(@cart), notice: created_order.errors.full_messages)
     end

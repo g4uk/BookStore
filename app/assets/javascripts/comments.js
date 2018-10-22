@@ -4,10 +4,10 @@ $(document).on('turbolinks:load', function() {
   var starsWrapper = $('.rating > .fa-star');
 
   if (starsWrapper.length) {
-    var checked = 'rate-star'
-    var empty = 'rate-empty'
-    var starsHover = starsWrapper.hover(function() { 
-      var last_index = $(this).attr('class').split(' ')[0];
+    let checked = 'rate-star'
+    let empty = 'rate-empty'
+    let starsHover = starsWrapper.hover(function() { 
+      let last_index = $(this).attr('class').split(' ')[0];
       starsWrapper.each(function(idx, obj){
         if (idx <= last_index) {
           if (!$(obj).hasClass(checked)) {
@@ -19,7 +19,7 @@ $(document).on('turbolinks:load', function() {
 
     starsWrapper.click(function() {
       starsWrapper.removeClass(checked);
-      var last_index = $(this).attr('class').split(' ')[0];
+      let last_index = $(this).attr('class').split(' ')[0];
       starsWrapper.each(function(idx, obj){
         if (idx <= last_index) {
           $(obj).addClass(checked);
@@ -27,6 +27,8 @@ $(document).on('turbolinks:load', function() {
           $(obj).addClass(empty);
         }
       })
+      let rating = $('.rating').children('.rate-star').length;
+      $('#comment_rating').val(rating);
     });
   }
 });

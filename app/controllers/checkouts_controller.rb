@@ -1,4 +1,8 @@
 class CheckoutsController < ApplicationController
+  STATUSES = { address: :address,
+               shipping: :delivery,
+               in_progress: :payment,
+               payment: :confirm }.freeze
   include Wicked::Wizard
 
   before_action :authenticate_user!
@@ -7,10 +11,11 @@ class CheckoutsController < ApplicationController
   steps :address, :delivery, :payment, :confirm, :complete
 
   def show
+    return redirect_to cart_path(@cart) unless @order
     @order_presenter = OrderPresenter.new(@order)
-    @order.build_billing_address if @order.billing_address.blank?
-    @order.build_shipping_address if @order.shipping_address.blank?
-    @order.build_credit_card if @order.credit_card.blank?
+    build_associated_objects
+    current_step = STATUSES[@order.status.to_sym]
+    jump_to(current_step) unless @order.payment? || current_step == step
     render_wizard
   end
 
@@ -39,5 +44,11 @@ class CheckoutsController < ApplicationController
 
   rescue_from(ActionController::ParameterMissing) do
     redirect_to wizard_path, notice: t('notice.choose_delivery')
+  end
+
+  def build_associated_objects
+    @order.build_billing_address if @order.billing_address.blank?
+    @order.build_shipping_address if @order.shipping_address.blank?
+    @order.build_credit_card if @order.credit_card.blank?
   end
 end

@@ -6,23 +6,23 @@ class CheckoutService
   end
 
   def call
-    fill_address
-    copy_delivery_info
-    fill_payment_info
+    fill_address if @step.eql?(:address)
+    copy_delivery_info if @step.eql?(:delivery)
+    fill_payment_info if @step.eql?(:payment)
     @order
   end
 
   private
 
   def fill_address
-    FillAddressesService.new(order: @order, order_params: @params).call if @step.eql?(:address)
+    FillAddressesService.new(order: @order, order_params: @params).call
   end
 
   def copy_delivery_info
-    UpdateOrdersDeliveryInfoService.new(order: @order, order_params: @params).call if @step.eql?(:delivery)
+    UpdateOrdersDeliveryInfoService.new(order: @order, order_params: @params).call
   end
 
   def fill_payment_info
-    PaymentService.new(order: @order, order_params: @params, cart: @cart).call if @step.eql?(:payment)
+    PaymentService.new(order: @order, order_params: @params, cart: @cart).call
   end
 end

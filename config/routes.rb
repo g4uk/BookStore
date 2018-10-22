@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get 'order_items/new/:book_id', to: 'order_items#create', as: :create_order_item
     get 'users/edit/:id', to: 'users#edit', as: :settings
     resources :orders, only: %i[index show create]
-    resources :comments, only: %i[create update]
+    resources :comments, only: :create
     resources :books, only: %i[index show]
     resources :order_items, only: %i[create destroy] do
       member do

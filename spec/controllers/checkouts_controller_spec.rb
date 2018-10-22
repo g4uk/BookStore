@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CheckoutsController, type: :controller do
   let(:user) { create(:user) }
-  let(:order) { create(:order) }
+  let!(:order) { create(:order) }
   let(:order_params) { attributes_for(:order) }
   let(:cart) { create(:cart).decorate }
   let(:countries_with_codes) { CountriesListService.call }
@@ -18,6 +18,7 @@ RSpec.describe CheckoutsController, type: :controller do
     allow(Order).to receive(:find).and_return(order)
     allow(Order).to receive_message_chain(:includes, :find).and_return order
     allow(controller).to receive(:current_user).and_return(user)
+    session[:order_id] = order.id
   end
 
   describe 'GET #show' do

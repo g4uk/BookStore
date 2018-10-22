@@ -5,6 +5,7 @@ class FindOrderQuery
   end
 
   def call
+    return false unless @order_id
     return set_order_with_items if %i[confirm complete].include?(@step)
     set_order
   end
@@ -12,7 +13,7 @@ class FindOrderQuery
   private
 
   def set_order
-    Order.find_or_initialize_by(id: @order_id).decorate
+    Order.find(@order_id).decorate
   end
 
   def set_order_with_items
