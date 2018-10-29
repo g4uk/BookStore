@@ -10,8 +10,5 @@ class User < ApplicationRecord
   has_one :billing_address, as: :addressable, dependent: :destroy
   has_one :shipping_address, as: :addressable, dependent: :destroy
 
-  accepts_nested_attributes_for :billing_address, update_only: true
-  accepts_nested_attributes_for :shipping_address, reject_if: :all_blank
-
   validates :password, password: true
 end
