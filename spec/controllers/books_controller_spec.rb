@@ -13,11 +13,16 @@ RSpec.describe BooksController, type: :controller do
   let(:category_id) { create(:category).id }
   let(:page) { '1' }
   let(:book) { create(:book) }
+  let!(:user) { create(:user) }
+
+  before do
+    sign_in user
+  end
 
   describe 'GET #index' do
     it 'returns http success' do
       get :index
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(200)
     end
 
     it 'renders index template' do
@@ -84,8 +89,8 @@ RSpec.describe BooksController, type: :controller do
         assert_equal book, assigns(:book)
       end
 
-      it 'assigns @comment' do
-        expect(assigns(:comment)).not_to be_nil
+      it 'assigns @comment_form' do
+        expect(assigns(:comment_form)).not_to be_nil
       end
 
       it 'assigns @reviews' do

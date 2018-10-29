@@ -15,6 +15,12 @@ class CommentForm
 
   def save
     return false unless valid?
-    Comment.create(book_id: book_id, user_id: user_id, title: title, text: text, rating: rating)
+    Comment.create(book_id: book_id, user_id: user_id, title: title, text: text, rating: valid_rating)
+  end
+
+  private
+
+  def valid_rating
+    rating = 0 if rating.nil?
   end
 end

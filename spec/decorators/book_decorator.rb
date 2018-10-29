@@ -15,13 +15,8 @@ RSpec.describe BookDecorator do
     expect(book.formatted_price).to eql(price)
   end
 
-  it 'truncates description for carousel' do
-    description = book.description.truncate(150).html_safe
-    expect(book.carousel_description).to eql(description)
-  end
-
   it 'truncates description for order items' do
-    description = book.description.truncate(350).html_safe
-    expect(book.short_description).to eql(description)
+    description = book.description.truncate(150).html_safe
+    expect(book.short_description(150)).to eql(description)
   end
 end

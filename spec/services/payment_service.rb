@@ -12,7 +12,7 @@ RSpec.describe PaymentService do
   
   context 'order may not fill payment' do
     it 'adds credit_card to order' do
-      PaymentService.call(order: order, order_params: order_params, cart: cart)
+      PaymentService.new(order: order, order_params: order_params, cart: cart).call
       expect(order.credit_card.number).to eql(credit_card_number)
     end
   end
@@ -22,13 +22,13 @@ RSpec.describe PaymentService do
       order.status = 'in_progress'
     end
     it 'changes order status to payment' do
-      PaymentService.call(order: order, order_params: order_params, cart: cart)
+      PaymentService.new(order: order, order_params: order_params, cart: cart).call
       expect(order.payment?).to eql true
     end
 
     it 'destroys cart after payment' do
       cart = create(:cart)
-      expect { PaymentService.call(order: order, order_params: order_params, cart: cart) }.to change(Cart, :count).by(-1)
+      expect { PaymentService.new(order: order, order_params: order_params, cart: cart).call }.to change(Cart, :count).by(-1)
     end
   end
 end

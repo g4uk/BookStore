@@ -5,7 +5,7 @@ RSpec.describe NewOrderItemService do
   let(:cart) { create(:cart) }
 
   it 'gets three latest books' do
-    saved = NewOrderItemService.call(book: book, quantity: 3, cart: cart)
+    saved = NewOrderItemService.new(book: book, quantity: 3, cart: cart).call
     expect(saved).to eql true
     expect(OrderItem.all.last.book_name).to eql(book.title)
     expect(OrderItem.all.last.quantity).to eql 3

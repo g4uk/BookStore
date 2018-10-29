@@ -11,13 +11,13 @@ RSpec.describe UpdateOrdersDeliveryInfoService do
   end
 
   it 'updates orders delivery info' do
-    UpdateOrdersDeliveryInfoService.call(order: order, order_params: order_params)
+    UpdateOrdersDeliveryInfoService.new(order: order, order_params: order_params).call
     expect(order.delivery_type).to eql(delivery.name)
   end
 
   context 'order may not fill delivery' do
     it 'does not change orders status' do
-      UpdateOrdersDeliveryInfoService.call(order: order, order_params: order_params)
+      UpdateOrdersDeliveryInfoService.new(order: order, order_params: order_params).call
       expect(order.in_progress?).to eql false
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe UpdateOrdersDeliveryInfoService do
   context 'order may fill delivery' do
     it 'changes orders status to in_progress' do
       order.status = 'shipping'
-      UpdateOrdersDeliveryInfoService.call(order: order, order_params: order_params)
+      UpdateOrdersDeliveryInfoService.new(order: order, order_params: order_params).call
       expect(order.in_progress?).to eql true
     end
   end

@@ -8,7 +8,7 @@ RSpec.describe OrderDecorator do
 
   it 'formats delivery_name' do
     order.delivery = delivery
-    delivery_name = "#{order.delivery.name} #{number_to_currency(order.delivery_price.to_i, precizion: 2)}"
+    delivery_name = "#{order.delivery_type} #{number_to_currency(order.delivery_price, precizion: 2)}"
     expect(order.formatted_delivery_name).to eql(delivery_name)
   end
 
@@ -24,12 +24,12 @@ RSpec.describe OrderDecorator do
 
   it 'formats delivery_price' do
     order.delivery = delivery
-    delivery_price = number_to_currency(order.delivery_price.to_i, precizion: 2)
+    delivery_price = number_to_currency(order.delivery_price, precizion: 2)
     expect(order.formatted_delivery_price).to eql(delivery_price)
   end
 
   it 'formats total' do
-    total = order.total + order.delivery_price.to_i
+    total = order.total + order.delivery_price
     total = number_to_currency(total, precizion: 2)
     expect(order.formatted_total).to eql(total)
   end
@@ -45,7 +45,8 @@ RSpec.describe OrderDecorator do
   end
 
   it 'formats status' do
-    tag = h.content_tag(:span, h.t(order.status), class: "font-16 in-grey-900 in-grey-900 fw-300")
+    css_class = order.delivered? ? 'text-success' : 'in-grey-900'
+    tag = h.content_tag(:span, h.t(order.status), class: "font-16 #{css_class} fw-300")
     expect(order.formatted_status).to eql(tag)
   end
 end

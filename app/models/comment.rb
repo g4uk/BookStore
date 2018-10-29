@@ -4,5 +4,5 @@ class Comment < ApplicationRecord
 
   enum status: { unprocessed: 0, approved: 1, rejected: 2 }
 
-  scope :approved, -> { includes(:user).where(status: 'approved') }
+  scope :approved, -> { includes(:user).where(status: 'approved').order(:created_at) }
 end

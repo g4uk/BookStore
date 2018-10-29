@@ -118,20 +118,22 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'POST #update_billing_address' do
+  describe 'POST #update_address' do
     before do
       sign_in user
-      user_params[:billing_address_attributes] = address_params
+      address_params[:addressable_id] = user.id
+      address_params[:type] = 'billing'
+      address_params[:country] = 'UA'
     end
 
     it 'returns http success' do
-      post :update_billing_address, xhr: true, params: { id: user.id, user: user_params }
+      post :update_address, xhr: true, params: { id: user.id, address_form: address_params }
       expect(response.code).to eql('200')
     end
 
     context 'with valid attributes' do
       it 'renders update_addresses.js' do
-        post :update_billing_address, xhr: true, params: { id: user.id, user: user_params }
+        post :update_address, xhr: true, params: { id: user.id, address_form: address_params }
         allow(user).to receive_message_chain(:billing_address, :update).and_return true
         expect(response).to render_template('users/update_addresses')
       end
@@ -139,14 +141,14 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with forbidden attributes' do
       it 'generates ParameterMissing error without user params' do
-        expect { post :update_billing_address, xhr: true, params: { id: user.id } }.to raise_error(ActionController::ParameterMissing)
+        expect { post :update_address, xhr: true, params: { id: user.id } }.to raise_error(ActionController::ParameterMissing)
       end
     end
 
     context 'with invalid attributes' do
       it 'renders edit_addresses.js' do
-        user_params[:billing_address_attributes][:address] = nil
-        post :update_billing_address, xhr: true, params: { id: user.id, user: user_params }
+        address_params[:address] = nil
+        post :update_address, xhr: true, params: { id: user.id, address_form: address_params }
         expect(response).to render_template('users/edit_addresses')
       end
     end
@@ -158,14 +160,15 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it 'returns http success' do
-      post :update_password, xhr: true, params: { id: user.id, user: user_params }
+      post :update_password, xhr: true, params: { id: user.id, password_form: user_params }
       expect(response.code).to eql('200')
     end
 
     context 'with valid attributes' do
       it 'renders update_password.js' do
         user_params[:current_password] = user.password
-        post :update_password, xhr: true, params: { id: user.id, user: user_params }
+        user_params[:user_id] = user.id
+        post :update_password, xhr: true, params: { id: user.id, password_form: user_params }
         allow(user).to receive(:update_with_password).and_return true
         expect(response).to render_template('users/update_password')
       end
@@ -179,7 +182,7 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with invalid attributes' do
       it 'renders edit_password.js' do
-        post :update_password, xhr: true, params: { id: user.id, user: { password: nil } }
+        post :update_password, xhr: true, params: { id: user.id, password_form: { password: nil } }
         expect(response).to render_template('users/edit_password')
       end
     end
