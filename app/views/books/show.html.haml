@@ -12,7 +12,7 @@
           - 5.times do |index|
             %i.fa.fa-star.rate-empty{ class: index }
       #comment_form_wrapper
-        = render 'comments/form', comment: @comment
+        = render 'comments/form', comment: @comment_form
   .mb-80
     %h3.in-gold-500.mb-25= "#{ t('.reviews') } (#{ @reviews.size })"
     - @reviews.each do |review|

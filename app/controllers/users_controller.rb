@@ -8,7 +8,11 @@ class UsersController < ApplicationController
 
   before_action :set_addresses, only: %i[update_billing_address update_shipping_address edit]
 
-  def edit; end
+  def edit
+    @billing_form = AssignAddressFormService.new(@user, :billing_address).call
+    @shipping_form = AssignAddressFormService.new(@user, :shipping_address).call
+    @password_form = PasswordForm.new(user_id: @user.id)
+  end
 
   def update
     respond_to do |format|
@@ -20,19 +24,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def update_billing_address
+  def update_address
+    instance_variable_set("@#{address_form_params[:type]}_form".to_sym, AddressForm.new(address_form_params))
+    @updated_address = instance_variable_get("@#{address_form_params[:type]}_form").save
     respond_to do |format|
-      if @user.billing_address.update(user_params[:billing_address_attributes])
-        format.js { render :update_addresses }
-      else
-        format.js { render :edit_addresses }
-      end
-    end
-  end
-
-  def update_shipping_address
-    respond_to do |format|
-      if @user.shipping_address.update(user_params[:shipping_address_attributes])
+      if @updated_address
         format.js { render :update_addresses }
       else
         format.js { render :edit_addresses }
@@ -41,8 +37,10 @@ class UsersController < ApplicationController
   end
 
   def update_password
+    @password_form = PasswordForm.new(password_params)
+    @user = @password_form.save
     respond_to do |format|
-      if @user.update_with_password(user_params)
+      if @user
         bypass_sign_in(@user)
         format.js { render :update_password }
       else
@@ -93,6 +91,10 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  def password_params
+    params.require(:password_form).permit(:password, :password_confirmation, :current_password, :user_id)
+  end
+
   def user_params
     params.require(:user).permit(:password, :password_confirmation, :email,
                                  :current_password,
@@ -100,5 +102,9 @@ class UsersController < ApplicationController
                                    %i[first_name last_name address city zip country phone],
                                  shipping_address_attributes:
                                    %i[first_name last_name address city zip country phone])
+  end
+
+  def address_form_params
+    params.require(:address_form).permit(%i[first_name last_name address city zip country phone type addressable_id])
   end
 end

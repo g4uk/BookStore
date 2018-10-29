@@ -28,7 +28,7 @@ $(document).on('turbolinks:load', function() {
         }
       })
       let rating = $('.rating').children('.rate-star').length;
-      $('#comment_rating').val(rating);
+      $('#comment_form_rating').val(rating);
     });
   }
 });

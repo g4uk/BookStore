@@ -1,6 +1,5 @@
-= form_with model: @user, url: { action: "update_#{address.to_s}" } do |user_form|
+= form_with model: instance_variable_get("@#{type + '_form'}"), url: update_address_users_path do |form|
   .flash_message
-  = user_form.fields_for address do |form|
-    = render 'addresses/form', f: form, type: address.to_s.split('_').first, countries_with_codes: @countries_with_codes
+  = render 'addresses/form', f: form, type: type
   .text-center.general-text-align
-    .btn.btn-default= user_form.submit t('.save')
+    .btn.btn-default= form.submit t('.save')

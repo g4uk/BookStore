@@ -4,9 +4,9 @@ Rails.application.routes.draw do
     ActiveAdmin.routes(self)
     devise_for :admin_users, { class_name: 'User', skip: :omniauth_callbacks }.merge(ActiveAdmin::Devise.config)
     devise_for :users, skip: :omniauth_callbacks, controllers: { registrations: 'users/registrations',
-                                      sessions: 'users/sessions',
-                                      passwords: 'users/passwords',
-                                      omniauth_callbacks: 'users/omniauth_callbacks' }
+                                                                 sessions: 'users/sessions',
+                                                                 passwords: 'users/passwords',
+                                                                 omniauth_callbacks: 'users/omniauth_callbacks' }
     root to: 'pages#home'
     get 'pages/home', to: 'pages#home', as: :home
     get 'order_items/new/:book_id', to: 'order_items#create', as: :create_order_item
@@ -24,9 +24,8 @@ Rails.application.routes.draw do
     resources :checkouts, only: %i[index show update]
     resources :users, only: %i[edit update destroy] do
       collection do
-        patch :update_billing_address
-        patch :update_shipping_address
-        patch :update_password
+        post :update_password
+        post :update_address
         put :quick_signup
         get :login
         get :signup

@@ -9,7 +9,7 @@ class BooksController < ApplicationController
   def show
     @sort_presenter = SortPresenter.new(sort_params)
     @book = Book.includes(images: [photo_attachment: :blob]).find(params[:id]).decorate
-    @comment = @book.comments.new
+    @comment_form = CommentForm.new(book_id: @book.id, user_id: current_user.id)
     @order_item = @book.order_items.new
     @reviews = CommentDecorator.decorate_collection(@book.comments.approved)
   end
