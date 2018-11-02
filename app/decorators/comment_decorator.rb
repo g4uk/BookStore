@@ -6,7 +6,7 @@ class CommentDecorator < Draper::Decorator
   end
 
   def email_first_letter
-    user.email.slice(0, user.email.index('@'))
+    user.email.split('@').first
   end
 
   def verified_reviewer
