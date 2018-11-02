@@ -3,8 +3,6 @@ class PagesController < ApplicationController
     @books = PopularBooksService.new.call
     @latest_books = Book.newest.limit(3).decorate
     @cart = @cart.decorate
-    respond_to do |format|
-      format.html.haml
-    end
+    respond_to :html
   end
 end

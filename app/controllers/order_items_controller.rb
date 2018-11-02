@@ -1,4 +1,6 @@
 class OrderItemsController < ApplicationController
+  include Rectify::ControllerHelpers
+
   DEFAULT_QUANTITY = 1
 
   before_action :set_item, except: :create
@@ -6,11 +8,10 @@ class OrderItemsController < ApplicationController
   def create
     @item_presenter = OrderItemPresenter.new(presenter_params)
     book = Book.find(@item_presenter.book_id)
-    respond_to do |format|
-      if NewOrderItemService.new(book: book, quantity: @item_presenter.quantity, cart: @cart).call
-        format.js
-      else
-        redirect_back(fallback_location: cart_path(@cart), flash: { danger: t('danger.not_saved')})
+    NewOrderItemService.call(book: book, quantity: @item_presenter.quantity, cart: @cart) do
+      on(:ok) { respond_to :js }
+      on(:invalid) do
+        redirect_back(fallback_location: cart_path(session[:cart_id]), flash: { danger: t('danger.not_saved')})
       end
     end
   end

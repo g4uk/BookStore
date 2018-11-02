@@ -1,4 +1,4 @@
-class NewOrderItemService
+class NewOrderItemService < Rectify::Command
   DEFAULT_QUANTITY = 1
 
   def initialize(book:, quantity: DEFAULT_QUANTITY, cart:)
@@ -11,7 +11,8 @@ class NewOrderItemService
   def call
     calculate_quantity
     create_item
-    @current_item.save
+    return broadcast(:ok) if @current_item.save
+    broadcast(:invalid)
   end
 
   private

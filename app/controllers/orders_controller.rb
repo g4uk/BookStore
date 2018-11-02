@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  include Rectify::ControllerHelpers
+
   ORDERS_SCOPES = %i[sorted_paid in_progress in_delivery delivered canceled].freeze
 
   load_and_authorize_resource except: :create
@@ -21,12 +23,14 @@ class OrdersController < ApplicationController
 
   def create
     @order = current_user.orders.not_paid.last || Order.new
-    created_order = CreateOrderService.new(cart: @cart, user: current_user, order: @order).call
-    if created_order
-      session[:order_id] = @order.id
-      redirect_to checkouts_path
-    else
-      redirect_back(fallback_location: cart_path(@cart), notice: created_order.errors.full_messages)
+    CreateOrderService.call(cart: @cart, user: current_user, order: @order) do
+      on(:ok) do
+        session[:order_id] = @order.id
+        redirect_to checkouts_path
+      end
+      on(:invalid) do |errors|
+        redirect_back(fallback_location: cart_path(@cart), notice: errors)
+      end
     end
   end
 

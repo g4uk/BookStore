@@ -1,4 +1,4 @@
-class CreateOrderService
+class CreateOrderService < Rectify::Command
   def initialize(cart:, user:, order:)
     @cart = cart
     @user = user
@@ -7,8 +7,11 @@ class CreateOrderService
 
   def call
     saved_order = fill_order
-    checkout if saved_order
-    saved_order
+    if saved_order
+      checkout
+      return broadcast(:ok)
+    end
+    broadcast(:invalid, saved_order.errors.full_messages)
   end
 
   private

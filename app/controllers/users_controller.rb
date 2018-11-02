@@ -58,12 +58,14 @@ class UsersController < ApplicationController
   def checkout_login; end
 
   def quick_signup
-    user = QuickRegistrationService.new(user_params).call
-    if user.errors.empty?
-      sign_in(:user, user)
-      redirect_to @cart, notice: t('notice.signed_up')
-    else
-      redirect_to checkout_login_users_path, flash: { danger: user.errors.full_messages }
+    QuickRegistrationService.call(user_params) do
+      on(:ok) do |user|
+        sign_in(:user, user)
+        redirect_to cart_path(session[:cart_id]), notice: t('notice.signed_up')
+      end
+      on(:invalid) do |errors|
+        redirect_to checkout_login_users_path, flash: { danger: errors }
+      end
     end
   end
 

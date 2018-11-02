@@ -7,13 +7,21 @@ class QuickRegistrationService < Rectify::Command
 
   def call
     register
-    @user
+    if @user.errors.empty?
+      send_email
+      return broadcast(:ok, @user)
+    else
+      broadcast(:invalid, @user.errors.full_messages)
+    end
   end
 
   private
 
   def register
     @user = User.create(email: @email, password: @password)
-    ApplicationMailer.welcome_email(@user, @password).deliver if @user.errors.empty?
+  end
+
+  def send_email
+    ApplicationMailer.welcome_email(@user, @password).deliver
   end
 end
