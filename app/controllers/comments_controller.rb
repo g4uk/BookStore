@@ -2,16 +2,12 @@ class CommentsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
 
+  respond_to :js
+
   def create
-    @comment = CommentForm.new(comment_params)
-    @comment.user_id = current_user.id
-    respond_to do |format|
-      if @comment.save
-        format.js
-      else
-        format.js { render :new }
-      end
-    end
+    @comment = CommentForm.new(comment_params.merge(user_id: current_user.id))
+    return respond_with @comment if @comment.save
+    render :new
   end
 
   private

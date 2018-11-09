@@ -5,8 +5,9 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: %i[login signup forgot_password change_password 
                                                 checkout_login quick_signup]
   before_action :set_user
-
   before_action :set_addresses, only: %i[update_billing_address update_shipping_address edit]
+
+  respond_to :js, only: %i[update update_address update_password]
 
   def edit
     @billing_form = AssignAddressFormService.new(@user, :billing_address).call
@@ -15,38 +16,23 @@ class UsersController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @user.update_without_password(user_params)
-        format.js
-      else
-        format.js { render :edit }
-      end
-    end
+    return respond_with @user if @user.update_without_password(user_params)
+    render :edit
   end
 
   def update_address
     instance_variable_set("@#{address_form_params[:type]}_form".to_sym, AddressForm.new(address_form_params))
-    @updated_address = instance_variable_get("@#{address_form_params[:type]}_form").save
-    respond_to do |format|
-      if @updated_address
-        format.js { render :update_addresses }
-      else
-        format.js { render :edit_addresses }
-      end
-    end
+    @updated_address = instance_variable_get("@#{address_form_params[:type]}_form")
+    return render :update_addresses if @updated_address.save
+    render :edit_addresses
   end
 
   def update_password
     @password_form = PasswordForm.new(password_params)
     @user = @password_form.save
-    respond_to do |format|
-      if @user
-        bypass_sign_in(@user)
-        format.js { render :update_password }
-      else
-        format.js { render :edit_password }
-      end
-    end
+    return render :edit_password unless @user
+    bypass_sign_in(@user)
+    respond_with @user
   end
 
   def login; end

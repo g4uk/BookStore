@@ -40,7 +40,7 @@ class SortBooksQuery
   end
 
   def paginate
-    @books = Kaminari.paginate_array(@books).page(@page).per(BOOKS_ON_PAGE)
+    BookDecorator.decorate_collection(Kaminari.paginate_array(@books).page(@page).per(BOOKS_ON_PAGE))
   end
 
   def books_sorted_by_order_items_quantity

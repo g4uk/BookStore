@@ -1,15 +1,16 @@
 class OrderItemsController < ApplicationController
   include Rectify::ControllerHelpers
 
+  respond_to :js
+
   DEFAULT_QUANTITY = 1
 
   before_action :set_item, except: :create
 
   def create
     @item_presenter = OrderItemPresenter.new(presenter_params)
-    book = Book.find(@item_presenter.book_id)
-    NewOrderItemService.call(book: book, quantity: @item_presenter.quantity, cart: @cart) do
-      on(:ok) { respond_to :js }
+    NewOrderItemService.call(book_id: @item_presenter.book_id, quantity: @item_presenter.quantity, cart: @cart) do
+      on(:ok) { respond_with @item_presenter }
       on(:invalid) do
         redirect_back(fallback_location: cart_path(session[:cart_id]), flash: { danger: t('danger.not_saved')})
       end
@@ -19,25 +20,19 @@ class OrderItemsController < ApplicationController
   def destroy
     @order_item.destroy
     decorate_items
-    respond_to do |format|
-      format.js
-    end
+    respond_with @order_item
   end
 
   def decrement
     @order_item.decrement(:quantity)
     recalculate_total
-    respond_to do |format|
-      format.js if @order_item.save
-    end
+    respond_with @order_item if @order_item.save
   end
 
   def increment
     @order_item.increment(:quantity)
     recalculate_total
-    respond_to do |format|
-      format.js if @order_item.save
-    end
+    respond_with @order_item if @order_item.save
   end
 
   private

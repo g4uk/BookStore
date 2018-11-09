@@ -1,18 +1,15 @@
 class CartsController < ApplicationController
+  respond_to :js, only: :update
+
   def show
     decorate_order_items
   end
 
   def update
     decorate_order_items
-    @coupon = Coupon.find_by(code: cart_params[:coupon_code])
-    respond_to do |format|
-      if @coupon
-        @cart.update(coupon_code: @coupon.code, coupon_price: @coupon.discount)
-        format.js
-      else
-        format.js { render :edit }
-      end
+    ApplyCouponService.call(code: cart_params[:coupon_code], cart: @cart) do
+      on(:ok) { render :update }
+      on(:invalid) { render :edit }
     end
   end
 

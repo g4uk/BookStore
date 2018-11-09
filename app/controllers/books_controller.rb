@@ -1,17 +1,16 @@
 class BooksController < ApplicationController
   def index
     @sort_presenter = SortPresenter.new(sort_params)
-    sorted_books = SortBooksQuery.new(sort_param: params[:sort], category_id: params[:category], page: params[:page]).call
-    @books = BookDecorator.decorate_collection(sorted_books)
+    @books = SortBooksQuery.new(sort_param: params[:sort], category_id: params[:category], page: params[:page]).call
     respond_to :html, :js
   end
 
   def show
     @sort_presenter = SortPresenter.new(sort_params)
     @book = Book.includes(images: [photo_attachment: :blob]).find(params[:id]).decorate
-    @comment_form = CommentForm.new(book_id: @book.id, user_id: current_user.id)
+    @comment_form = CommentForm.new(book_id: @book.id)
     @order_item = @book.order_items.new
-    @reviews = CommentDecorator.decorate_collection(@book.comments.approved)
+    @reviews = @book.comments.approved.decorate
   end
 
   private

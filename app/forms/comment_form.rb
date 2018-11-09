@@ -21,6 +21,6 @@ class CommentForm
   private
 
   def valid_rating
-    rating = 0 if rating.nil?
+    rating.empty? ? 0 : rating
   end
 end
