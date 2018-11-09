@@ -30,7 +30,7 @@ RSpec.describe OrderItemsController, type: :controller do
       end
 
       it 'creates new item' do
-        expect(NewOrderItemService).to receive_message_chain(:new, :call).and_return true
+        expect(NewOrderItemService).to receive(:call).and_return :ok
         post :create, xhr: true, params: { order_item: order_item_params }
       end
     end

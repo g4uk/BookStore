@@ -10,7 +10,7 @@ class NewOrderItemService < Rectify::Command
 
   def call
     if @current_item
-      calculate_quantity 
+      calculate_quantity
     else
       create_item
     end

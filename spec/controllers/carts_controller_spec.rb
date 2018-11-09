@@ -47,10 +47,6 @@ RSpec.describe CartsController, type: :controller do
         allow(Coupon).to receive_message_chain(:where, :first).and_return coupon
       end
 
-      it 'assigns coupon' do
-        assert_equal coupon, assigns(:coupon)
-      end
-
       it 'renders update.js' do
         expect(response.code).to eql('200')
         expect(response).to render_template('carts/update')

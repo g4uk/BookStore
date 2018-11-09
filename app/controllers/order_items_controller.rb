@@ -1,6 +1,4 @@
 class OrderItemsController < ApplicationController
-  include Rectify::ControllerHelpers
-
   respond_to :js
 
   DEFAULT_QUANTITY = 1
