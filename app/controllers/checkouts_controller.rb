@@ -1,8 +1,4 @@
 class CheckoutsController < ApplicationController
-  STATUSES = { address: :address,
-               shipping: :delivery,
-               in_progress: :payment,
-               payment: :confirm }.freeze
   include Wicked::Wizard
 
   before_action :authenticate_user!
@@ -14,8 +10,7 @@ class CheckoutsController < ApplicationController
     return redirect_to cart_path(@cart) unless @order
     @order_presenter = OrderPresenter.new(@order)
     build_associated_objects
-    current_step = STATUSES[@order.status.to_sym]
-    jump_to(current_step) unless @order.payment? || current_step == step
+    CheckoutStepService.call(order: @order, step: step) { on(:ok) { |current_step| jump_to(current_step) } }
     render_wizard
   end
 

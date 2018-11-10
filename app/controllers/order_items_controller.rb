@@ -23,25 +23,28 @@ class OrderItemsController < ApplicationController
 
   def decrement
     @order_item.decrement(:quantity)
-    recalculate_total
-    respond_with @order_item if @order_item.save
+    OrderItemUpdateService.call(@order_item) do
+      on(:ok) do |item|
+        decorate_items
+        respond_with item
+      end
+    end
   end
 
   def increment
     @order_item.increment(:quantity)
-    recalculate_total
-    respond_with @order_item if @order_item.save
+    OrderItemUpdateService.call(@order_item) do
+      on(:ok) do |item|
+        decorate_items
+        respond_with item
+      end
+    end
   end
 
   private
 
   def set_item
     @order_item = OrderItem.find(params[:id]).decorate
-  end
-
-  def recalculate_total
-    @order_item.total = CartUtilsService.item_total_price(@order_item)
-    decorate_items
   end
 
   def decorate_items
