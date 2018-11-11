@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateOrdersDeliveryInfoService
   def initialize(order:, order_params:)
     @order = order

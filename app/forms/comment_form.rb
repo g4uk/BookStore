@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CommentForm
   include ActiveModel::Model
   include Virtus.model

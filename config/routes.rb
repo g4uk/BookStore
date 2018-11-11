@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  devise_for :users, only: :omniauth_callbacks, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
+  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   scope '(:locale)', locale: /en/ do
     ActiveAdmin.routes(self)
     devise_for :admin_users, { class_name: 'User', skip: :omniauth_callbacks }.merge(ActiveAdmin::Devise.config)
@@ -8,13 +10,12 @@ Rails.application.routes.draw do
                                                                  passwords: 'users/passwords',
                                                                  omniauth_callbacks: 'users/omniauth_callbacks' }
     root to: 'pages#home'
-    get 'pages/home', to: 'pages#home', as: :home
-    get 'order_items/new/:book_id', to: 'order_items#create', as: :create_order_item
-    get 'users/edit/:id', to: 'users#edit', as: :settings
     resources :orders, only: %i[index show create]
-    resources :comments, only: :create
-    resources :books, only: %i[index show]
-    resources :order_items, only: %i[create destroy] do
+    resources :books, only: %i[index show] do
+      resources :comments, only: :create
+      resources :order_items, only: :create
+    end
+    resources :order_items, only: :destroy do
       member do
         put :decrement
         put :increment

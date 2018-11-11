@@ -16,7 +16,7 @@
         %li
           = link_to t(:orders_list), orders_path
         %li
-          = link_to t(:accout), settings_path(current_user)
+          = link_to t(:accout), edit_user_path(current_user)
         %li.divider{role: "separator"}
         %li
           = link_to t(:log_out), destroy_user_session_path, method: :delete 

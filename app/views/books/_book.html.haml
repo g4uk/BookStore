@@ -13,7 +13,7 @@
     .row
       .col-xs-12.col-md-4
         %p.h1.in-gold-500.mt-10= @book.formatted_price
-      = render 'order_items/form', order_item: @order_item
+      = render 'order_items/form', order_item: @order_item, book: @book
     .general-info-wrap.divider-lg
       %p= t('.description')
       %p.lead.small.line-height-2

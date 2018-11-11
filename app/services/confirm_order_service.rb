@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ConfirmOrderService
   def initialize(user:, order:)
     @email = user.email

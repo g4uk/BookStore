@@ -15,7 +15,7 @@
               %p.lead= book.short_description(150)
               %p.lead.small= book.formatted_authors
               .general-align
-                = link_to t(:buy_now), create_order_item_path(book_id: book), class: 'btn btn-primary', remote: true
+                = link_to t(:buy_now), book_order_items_path(book), class: 'btn btn-primary', method: :post, remote: true
   %a.left.carousel-control{href: "#slider", role: "button", 'data-slide': "prev"}
     %span.icon-prev{'aria-hidden': "true"}
     %span.sr-only= t('.previous')

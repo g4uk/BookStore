@@ -52,7 +52,7 @@
                 %li
                   = link_to t(:orders_list), orders_path
                 %li
-                  = link_to t(:accout), settings_path(current_user), class: 'nav-link'
+                  = link_to t(:accout), edit_user_path(current_user), class: 'nav-link'
               - else
                 %li
                   = link_to t(:log_in), login_users_path, class: 'nav-link'

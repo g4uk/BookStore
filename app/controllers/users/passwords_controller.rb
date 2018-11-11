@@ -38,7 +38,7 @@ class Users::PasswordsController < Devise::PasswordsController
     Devise.sign_in_after_reset_password ? after_sign_in_path_for(resource) : login_users_path(resource_name)
   end
 
-  def after_sending_reset_password_instructions_path_for(resource_name)
+  def after_sending_reset_password_instructions_path_for(_resource_name)
     login_users_path if is_navigational_format?
   end
 end

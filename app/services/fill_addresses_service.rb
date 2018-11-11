@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FillAddressesService
   def initialize(order:, order_params:)
     @order = order

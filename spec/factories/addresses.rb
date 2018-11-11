@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :address do
     first_name { FFaker::String.from_regexp(NAME) }

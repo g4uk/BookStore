@@ -5,7 +5,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def create
     self.resource = warden.authenticate(auth_options)
-    if self.resource
+    if resource
       super
     else
       flash[:danger] = I18n.t(:invalid_login)

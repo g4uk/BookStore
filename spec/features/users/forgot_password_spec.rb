@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'forgot_password', type: :feature do
@@ -12,7 +14,7 @@ RSpec.describe 'forgot_password', type: :feature do
   describe 'forgot_password form' do
     context 'valid input' do
       it 'sends email instructions', js: true do
-        allow(Devise::Mailer).to receive(:reset_password_instructions).and_return( double('Devise::Mailer', deliver: true))
+        allow(Devise::Mailer).to receive(:reset_password_instructions).and_return(double('Devise::Mailer', deliver: true))
         within(first('.general-form')) do
           fill_in 'user_email', with: user.email
           submit.click

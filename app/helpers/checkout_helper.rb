@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CheckoutHelper
   def ckeckout_progress_bar_span_content(index, ckeckout_step)
     return index + 1 unless past_step?(ckeckout_step)

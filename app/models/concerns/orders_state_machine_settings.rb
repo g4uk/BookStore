@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module OrdersStateMachineSettings
   extend ActiveSupport::Concern
-  
+
   included do
     include AASM
 

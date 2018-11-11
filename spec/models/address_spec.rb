@@ -10,7 +10,7 @@ RSpec.describe BillingAddress, type: :model do
   let(:valid_phone) { FFaker::PhoneNumber.phone_calling_code }
   let(:valid_zip) { FFaker::String.from_regexp(ZIP) }
   let(:valid_address) { FFaker::String.from_regexp(ADDRESS) }
-  let(:invalid_address) { FFaker::String.from_regexp(EMAIL_REGEXP) }
+  let(:invalid_address) { '@' }
 
   context 'validations' do
     it { is_expected.to validate_presence_of(:first_name) }

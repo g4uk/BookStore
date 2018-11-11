@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BooksController < ApplicationController
   def index
     @sort_presenter = SortPresenter.new(sort_params)
@@ -8,7 +10,7 @@ class BooksController < ApplicationController
   def show
     @sort_presenter = SortPresenter.new(sort_params)
     @book = Book.includes(images: [photo_attachment: :blob]).find(params[:id]).decorate
-    @comment_form = CommentForm.new(book_id: @book.id)
+    @comment_form = CommentForm.new
     @order_item = @book.order_items.new
     @reviews = @book.comments.approved.decorate
   end

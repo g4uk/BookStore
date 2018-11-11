@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CheckoutStepService < Rectify::Command
   STATUSES = { address: :address,
                shipping: :delivery,

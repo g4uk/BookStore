@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 context.instance_eval do
   column 'Number', :id
   column :created_at

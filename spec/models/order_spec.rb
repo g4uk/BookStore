@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-
-  let(:statuses) { { created: 0, address: 1, shipping: 2, in_progress: 3,
-                     payment: 4, in_queue: 5, in_delivery: 6, delivered: 7, canceled: 8 } }
+  let(:statuses) do
+    { created: 0, address: 1, shipping: 2, in_progress: 3,
+      payment: 4, in_queue: 5, in_delivery: 6, delivered: 7, canceled: 8 }
+  end
 
   context 'relations' do
     it { is_expected.to belong_to(:user) }
@@ -19,7 +21,7 @@ RSpec.describe Order, type: :model do
     it { is_expected.to accept_nested_attributes_for(:credit_card).update_only(true) }
   end
   context 'validations' do
-    it { is_expected.to validate_numericality_of(:total).is_greater_than_or_equal_to (0.01)}
+    it { is_expected.to validate_numericality_of(:total).is_greater_than_or_equal_to 0.01 }
   end
   context 'attributes' do
     it { is_expected.to have_db_column(:user_id).of_type(:integer) }

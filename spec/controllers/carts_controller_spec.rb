@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CartsController, type: :controller do
@@ -43,7 +45,7 @@ RSpec.describe CartsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid attributes' do
       before do
-        put :update, xhr: true, params: { id: cart.id, cart: { coupon_code: coupon.code} }
+        put :update, xhr: true, params: { id: cart.id, cart: { coupon_code: coupon.code } }
         allow(Coupon).to receive_message_chain(:where, :first).and_return coupon
       end
 

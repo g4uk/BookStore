@@ -5,5 +5,5 @@
       .general-thumb-link-wrap
         = link_to book_path(book, sort: @sort_params, category: @category_id), class: 'thumb-hover-link link-to-book' do
           %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
-        = link_to create_order_item_path(book_id: book), class: 'thumb-hover-link add-to-cart', remote: true do
+        = link_to book_order_items_path(book), class: 'thumb-hover-link add-to-cart', method: :post, remote: true do
           %i.fa.fa-shopping-cart.thumb-icon

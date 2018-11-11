@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CopyInfoToOrderService
   def initialize(options = {})
     options.each_pair do |key, value|

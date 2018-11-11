@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PopularBooksService
   def initialize
     @grouped_by_category = {}

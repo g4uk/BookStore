@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderItemsController < ApplicationController
   respond_to :js
 
@@ -10,7 +12,7 @@ class OrderItemsController < ApplicationController
     NewOrderItemService.call(book_id: @item_presenter.book_id, quantity: @item_presenter.quantity, cart: @cart) do
       on(:ok) { respond_with @item_presenter }
       on(:invalid) do
-        redirect_back(fallback_location: cart_path(session[:cart_id]), flash: { danger: t('danger.not_saved')})
+        redirect_back(fallback_location: cart_path(session[:cart_id]), flash: { danger: t('danger.not_saved') })
       end
     end
   end

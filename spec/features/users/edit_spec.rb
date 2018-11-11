@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'edit', type: :feature do
@@ -10,7 +12,7 @@ RSpec.describe 'edit', type: :feature do
 
   before do
     login_as user
-    visit settings_path(id: user.id, locale: locale)
+    visit edit_user_path(id: user.id, locale: locale)
   end
   describe 'address tab' do
     context 'invalid address' do

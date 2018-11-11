@@ -12,7 +12,7 @@ RSpec.describe Book, type: :model do
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:price) }
     it { expect(book).to validate_uniqueness_of(:title) }
-    it { is_expected.to validate_numericality_of(:price).is_greater_than_or_equal_to (0.01)}
+    it { is_expected.to validate_numericality_of(:price).is_greater_than_or_equal_to 0.01 }
     it { is_expected.to validate_length_of(:title).is_at_most(string_length) }
     it { is_expected.to validate_length_of(:materials).is_at_most(string_length) }
     it { is_expected.to validate_inclusion_of(:publishing_year).in_range(minimum_year..this_year) }

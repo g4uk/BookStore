@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderItemPresenter < BasePresenter
   DEFAULT_QUANTITY = 1
 

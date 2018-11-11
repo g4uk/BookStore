@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FindOrderQuery
   def initialize(order_id:, step:)
     @order_id = order_id

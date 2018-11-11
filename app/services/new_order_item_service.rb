@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NewOrderItemService < Rectify::Command
   DEFAULT_QUANTITY = 1
 
@@ -22,7 +24,7 @@ class NewOrderItemService < Rectify::Command
 
   def create_item
     @current_item = @cart.order_items.new(book_id: @book.id, book_name: @book.title,
-                                          book_price: @book.price, total: @book.price, 
+                                          book_price: @book.price, total: @book.price,
                                           quantity: @quantity)
     @current_item.image.attach(@book.images.first.photo.blob) if @book.images.present?
   end

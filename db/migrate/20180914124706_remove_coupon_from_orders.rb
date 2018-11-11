@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveCouponFromOrders < ActiveRecord::Migration[5.2]
   def change
     remove_column :orders, :coupon_code, :string

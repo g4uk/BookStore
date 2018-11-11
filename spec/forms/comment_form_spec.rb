@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-COMMENT = %r/\A[a-zA-Z0-9\s\.!,;#$%&'*+\/=?^_`{\(|\)}~-]+{1,500}\Z/.freeze
+COMMENT = %r/\A[a-zA-Z0-9\s\.!,;#$%&'*+\/=?^_`{\(|\)}~-]+{1,500}\Z/
 
 RSpec.describe CommentForm, type: :model do
   let(:title_length) { 80 }
   let(:text_length) { 500 }
   let(:valid_string) { FFaker::String.from_regexp(COMMENT) }
   let(:invalid_string) { FFaker::Internet.disposable_email }
-  let(:statuses) { {unprocessed: 0, approved: 1, rejected: 2} }
+  let(:statuses) { { unprocessed: 0, approved: 1, rejected: 2 } }
 
   context 'validations' do
     it { is_expected.to validate_presence_of(:title) }

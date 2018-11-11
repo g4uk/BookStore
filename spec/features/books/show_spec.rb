@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'books/show.html.haml', type: :feature do
@@ -67,7 +69,7 @@ RSpec.describe 'books/show.html.haml', type: :feature do
 
     context 'valid comment' do
       it 'shows alert', js: true do
-        first('.rating_wrapper').all('.fa-star').each { |star| star.click }
+        first('.rating_wrapper').all('.fa-star').each(&:click)
         within(comment_form_wrapper) do
           fill_in 'title', with: comment.title
           fill_in 'review', with: comment.text

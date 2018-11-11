@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SortPresenter < BasePresenter
   SORT_CONDITIONS = ['created_at desc',
                      'popular',

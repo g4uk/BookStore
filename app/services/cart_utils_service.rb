@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CartUtilsService
   class << self
     def subtotal(order_items)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.setup do |config|
   # == Site Title
   #
@@ -284,7 +286,7 @@ ActiveAdmin.setup do |config|
   # By default, the footer shows the current Active Admin version. You can
   # override the content of the footer here.
   #
-  config.footer = "Bookstore for RG #{ Time.current.year }"
+  config.footer = "Bookstore for RG #{Time.current.year}"
 
   # == Sorting
   #

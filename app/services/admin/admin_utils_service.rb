@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::AdminUtilsService
   class << self
     def authors_with_ids(authors = Author.all)

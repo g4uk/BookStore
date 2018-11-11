@@ -1,4 +1,4 @@
-= form_with model: @order_item do |f|
+= form_with model: order_item, url: book_order_items_path(book) do |f|
   .col-xs-5.col-md-3
     .input-group.general-position
       = link_to '#', class: 'input-link decrement', remote: true do

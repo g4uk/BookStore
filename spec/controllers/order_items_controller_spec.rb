@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe OrderItemsController, type: :controller do
@@ -10,7 +12,7 @@ RSpec.describe OrderItemsController, type: :controller do
     context 'assigns' do
       it 'assigns @item_presenter' do
         allow(Book).to receive(:find).and_return book
-        post :create, xhr: true, params: { order_item: order_item_params }
+        post :create, xhr: true, params: { order_item: order_item_params, book_id: book.id }
         expect(assigns(:item_presenter)).to be_a OrderItemPresenter
       end
     end
@@ -18,7 +20,7 @@ RSpec.describe OrderItemsController, type: :controller do
     context 'with valid attributes' do
       before do
         allow(Book).to receive(:find).and_return book
-        post :create, xhr: true, params: { order_item: order_item_params }
+        post :create, xhr: true, params: { order_item: order_item_params, book_id: book.id }
       end
 
       it 'renders create.js' do
@@ -31,7 +33,7 @@ RSpec.describe OrderItemsController, type: :controller do
 
       it 'creates new item' do
         expect(NewOrderItemService).to receive(:call).and_return :ok
-        post :create, xhr: true, params: { order_item: order_item_params }
+        post :create, xhr: true, params: { order_item: order_item_params, book_id: book.id }
       end
     end
   end

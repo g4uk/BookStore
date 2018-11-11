@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
@@ -5,7 +7,7 @@ RSpec.describe Comment, type: :model do
   let(:text_length) { 500 }
   let(:valid_string) { FFaker::String.from_regexp(COMMENT) }
   let(:invalid_string) { FFaker::Internet.disposable_email }
-  let(:statuses) { {unprocessed: 0, approved: 1, rejected: 2} }
+  let(:statuses) { { unprocessed: 0, approved: 1, rejected: 2 } }
 
   context 'relations' do
     it { is_expected.to belong_to(:book) }

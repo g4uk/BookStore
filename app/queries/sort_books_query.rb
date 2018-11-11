@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SortBooksQuery
   BOOKS_ON_PAGE = 12
 

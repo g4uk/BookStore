@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderPresenter < BasePresenter
   def initialize(order)
     @order = order

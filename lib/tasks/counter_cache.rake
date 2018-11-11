@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 desc 'Counter cache for category has many books'
 
 task book_counter: :environment do

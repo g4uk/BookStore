@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 context.instance_eval do
   selectable_column
   column :main_image do |book|
@@ -22,6 +24,6 @@ context.instance_eval do
   end
   actions defaults: false, only: :delete do |book|
     link_to t(:delete), admin_book_path(book), method: :delete,
-                                                data: { confirm: t(:destroy_confirmation) }
+                                               data: { confirm: t(:destroy_confirmation) }
   end
 end

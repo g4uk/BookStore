@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class QuickRegistrationService < Rectify::Command
   def initialize(params)
     @email = params[:email]

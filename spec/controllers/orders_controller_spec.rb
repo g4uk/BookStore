@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
@@ -104,7 +106,7 @@ RSpec.describe OrdersController, type: :controller do
       end
 
       it 'creates order' do
-        expect(CreateOrderService).to receive_message_chain(:new, :call).and_return true
+        expect(CreateOrderService).to receive_message_chain(:call).and_return :ok
         post :create
       end
 

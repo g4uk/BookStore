@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Coupon < ApplicationRecord
   validates :code, presence: true
   validates :code, format: { with: COUPON }

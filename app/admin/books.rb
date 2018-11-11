@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Book do
   menu priority: 1
 
@@ -9,7 +11,7 @@ ActiveAdmin.register Book do
 
   permit_params :title, :description, :price, :publishing_year, :dimensions, :materials,
                 :category_id, images: [], author_ids: [],
-                images_attributes: [:id, :book_id, :photo]
+                              images_attributes: %i[id book_id photo]
 
   index do
     render 'index', context: self

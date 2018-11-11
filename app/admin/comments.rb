@@ -1,4 +1,6 @@
-ActiveAdmin.register Comment, :as => 'Reviews' do
+# frozen_string_literal: true
+
+ActiveAdmin.register Comment, as: 'Reviews' do
   menu priority: 5
 
   includes :book, :user
@@ -22,7 +24,6 @@ ActiveAdmin.register Comment, :as => 'Reviews' do
   end
 
   controller do
-
     before_action :set_review, only: :update
 
     def update
@@ -40,5 +41,4 @@ ActiveAdmin.register Comment, :as => 'Reviews' do
       params.permit(:status)
     end
   end
-
 end

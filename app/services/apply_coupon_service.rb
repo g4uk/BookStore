@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplyCouponService < Rectify::Command
   def initialize(code:, cart:)
     @coupon = Coupon.find_by(code: code)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
@@ -5,7 +7,7 @@ class CommentsController < ApplicationController
   respond_to :js
 
   def create
-    @comment = CommentForm.new(comment_params.merge(user_id: current_user.id))
+    @comment = CommentForm.new(comment_params.merge(user_id: current_user.id, book_id: params[:book_id]))
     return respond_with @comment if @comment.save
     render :new
   end

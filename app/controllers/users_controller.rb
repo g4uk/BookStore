@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  load_and_authorize_resource except: %i[login signup forgot_password change_password 
+  load_and_authorize_resource except: %i[login signup forgot_password change_password
                                          checkout_login quick_signup]
 
-  before_action :authenticate_user!, except: %i[login signup forgot_password change_password 
+  before_action :authenticate_user!, except: %i[login signup forgot_password change_password
                                                 checkout_login quick_signup]
   before_action :set_user
   before_action :set_addresses, only: %i[update_billing_address update_shipping_address edit]

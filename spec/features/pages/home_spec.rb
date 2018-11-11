@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'home', type: :feature do
@@ -81,7 +83,7 @@ RSpec.describe 'home', type: :feature do
         within(account_dropdown) do
           click_link 'Settings'
         end
-        expect(current_path).to eq settings_path(id: user.id, locale: locale)
+        expect(current_path).to eq edit_user_path(id: user.id, locale: locale)
       end
 
       it 'has link to orders list' do
@@ -137,7 +139,7 @@ RSpec.describe 'home', type: :feature do
         within(footer_navbar) do
           click_link 'Settings'
         end
-        expect(current_path).to eq settings_path(id: user.id, locale: locale)
+        expect(current_path).to eq edit_user_path(id: user.id, locale: locale)
       end
 
       it 'has link to orders list' do

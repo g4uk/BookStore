@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BookDecorator < Draper::Decorator
   include ActionView::Helpers::NumberHelper
 
@@ -16,7 +18,7 @@ class BookDecorator < Draper::Decorator
   end
 
   def main_image(css_class)
-    h.image_tag images.first.photo, class: css_class unless images.blank? 
+    h.image_tag images.first.photo, class: css_class unless images.blank?
   end
 
   def short_description(length)

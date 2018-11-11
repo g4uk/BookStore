@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ffaker'
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
@@ -25,7 +27,7 @@ user = User.create!(
 user.add_role :admin
 
 categories = []
-5.times do |index|
+5.times do |_index|
   categories << Category.create!(
     name: FFaker::String.from_regexp(NAME)
   )
@@ -37,7 +39,7 @@ author = Author.create!(
 )
 
 books = []
-categories.each_with_index do |category, index|
+categories.each_with_index do |category, _index|
   4.times do
     books << Book.create!(
       category: category,
@@ -46,7 +48,7 @@ categories.each_with_index do |category, index|
       description: FFaker::Lorem.paragraphs,
       publishing_year: Date.today.year,
       dimensions: FFaker::Lorem.words,
-      materials: FFaker::Lorem.words,
+      materials: FFaker::Lorem.words
     )
   end
 end

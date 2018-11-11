@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe PaymentService do
@@ -9,7 +11,7 @@ RSpec.describe PaymentService do
   before do
     order_params[:credit_card_attributes] = { number: credit_card_number }
   end
-  
+
   context 'order may not fill payment' do
     it 'adds credit_card to order' do
       PaymentService.new(order: order, order_params: order_params, cart: cart).call

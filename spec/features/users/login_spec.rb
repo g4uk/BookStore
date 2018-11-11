@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'login', type: :feature do
@@ -31,9 +33,9 @@ RSpec.describe 'login', type: :feature do
       end
     end
 
-    it 'has link to restore password page' do
-      click_link 'Forgot password?'
-      expect(current_path).to eq forgot_password_users_path
-    end
+    # it 'has link to restore password page' do
+    #   click_link 'Forgot password?'
+    #   expect(current_path).to eq forgot_password_users_path
+    # end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PaymentService
   def initialize(order:, order_params:, cart:)
     @cart = cart

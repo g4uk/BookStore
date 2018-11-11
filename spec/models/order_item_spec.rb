@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe OrderItem, type: :model do
@@ -15,8 +16,8 @@ RSpec.describe OrderItem, type: :model do
     it { is_expected.to validate_presence_of(:book_name) }
     it { is_expected.to validate_presence_of(:total) }
     it { is_expected.to validate_presence_of(:book_price) }
-    it { is_expected.to validate_numericality_of(:book_price).is_greater_than_or_equal_to (0.01)}
-    it { is_expected.to validate_numericality_of(:total).is_greater_than_or_equal_to (0.01)}
-    it { is_expected.to validate_numericality_of(:quantity).is_greater_than_or_equal_to (1)}
+    it { is_expected.to validate_numericality_of(:book_price).is_greater_than_or_equal_to 0.01 }
+    it { is_expected.to validate_numericality_of(:total).is_greater_than_or_equal_to 0.01 }
+    it { is_expected.to validate_numericality_of(:quantity).is_greater_than_or_equal_to 1 }
   end
 end

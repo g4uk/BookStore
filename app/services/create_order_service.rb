@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOrderService < Rectify::Command
   def initialize(cart:, user:, order:)
     @cart = cart
