@@ -11,14 +11,13 @@ Rails.application.routes.draw do
                                                                  omniauth_callbacks: 'users/omniauth_callbacks' }
     root to: 'pages#home'
     resources :orders, only: %i[index show create]
-    resources :books, only: %i[index show] do
+    resources :books, shallow: true, only: %i[index show] do
       resources :comments, only: :create
-      resources :order_items, only: :create
-    end
-    resources :order_items, only: :destroy do
-      member do
-        put :decrement
-        put :increment
+      resources :order_items, only: %i[create destroy] do
+        member do
+          put :decrement
+          put :increment
+        end
       end
     end
     resources :carts, only: %i[show update]
