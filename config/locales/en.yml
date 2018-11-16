@@ -154,6 +154,10 @@ en:
       order: 'Order #'
       back_to_store: 'Back to Store'
 
+  addresses:
+    settings_address:
+      save: 'Save'
+
   users:
     login_form:
       forgot_password: 'Forgot password?'

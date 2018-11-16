@@ -25,15 +25,14 @@ Rails.application.routes.draw do
     resources :users, only: %i[edit update destroy] do
       collection do
         post :update_password
-        post :update_address
-        put :quick_signup
         get :login
         get :signup
         get :forgot_password
         get :change_password
-        get :checkout_login
       end
     end
+    resources :quick_signups, only: %i[new create]
+    resources :addresses, only: :create
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

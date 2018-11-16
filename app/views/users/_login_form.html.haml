@@ -1,5 +1,5 @@
 = form_for(:user, url: session_path(:user), html: { class: 'general-form' }) do |f|
-  = render partial: 'flash'
+  = render partial: 'users/flash'
   .form-group.mb-30
     = f.label :email, t(:enter_email), class: 'control-label input-label'
     = f.text_field :email, class: 'form-control', placeholder: true

@@ -48,18 +48,6 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'GET #checkout_login' do
-    it 'returns http success' do
-      get :checkout_login
-      expect(response).to have_http_status('200')
-    end
-
-    it 'renders checkout_login template' do
-      get :checkout_login
-      expect(response).to render_template(:checkout_login)
-    end
-  end
-
   describe 'GET #change_password' do
     it 'returns http success' do
       get :change_password
@@ -120,42 +108,6 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'POST #update_address' do
-    before do
-      sign_in user
-      address_params[:addressable_id] = user.id
-      address_params[:type] = 'billing'
-      address_params[:country] = 'UA'
-    end
-
-    it 'returns http success' do
-      post :update_address, xhr: true, params: { id: user.id, address_form: address_params }
-      expect(response.code).to eql('200')
-    end
-
-    context 'with valid attributes' do
-      it 'renders update_addresses.js' do
-        post :update_address, xhr: true, params: { id: user.id, address_form: address_params }
-        allow(user).to receive_message_chain(:billing_address, :update).and_return true
-        expect(response).to render_template('users/update_addresses')
-      end
-    end
-
-    context 'with forbidden attributes' do
-      it 'generates ParameterMissing error without user params' do
-        expect { post :update_address, xhr: true, params: { id: user.id } }.to raise_error(ActionController::ParameterMissing)
-      end
-    end
-
-    context 'with invalid attributes' do
-      it 'renders edit_addresses.js' do
-        address_params[:address] = nil
-        post :update_address, xhr: true, params: { id: user.id, address_form: address_params }
-        expect(response).to render_template('users/edit_addresses')
-      end
-    end
-  end
-
   describe 'POST #update_password' do
     before do
       sign_in user
@@ -186,35 +138,6 @@ RSpec.describe UsersController, type: :controller do
       it 'renders edit_password.js' do
         post :update_password, xhr: true, params: { id: user.id, password_form: { password: nil } }
         expect(response).to render_template('users/edit_password')
-      end
-    end
-  end
-
-  describe 'POST #quick_signup' do
-    it 'returns http success' do
-      post :quick_signup, params: { user: user_params }
-      expect(response.code).to eql('302')
-    end
-
-    context 'with valid attributes' do
-      it 'redirects to carts/show' do
-        post :quick_signup, params: { user: user_params }
-        allow(User).to receive(:create).and_return user
-        allow(ApplicationMailer).to receive_message_chain(:welcome_email, :deliver).and_return true
-        expect(response).to redirect_to("/en/carts/#{session[:cart_id]}")
-      end
-    end
-
-    context 'with forbidden attributes' do
-      it 'generates ParameterMissing error without user params' do
-        expect { post :quick_signup }.to raise_error(ActionController::ParameterMissing)
-      end
-    end
-
-    context 'with invalid attributes' do
-      it 'redirects to checkout_login' do
-        post :quick_signup, params: { user: { email: nil } }
-        expect(response).to redirect_to('/en/users/checkout_login')
       end
     end
   end

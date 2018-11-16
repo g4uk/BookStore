@@ -4,31 +4,13 @@ require 'rails_helper'
 
 RSpec.describe 'confirm', type: :feature do
   let(:user) { create(:user) }
-  let(:order) { create(:order) }
-  let(:book) { create(:book) }
-  let(:delivery) { create(:delivery).decorate }
-  let(:credit_card) { create(:credit_card) }
-  let(:locale) { 'en' }
+  let(:order) { create(:order, status: :payment) }
   let(:submit) { first('input[name="commit"]') }
 
   before do
-    order.delivery_price = delivery.price
+    inject_session order_id: order.id
     login_as user
-    visit book_path(id: book.id, locale: locale)
-    first('input[name="commit"]').click
-    first('.shop-link').click
-    click_link 'Checkout'
-    within(first('.mb-40')) do
-      first('select').all(:css, 'option')[3].select_option
-    end
-    first('.checkbox-icon').click
-    first('input[name="commit"]').click
-    first('.radio-icon').click
-    first('input[name="commit"]').click
-    within(first('.form-group')) do
-      fill_in 'cardName', with: credit_card.number
-    end
-    submit.click
+    visit 'en/checkouts/confirm'
   end
 
   it 'is on the confirm step', js: true do

@@ -8,7 +8,7 @@ class AssignAddressFormService
   end
 
   def call
-    @address ? address_form : AddressForm.new(type: address_class_name)
+    @address ? address_form : AddressForm.new(type: address_class_name, addressable_id: @user.id)
   end
 
   private

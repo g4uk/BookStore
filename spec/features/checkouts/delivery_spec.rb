@@ -4,24 +4,16 @@ require 'rails_helper'
 
 RSpec.describe 'checkout/address', type: :feature do
   let(:user) { create(:user) }
-  let(:order) { create(:order) }
+  let(:order) { create(:order, status: :shipping) }
   let(:book) { create(:book) }
   let(:delivery) { create(:delivery).decorate }
-  let(:locale) { 'en' }
   let(:submit) { first('input[name="commit"]') }
 
   before do
+    inject_session order_id: order.id
     order.delivery_price = delivery.price
     login_as user
-    visit book_path(id: book.id, locale: locale)
-    first('input[name="commit"]').click
-    first('.shop-link').click
-    click_link 'Checkout'
-    within(first('.mb-40')) do
-      first('select').all(:css, 'option')[3].select_option
-    end
-    first('.checkbox-icon').click
-    first('input[name="commit"]').click
+    visit 'en/checkouts/delivery'
   end
 
   it 'is on the delivery step', js: true do

@@ -10,7 +10,7 @@ RSpec.describe 'signup', type: :feature do
   let(:form) { first('.mb-60').first('.general-form') }
 
   before do
-    visit checkout_login_users_path
+    visit new_quick_signup_path
   end
 
   describe 'registration form' do

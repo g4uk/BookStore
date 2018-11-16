@@ -43,6 +43,6 @@ class OrdersController < ApplicationController
   end
 
   def checkout_authentication
-    redirect_to checkout_login_users_path, notice: t('notice.login') unless user_signed_in?
+    redirect_to new_quick_signup_path, notice: t('notice.login') unless user_signed_in?
   end
 end

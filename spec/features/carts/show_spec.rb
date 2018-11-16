@@ -6,34 +6,19 @@ include ActionView::Helpers::NumberHelper
 
 RSpec.describe 'show', type: :feature do
   let(:coupon) { create(:coupon) }
+  let(:cart) { create(:cart, order_items_count: 1) }
+  let(:cart_id) { cart.id }
+  let(:order_item) { cart.order_items.first.decorate }
   let(:user) { create(:user) }
-  let(:locale) { 'en' }
-  let(:book) { create(:book).decorate }
-  let(:subtotal) { first('.item-subtotal').text }
 
   before do
-    visit book_path(id: book.id, locale: locale)
-    2.times { first('input[name="commit"]').click }
-    first('.shop-link').click
+    inject_session cart_id: cart_id
+    visit cart_path(id: cart_id)
   end
 
   describe 'order items' do
-    def formatted_price
-      number_to_currency(book.price * 2, precizion: 2)
-    end
-
     it 'lists order items', js: true do
-      expect(page).to have_content(book.title)
-    end
-
-    it 'increments item quantity', js: true do
-      first('.increment').click
-      expect(subtotal).to eql formatted_price
-    end
-
-    it 'decrements item quantity', js: true do
-      first('.decrement').click
-      expect(subtotal).to eql formatted_price
+      expect(page).to have_content(order_item.book_name)
     end
 
     it 'destroys item', js: true do
@@ -69,7 +54,7 @@ RSpec.describe 'show', type: :feature do
     context 'guest' do
       it 'goes to checkout_login' do
         click_link 'Checkout'
-        expect(current_path).to eq checkout_login_users_path
+        expect(current_path).to eq new_quick_signup_path
       end
     end
     context 'signed in user', js: true do

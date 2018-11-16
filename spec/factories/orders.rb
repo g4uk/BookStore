@@ -19,7 +19,7 @@ FactoryBot.define do
     end
 
     transient do
-      order_items_count { 4 }
+      order_items_count { 2 }
     end
 
     after(:create) do |order, evaluator|

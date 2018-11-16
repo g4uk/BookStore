@@ -4,23 +4,18 @@ require 'rails_helper'
 
 RSpec.describe 'address', type: :feature do
   let(:user) { create(:user) }
-  let(:order) { create(:order) }
+  let(:order) { create(:order, status: :address) }
   let(:delivery) { create(:delivery) }
-  let(:locale) { 'en' }
   let(:submit) { first('input[name="commit"]') }
   let(:billing_address) { user.billing_address }
   let(:shipping_address) { user.shipping_address }
   let(:addresses) { { 'billing_address': billing_address, 'shipping_address': shipping_address } }
   let(:form) { first("edit_order_#{order.id}") }
-  let(:book) { create(:book) }
 
   before do
-    order.delivery_price = delivery.price
+    inject_session order_id: order.id
     login_as user
-    visit book_path(id: book.id, locale: locale)
-    first('input[name="commit"]').click
-    first('.shop-link').click
-    click_link 'Checkout'
+    visit checkouts_path
   end
 
   describe 'address form' do

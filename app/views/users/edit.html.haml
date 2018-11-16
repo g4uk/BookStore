@@ -18,12 +18,12 @@
           .visible-xs.visible-sm
             %h3.general-subtitle.mt-0= t(:billing_address)
           #edit_billing_address_form_wrapper
-            = render 'form', type: 'billing'
+            = render 'addresses/settings_address', type: 'billing', user: @user
         .col-md-5.col-md-offset-1.mb-25
           .visible-xs.visible-sm
             %h3.general-subtitle.mt-0= t(:shipping_address)
           #edit_shipping_address_form_wrapper
-            = render 'form', type: 'shipping'
+            = render 'addresses/settings_address', type: 'shipping', user: @user
     #privacy.tab-pane.fade{role: "tabpanel"}
       .row.mb-60
         .col-sm-5
