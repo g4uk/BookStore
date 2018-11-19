@@ -17,8 +17,7 @@ class CopyInfoToOrderService
   private
 
   def assign_order_attributes
-    total = CartUtilsService.total_price(@cart)
-    @order.assign_attributes(user: @user, total: total)
+    @order.assign_attributes(user: @user, total: @cart.total_price)
   end
 
   def copy_addresses

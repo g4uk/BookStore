@@ -13,6 +13,6 @@ class OrderItemUpdateService < Rectify::Command
   private
 
   def recalculate_total
-    @item.total = CartUtilsService.item_total_price(@item)
+    @item.total = @item.book_price * @item.quantity
   end
 end

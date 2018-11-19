@@ -5,7 +5,7 @@ class CartDecorator < Draper::Decorator
   delegate_all
 
   def formatted_subtotal
-    number_to_currency(CartUtilsService.subtotal(order_items), precizion: 2)
+    number_to_currency(object.subtotal, precizion: 2)
   end
 
   def formatted_discount
@@ -13,10 +13,6 @@ class CartDecorator < Draper::Decorator
   end
 
   def formatted_total
-    number_to_currency(CartUtilsService.total_price(object), precizion: 2)
-  end
-
-  def total_quantity
-    CartUtilsService.total_quantity(order_items)
+    number_to_currency(object.total_price, precizion: 2)
   end
 end
