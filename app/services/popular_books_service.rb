@@ -14,7 +14,7 @@ class PopularBooksService
   def group_by_order_items_quantity(books)
     grouped_books = {}
     books.each { |book| grouped_books[book] = book.order_items.sum(&:quantity) }
-    grouped_books.sort_by { |_book, order_items_number| order_items_number }.reverse.to_h
+    grouped_books.sort_by { |_book, order_items_number| -order_items_number }.to_h
   end
 
   private

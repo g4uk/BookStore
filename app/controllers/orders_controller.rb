@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   def index
     @scopes = ORDERS_SCOPES
     @scope = params[:scope] ? params[:scope].to_sym : :sorted_paid
-    @orders = current_user.orders.send(@scope).decorate
+    @orders = current_user.orders.public_send(@scope).decorate
   end
 
   def show

@@ -38,8 +38,8 @@ class AddressForm
   end
 
   def update_users_address(type)
-    @user.send("build_#{type}_address".to_sym) unless @user.send("#{type}_address".to_sym)
-    @user.send("#{type}_address".to_sym).update(first_name: first_name, last_name: last_name, address: address,
+    @user.public_send("build_#{type}_address".to_sym) unless @user.public_send("#{type}_address".to_sym)
+    @user.public_send("#{type}_address".to_sym).update(first_name: first_name, last_name: last_name, address: address,
                                                 country: country_name, city: city, zip: zip, phone: phone)
   end
 

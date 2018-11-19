@@ -3,7 +3,7 @@
 context.instance_eval do
   selectable_column
   column :main_image do |book|
-    image_tag(Admin::AdminUtilsService.book_image(book.images.includes(:photo_attachment).first)) unless book.images.blank?
+    image_tag(book_image(book.images.includes(:photo_attachment).first)) unless book.images.blank?
   end
   column :images_number do |book|
     book.images.size
@@ -11,7 +11,7 @@ context.instance_eval do
   column :category
   column :title
   column :authors do |book|
-    Admin::AdminUtilsService.authors_links(book.authors)
+    authors_list(book.authors)
   end
   column :description do |book|
     book.description.truncate(150).html_safe unless book.description.blank?

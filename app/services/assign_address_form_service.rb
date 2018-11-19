@@ -2,7 +2,7 @@
 
 class AssignAddressFormService
   def initialize(user, type)
-    @address = user.send(type)
+    @address = user.public_send(type)
     @type = type
     @user = user
   end
