@@ -5,4 +5,3 @@ $(document).on('turbolinks:load', function() {
     removeButton.toggleClass('btn-default');
   });
 });
-

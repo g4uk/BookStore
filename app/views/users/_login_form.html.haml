@@ -6,7 +6,7 @@
   .form-group.mb-30
     = f.label :password, t('.password'), class: 'control-label input-label'
     = f.password_field :password, class: 'form-control', placeholder: true
-    =# link_to t('.forgot_password'), forgot_password_users_path, class: 'help-block in-gold-500'
+    = link_to t('.forgot_password'), forgot_password_users_path, class: 'help-block in-gold-500'
   .form-group.checkbox.text-center.mb-30
     %label.checkbox-label
       = f.check_box :remember_me, class: 'checkbox-input', hidden: 'true'
