@@ -13,7 +13,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-
+/.rake_tasks~
 # Ignore uploaded files in development
 /storage/*
 
