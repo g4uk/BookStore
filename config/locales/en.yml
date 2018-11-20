@@ -189,7 +189,30 @@ en:
       characters_minimum: 'characters minimum'
       change_password: 'Change Password'
 
-
-
-
-
+  admin_users:
+    confirmations:
+      new:
+        resend: 'Resend confirmation instructions'
+    passwords:
+      edit:
+        new_password: 'New password'
+        confirm: 'Confirm new password'
+        change_password: 'Change my password'
+      new:
+        forgot_password: 'Forgot your password?'
+        send_instructions: 'Send me reset password instructions'
+      registrations:
+        edit: 'Currently waiting confirmation for:'
+        blank: '(leave blank if you don't want to change it)'
+        minimum: 'characters minimum'
+        current_password: '(we need your current password to confirm your changes)'
+      new:
+        minimum: 'characters minimum'
+      shared:
+        links:
+          forgot_password: 'Forgot your password?'
+          confirm_instructions: 'Didn't receive confirmation instructions?'
+          unlock_instructions: 'Didn't receive unlock instructions?'
+      unlock:
+        new:
+          resend: 'Resend unlock instructions'
