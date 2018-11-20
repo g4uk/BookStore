@@ -36,7 +36,7 @@ FactoryBot.define do
       end
 
       after(:create) do |book, evaluator|
-        create_list(:image, evaluator.images_count, books: book)
+        create_list(:image, evaluator.images_count, book: book)
       end
     end
   end

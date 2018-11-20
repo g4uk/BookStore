@@ -24,7 +24,7 @@ RSpec.describe CopyInfoToOrderService do
   end
 
   it 'assigns order attributes' do
-    total = CartUtilsService.total_price(cart)
+    total = cart.total_price
     expect(result).to eql(true)
   end
 end

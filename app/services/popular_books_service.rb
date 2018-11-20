@@ -31,6 +31,7 @@ class PopularBooksService
   end
 
   def decorate_books
-    BookDecorator.decorate_collection(@grouped_by_category.values.first(4))
+    @books = BookDecorator.decorate_collection(@grouped_by_category.values.first(4))
+    @books
   end
 end

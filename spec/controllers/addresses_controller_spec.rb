@@ -23,7 +23,7 @@ RSpec.describe AddressesController, type: :controller do
       it 'renders update_addresses.js' do
         post :create, xhr: true, params: { address_form: address_params }
         allow(user).to receive_message_chain(:billing_address, :update).and_return true
-        expect(response).to render_template('addresses/update_addresses')
+        expect(response).to render_template('addresses/create')
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe AddressesController, type: :controller do
       it 'renders edit_addresses.js' do
         address_params[:address] = nil
         post :create, xhr: true, params: { address_form: address_params }
-        expect(response).to render_template('addresses/edit_addresses')
+        expect(response).to render_template('addresses/new')
       end
     end
   end

@@ -5,10 +5,12 @@ require 'rails_helper'
 RSpec.describe 'home', type: :feature do
   let(:category) { create(:category) }
   let!(:book) { create(:book) }
+  let(:popular_books) { [book.decorate] }
   let(:user) { create(:user) }
   let(:locale) { 'en' }
 
   before do
+    allow(PopularBooksService).to receive_message_chain(:new, :call).and_return popular_books
     visit root_path
   end
 

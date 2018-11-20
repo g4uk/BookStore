@@ -40,7 +40,6 @@ RSpec.describe OrderItemsController, type: :controller do
 
   describe 'POST #decrement' do
     before do
-      allow(CartUtilsService).to receive(:item_total_price).and_return order_item.total
       post :decrement, xhr: true, params: { id: order_item.id }
       allow(order_item).to receive(:save).and_return true
     end
@@ -60,7 +59,6 @@ RSpec.describe OrderItemsController, type: :controller do
 
   describe 'POST #increment' do
     before do
-      allow(CartUtilsService).to receive(:item_total_price).and_return order_item.total
       allow(order_item).to receive(:save).and_return order_item
       post :increment, xhr: true, params: { id: order_item.id }
     end
