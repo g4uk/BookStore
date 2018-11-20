@@ -9,9 +9,9 @@ class AddressesController < ApplicationController
 
   def create
     instance_variable_set("@#{address_form_params[:type]}_form".to_sym, AddressForm.new(address_form_params))
-    @updated_address = instance_variable_get("@#{address_form_params[:type]}_form")
-    return render :update_addresses if @updated_address.save
-    render :edit_addresses
+    address = instance_variable_get("@#{address_form_params[:type]}_form")
+    return render :create if address.save
+    render :new
   end
 
   private

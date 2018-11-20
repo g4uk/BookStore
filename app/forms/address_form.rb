@@ -27,20 +27,23 @@ class AddressForm
 
   def save
     return false unless valid?
-    update
+    create
   end
 
   private
 
-  def update
+  def create
     @user = User.find(addressable_id)
-    update_users_address(type)
+    create_users_address
   end
 
-  def update_users_address(type)
+  def create_users_address
     @user.public_send("build_#{type}_address".to_sym) unless @user.public_send("#{type}_address".to_sym)
-    @user.public_send("#{type}_address".to_sym).update(first_name: first_name, last_name: last_name, address: address,
-                                                country: country_name, city: city, zip: zip, phone: phone)
+    @user.public_send("#{type}_address".to_sym).update(first_name: first_name,
+                                                       last_name: last_name,
+                                                       address: address,
+                                                       country: country_name,
+                                                       city: city, zip: zip, phone: phone)
   end
 
   def country_name
