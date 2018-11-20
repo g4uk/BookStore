@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ActiveAdminHelpers
+module ActiveAdminHelper
   def authors_with_ids(authors = Author.all)
     authors.map { |author| ["#{author.first_name} #{author.last_name}", author.id] }
   end

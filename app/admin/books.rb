@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-include ActiveAdminHelpers
+include ActiveAdminHelper
 
 ActiveAdmin.register Book do
   menu priority: 1
