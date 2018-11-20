@@ -25,9 +25,8 @@ class SortBooksQuery
   end
 
   def by_popularity
-    books_with_order_items
-    @books = by_category if @category_id
-    books_sorted_by_order_items_quantity
+    sort_in_category_by_order_items_quantity if @category_id
+    sort_by_order_items_quantity unless @category_id
     paginate
   end
 
@@ -45,15 +44,22 @@ class SortBooksQuery
     BookDecorator.decorate_collection(Kaminari.paginate_array(@books).page(@page).per(BOOKS_ON_PAGE))
   end
 
-  def books_sorted_by_order_items_quantity
-    @books = PopularBooksService.new.group_by_order_items_quantity(@books).keys
+  def sort_by_order_items_quantity
+    @books = Book.find_by_sql('select books.*, sum(order_items.quantity) from books inner join order_items on books.id=order_items.book_id group by books.id order by sum desc;')
+    load_associations
   end
 
-  def books_with_order_items
-    @books = Book.includes(:order_items, :authors, :books_authors, images: [photo_attachment: :blob])
+  def sort_in_category_by_order_items_quantity
+    @books = Book.find_by_sql("select books.*, sum(order_items.quantity) from books inner join order_items on books.id=order_items.book_id where books.category_id=#{@category_id} group by books.id order by sum desc;")
+    load_associations
   end
 
   def books_without_order_items
     @books = Book.includes(:authors, :books_authors, images: [photo_attachment: :blob])
+  end
+
+  def load_associations
+    ActiveRecord::Associations::Preloader.new.preload(@books, [:authors, :books_authors, images: [photo_attachment: :blob]])
+    @books
   end
 end
