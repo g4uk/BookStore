@@ -16,7 +16,7 @@
       = f.label :password_confirmation, class: 'control-label input-label'
       = f.password_field :password_confirmation, class: 'form-control', placeholder: true, title: t(:invalid_password), data: { regexp: INPUT_VALIDATIONS[:password] }
     .text-center
-      .btn.btn-default.mb-20= f.submit t(:sign_up)
+      = f.submit t(:sign_up), class: 'btn btn-default mb-20'
   %p.general-sign-text.text-center
     have an Account?
     = link_to t(:log_in), login_users_path, class: 'in-gold-500'

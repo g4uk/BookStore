@@ -21,4 +21,4 @@
           .form-group.mb-30
             = f.label :email, t(:enter_email), class: 'control-label input-label'
             = f.text_field :email, class: 'form-control', placeholder: true, title: t(:invalid_email), data: { regexp: INPUT_VALIDATIONS[:email] }
-        .btn.btn-default.mb-20= f.submit t(:continue)
+        = f.submit t(:continue), class: 'btn btn-default mb-20'

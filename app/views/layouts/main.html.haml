@@ -36,8 +36,9 @@
           .hidden-xs
             = render 'pages/menu', categories: categories
     - flash.each do |name, msg|
-      = content_tag :div, class: "alert alert-#{name == 'danger' ? name : 'success' }" do
-        = msg
+      - unless msg.class == Array
+        = content_tag :div, class: "alert alert-#{name == 'danger' ? name : 'success' }" do
+          = msg
     = yield
     %footer.navbar-inverse
       .container

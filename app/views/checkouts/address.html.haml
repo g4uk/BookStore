@@ -28,4 +28,4 @@
               %span.checkbox-text= t('.use_billing_adress')
     .general-text-align.mb-60
       = render 'order_summary', order: @order, pull_right: false
-      .btn.center-block.btn-default.mb-20= order_form.submit t(:continue)
+      = order_form.submit t(:continue), class: 'btn center-block btn-default mb-20'

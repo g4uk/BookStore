@@ -7,4 +7,4 @@
     .general-text-align
       = render 'order_summary', order: @order, pull_right: false
     .text-center
-      .btn.btn-default.mb-80= order_form.submit t(:continue)
+      = order_form.submit t(:continue), class: 'btn btn-default mb-80'

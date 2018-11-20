@@ -38,6 +38,7 @@
             %td
               %strong.font-18= cart.formatted_total
         .btn.btn-default.mb-20.visible-xs-inline-block= link_to(t(:checkout), orders_path, method: :post)
-= link_to(orders_path, method: :post, class: '') do
-  .btn.btn-default.mb-20.hidden-xs.center-block= t('.checkout')
-  
+  .row.hidden-xs
+    .col-sm-12
+      .text-center
+        = link_to(t('.checkout'), orders_path, method: :post, class: 'btn btn-default mb-20 hidden-xs')
