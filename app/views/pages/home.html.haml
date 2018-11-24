@@ -5,9 +5,9 @@
     %h2.h1= t('.welcome')
     .mb-res-50
       %p= t('.decription')
-    = link_to t(:get_started), books_path, class: 'btn btn-default'
+    = link_to t('.get_started'), books_path, class: 'btn btn-default'
   .mb-35
-    %h3= t(:best_sellers)
+    %h3= t('.best_sellers')
     .row
       - @books.each do |book|
         .col-sm-6.col-md-3

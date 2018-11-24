@@ -18,5 +18,5 @@
     .text-center
       = f.submit t(:sign_up), class: 'btn btn-default mb-20'
   %p.general-sign-text.text-center
-    have an Account?
+    = t('.have_account')
     = link_to t(:log_in), login_users_path, class: 'in-gold-500'

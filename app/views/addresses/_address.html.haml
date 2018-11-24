@@ -1,6 +1,6 @@
 %p.general-address
   = address.formatted_name
-  %span.general-edit= link_to t(:edit), wizard_path(:address) unless complete
+  %span.general-edit= link_to t('.edit'), wizard_path(:address) unless complete
   %br
   = address.formatted_address
   %br

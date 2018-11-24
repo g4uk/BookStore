@@ -3,8 +3,8 @@
     %h3.general-login-title= t(:log_in)
     = link_to user_facebook_omniauth_authorize_path, class: 'general-login-icon' do
       %i.fa.fa-facebook-official
-    %p.general-login-text or
+    %p.general-login-text= t(:or)
   = render partial: 'login_form'
   %p.general-sign-text.text-center
-    Don’t have an Account?
+    = t('.not_have_account')
     = link_to t(:sign_up), signup_users_path, class: 'in-gold-500'

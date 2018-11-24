@@ -14,18 +14,18 @@
           %h3.general-subtitle= t(:billing_address)
           %p.general-info-text= t('.required')
         = order_form.fields_for :billing_address do |billing_form|
-          = render 'addresses/form', f: billing_form, type: 'billing'
+          = render 'addresses/form', f: billing_form, type: 'billing', country: @order.billing_address.country
       .col-md-5.col-md-offset-1.mb-60.shipping-address-form
         .visible-xs.visible-sm
           %h3.general-subtitle= t(:shipping_address)
         = order_form.fields_for :shipping_address do |shipping_form|
-          = render 'addresses/form', f: shipping_form, type: 'shipping'
+          = render 'addresses/form', f: shipping_form, type: 'shipping', country: @order.shipping_address.country
           .form-group.checkbox
             %label.checkbox-label
               = order_form.check_box :billing_flag, class: 'checkbox-input billing-flag', hidden: true
               %span.checkbox-icon
                 %i.fa.fa-check
-              %span.checkbox-text= t('.use_billing_adress')
+              %span.checkbox-text= t('.use_billing')
     .general-text-align.mb-60
       = render 'order_summary', order: @order, pull_right: false
       = order_form.submit t(:continue), class: 'btn center-block btn-default mb-20'

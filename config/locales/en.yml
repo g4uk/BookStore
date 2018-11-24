@@ -33,11 +33,12 @@ en:
   sign_up: 'Sign Up'
   log_out: 'Log Out'
   all: 'All'
+  or: 'or'
   view_more: 'View more'
   shipping_address: 'Shipping Address'
   billing_address: 'Billing Address'
   empty_cart: 'Cart Is Empty :('
-  continue: 'Save and Continue'
+  continue: 'Save And Continue'
   address: 'Address'
   delivery: 'Delivery'
   payment: 'Payment'
@@ -54,13 +55,16 @@ en:
   created: 'Created successfully'
   sign_in: 'You need to sign in or sign up before continuing.'
 
-  homes:
-    index:
+  pages:
+    home:
       welcome: 'Welcome to our amazing Bookstore'
       decription: 'We pore through hundreds of new books each month and select the five best we can find to share with our members.'
+      get_started: 'Get Started'
+      best_sellers: "Best Sellers"
     carousel:
       previous: 'Previous'
       next: 'Next'
+      buy_now: 'Buy Now'
   
   books:
     sort_links:
@@ -78,6 +82,7 @@ en:
       reviews: 'Reviews'
       write_a_review: 'Write A Review'
       score: 'Score'
+      back_to_results: 'Back To Results'
     book:
       description: 'Description'
       read_more: 'Read more'
@@ -111,6 +116,8 @@ en:
       order: 'Order #'
       shipments: 'Shipments'
       payment_information: 'Payment Information'
+      shipping_address: 'Shipping Address'
+      billing_address: 'Billing Address'
 
   carts:
     show:
@@ -131,6 +138,7 @@ en:
   checkouts:
     address:
       required: 'all fields are required'
+      use_billing: 'Use Billing Adress'
     delivery:
       shipments: 'Shipping Method'
       method: 'Method'
@@ -143,6 +151,8 @@ en:
       edit: 'edit'
       payment_info: 'Payment Information'
       place_order: 'Place Order'
+      shipping_address: 'Shipping Address'
+      billing_address: 'Billing Address'
     table_headers:
       book: 'Book'
       price: 'Price'
@@ -153,20 +163,34 @@ en:
       thank_you: 'Thank You for your Order!'
       order: 'Order #'
       back_to_store: 'Back to Store'
+    order_summary:
+      order_summary: 'Order Summary'
+      item_total: 'Item Total'
+      shipping: 'Shipping'
+      order_total: 'Order Total'
 
   addresses:
     settings_address:
       save: 'Save'
+    address: 
+      edit: 'Edit'
 
-  users:
-    login_form:
-      forgot_password: 'Forgot password?'
-      password: 'Password'
-    checkout_login:
+  quick_signups:
+    new:
       create_later: 'You’ll be able to create password later'
       quick_reg: 'Quick Registration'
       new: 'New Customer'
       returning: 'Returning Customer'
+      continue: 'Continue to Checkout'
+
+  users:
+    login: 
+      not_have_account: 'Don’t have an Account?'
+    signup:
+      have_account: 'have an Account?'
+    login_form:
+      forgot_password: 'Forgot password?'
+      password: 'Password'  
     form:
       save: 'Save'
     edit:

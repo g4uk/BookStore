@@ -2,6 +2,7 @@
 
 class BookDecorator < Draper::Decorator
   include ActionView::Helpers::NumberHelper
+  include ActionView::Helpers::SanitizeHelper
 
   delegate_all
 
@@ -22,6 +23,6 @@ class BookDecorator < Draper::Decorator
   end
 
   def short_description(length)
-    description.truncate(length).html_safe unless description.blank?
+    strip_tags(description.truncate(length)) unless description.blank?
   end
 end

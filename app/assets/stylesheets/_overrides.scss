@@ -65,3 +65,55 @@ form input[type="submit"].btn.center-block.btn-default.mb-20{
   margin-right: auto;
   display: block;
 }
+
+a, a:link, a:visited{
+  color:#8c8c8c;
+}
+
+a:hover, a:focus{
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+.btn-default:hover {
+  color: white;
+  background-color: #040403;
+  border-color: transparent;
+}
+
+form input[type="submit"]:not(.disabled):hover,
+input[type="submit"]:not(.disabled):hover{
+  background-image: none;
+}
+
+.btn-primary:hover {
+  color: white;
+  background-color: #b6834d;
+  border-color: transparent;
+}
+
+.btn.btn-primary {
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.btn.btn-default {
+  color: white;
+  font-weight: 600;
+}
+
+.nav-link, .nav-link:link, .nav-link:visited {
+  color: #8c8c8c;
+  text-decoration: none;
+}
+
+.lead, .lead p{
+  color: #8c8c8c;
+  word-break: break-word;
+  font-size: 21px;
+}
+
+.small {
+  font-size: 14px;
+}

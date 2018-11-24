@@ -5,14 +5,14 @@
         %h3.general-subtitle= t('.returning')
         = link_to user_facebook_omniauth_authorize_path, class: 'general-login-icon' do
           %i.fa.fa-facebook-official
-        %p.general-login-text or
+        %p.general-login-text= t(:or)
       = render partial: 'users/login_form'
     .col-md-5.col-md-offset-1.mb-60
       .text-center
         %h3.general-subtitle= t('.new')
         = link_to user_facebook_omniauth_authorize_path, class: 'general-login-icon' do
           %i.fa.fa-facebook-official
-        %p.general-login-text or
+        %p.general-login-text= t(:or)
       = form_for :user, url: quick_signups_path, html: { class: 'general-form' } do |f|
         .mb-40
           %p.mb-5= t('.quick_reg')
@@ -21,4 +21,4 @@
           .form-group.mb-30
             = f.label :email, t(:enter_email), class: 'control-label input-label'
             = f.text_field :email, class: 'form-control', placeholder: true, title: t(:invalid_email), data: { regexp: INPUT_VALIDATIONS[:email] }
-        = f.submit t(:continue), class: 'btn btn-default mb-20'
+        = f.submit t('.continue'), class: 'btn btn-default mb-20'

@@ -2,23 +2,23 @@
   = render partial: 'progress_bar'
   .row.mb-20
     .col-sm-3
-      %h3.general-subtitle= t(:shipping_address)
+      %h3.general-subtitle= t('.shipping_address')
       = render 'addresses/address', address: @order_presenter.shipping_address, complete: false
     .col-sm-3
-      %h3.general-subtitle= t(:billing_address)
+      %h3.general-subtitle= t('.billing_address')
       = render 'addresses/address', address: @order_presenter.billing_address, complete: false
     .col-sm-3
-      %h3.general-subtitle= t(:shipments)
+      %h3.general-subtitle= t('.shipments')
       %p.general-address
         = @order.delivery_duration
-        %span.general-edit= link_to t(:edit), wizard_path(:delivery)
+        %span.general-edit= link_to t('.edit'), wizard_path(:delivery)
         %br
         = @order.formatted_delivery_name
     .col-sm-3
-      %h3.general-subtitle= t(:payment_information)
+      %h3.general-subtitle= t('.payment_info')
       %p.general-address
         = @order.formatted_credit_card_number
-        %span.general-edit= link_to t(:edit), wizard_path(:payment)
+        %span.general-edit= link_to t('.edit'), wizard_path(:payment)
   = render 'order_items/order_item_xs', order_items: @order_presenter.order_items, type: 'order'
   .hidden-xs.divider-lg.pt-20
     %table.table.table-hover
@@ -27,4 +27,4 @@
   .text-center.general-text-right
     = render 'order_summary', order: @order, pull_right: true
   .text-center
-    .btn.btn-default.mb-20= link_to(t(:place_order), wizard_path, method: :put)
+    .btn.btn-default.mb-20= link_to(t('.place_order'), wizard_path, method: :put)
