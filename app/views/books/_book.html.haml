@@ -18,7 +18,7 @@
       %p= t('.description')
       %p.lead.small.line-height-2
         %span.short-descr= @book.short_description(350)
-        %span.full-descr.hidden= @book.description
+        %span.full-descr.hidden= @book.description.html_safe
         - unless @book.description.blank?
           = link_to t('.read_more'), '#', class: 'in-gold-500 ml-10 read-more', remote: true
           = link_to t('.read_less'), '#', class: 'in-gold-500 ml-10 read-less hidden', remote: true
