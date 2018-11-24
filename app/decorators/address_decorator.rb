@@ -18,4 +18,8 @@ class AddressDecorator < Draper::Decorator
   def formatted_address
     address.address
   end
+
+  def formatted_country
+    ISO3166::Country[country].name
+  end
 end

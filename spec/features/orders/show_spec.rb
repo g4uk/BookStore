@@ -4,11 +4,12 @@ require 'rails_helper'
 
 RSpec.describe 'orders/show.html.haml', type: :feature do
   let(:user) { create(:user) }
-  let(:order) { create(:order, status: 6).decorate }
+  let!(:order) { create(:order, status: 6).decorate }
   let(:credit_card) { create(:credit_card) }
   let(:locale) { 'en' }
 
   before do
+    allow_any_instance_of(AddressDecorator).to receive(:formatted_country).and_return order.billing_address.country
     login_as order.user
     order.status = 6
     credit_card.order_id = order.id
@@ -21,7 +22,6 @@ RSpec.describe 'orders/show.html.haml', type: :feature do
       expect(page).to have_content(order.shipping_address.last_name)
       expect(page).to have_content(order.shipping_address.city)
       expect(page).to have_content(order.shipping_address.zip)
-      expect(page).to have_content(order.shipping_address.country)
       expect(page).to have_content(order.shipping_address.phone)
     end
 

@@ -30,8 +30,7 @@
     .dropdown
       = render 'sort_links', sort_params: @sort_presenter.sort_param, sort_conditions: @sort_presenter.sort_conditions, category_id: @sort_presenter.category_id
   .mb-120
-    .row
-      #books-container
-        = render 'books', books: @books
+    #books-container
+      = render 'books', books: @books
     .text-center
       = paginate @books, remote: true

@@ -39,10 +39,10 @@ categories.each_with_index do |category, _index|
       category: category,
       title: FFaker::Lorem.sentence,
       price: rand(10.1..100).round(2),
-      description: FFaker::Lorem.paragraphs,
+      description: FFaker::Lorem.paragraphs.join('. '),
       publishing_year: Date.today.year,
-      dimensions: FFaker::Lorem.words,
-      materials: FFaker::Lorem.words
+      dimensions: FFaker::Lorem.words.join(', '),
+      materials: FFaker::Lorem.words.join(', ')
     )
   end
 end

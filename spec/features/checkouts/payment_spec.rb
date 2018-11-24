@@ -31,6 +31,7 @@ RSpec.describe 'payment', type: :feature do
 
     context 'valid number' do
       it 'goes to next step', js: true do
+        allow_any_instance_of(AddressDecorator).to receive(:formatted_country).and_return order.billing_address.country
         within(first('.form-group')) do
           fill_in 'cardName', with: credit_card.number
         end

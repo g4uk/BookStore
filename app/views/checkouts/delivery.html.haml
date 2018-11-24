@@ -47,7 +47,7 @@
               %td
                 %span= delivery.duration
               %td
-                %span.font-16.in-gold-500= delivery.formatted_price
+                %span.font-16.in-gold-500{class: ("delivery-#{delivery.id}") }= delivery.formatted_price
     .general-text-align
       = render 'order_summary', order: @order, pull_right: false
     .text-center

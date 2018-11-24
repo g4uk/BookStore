@@ -4,18 +4,18 @@ require 'rails_helper'
 
 RSpec.describe 'index', type: :feature do
   let(:user) { create(:user) }
-  let(:waiting_order) { create(:order, status: 5).decorate }
-  let(:canceled_order) { create(:order, status: 8).decorate }
-  let(:in_delivery_order) { create(:order, status: 6).decorate }
-  let(:delivered_order) { create(:order, status: 7).decorate }
+  let(:waiting_order) { create(:order, status: :in_queue).decorate }
+  let(:canceled_order) { create(:order, status: :canceled).decorate }
+  let(:in_delivery_order) { create(:order, status: :in_delivery).decorate }
+  let(:delivered_order) { create(:order, status: :delivered).decorate }
   let(:locale) { 'en' }
 
   before do
     login_as user
-    waiting_order.status = 5
-    canceled_order.status = 8
-    in_delivery_order.status = 6
-    delivered_order.status = 7
+    waiting_order.status = :in_queue
+    canceled_order.status = :canceled
+    in_delivery_order.status = :in_delivery
+    delivered_order.status = :delivered
     user.orders << waiting_order
     user.orders << canceled_order
     user.orders << in_delivery_order
@@ -31,6 +31,7 @@ RSpec.describe 'index', type: :feature do
   end
 
   it 'has link to order page', js: true do
+    allow_any_instance_of(AddressDecorator).to receive(:formatted_country).and_return waiting_order.billing_address.country
     within('tbody') do
       first('tr').click
       expect(current_path).to eq order_path(id: user.orders.sorted_paid.first.id, locale: locale)

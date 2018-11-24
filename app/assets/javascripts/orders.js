@@ -47,4 +47,13 @@ $(document).on('turbolinks:load', function() {
   $('table[data-link]').click(function() {
     window.location = $(this).data('link');
   })
+
+  $('input:radio[name="order[delivery_id]"]').change(function() {
+    var id = $(this).val();
+    var deliveryPrice = $('.delivery-' + id).text().replace('$','');
+    var orderTotal = $('.items_price').text().replace('$','');
+    var orderSummary = (parseFloat(orderTotal) + parseFloat(deliveryPrice)).toFixed(2);
+    $('.delivery_price').text('$' + deliveryPrice);
+    $('.order_price').text('$' + orderSummary);
+  })
 });

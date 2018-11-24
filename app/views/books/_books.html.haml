@@ -1,8 +1,10 @@
-- books.each do |book|
-  .col-sm-6.col-md-3
-    = render partial: 'book_photo', locals: {book: book}
-    .general-thumb-info
-      %p.title= book.title
-      %p.font-16.in-gold-500= book.formatted_price
-      %span.divider-sm
-      %p.lead.small= book.formatted_authors
+- books.each_slice(4) do |books_row|
+  .row
+    - books_row.each do |book|
+      .col-sm-6.col-md-3
+        = render partial: 'book_photo', locals: {book: book}
+        .general-thumb-info
+          %p.title= book.title
+          %p.font-16.in-gold-500= book.formatted_price
+          %span.divider-sm
+          %p.lead.small= book.formatted_authors

@@ -4,10 +4,11 @@ require 'rails_helper'
 
 RSpec.describe 'confirm', type: :feature do
   let(:user) { create(:user) }
-  let(:order) { create(:order, status: :payment) }
+  let!(:order) { create(:order, status: :payment) }
   let(:submit) { first('input[name="commit"]') }
 
   before do
+    allow_any_instance_of(AddressDecorator).to receive(:formatted_country).and_return order.billing_address.country
     inject_session order_id: order.id
     login_as user
     visit 'en/checkouts/confirm'

@@ -42,11 +42,7 @@ class AddressForm
     @user.public_send("#{type}_address".to_sym).update(first_name: first_name,
                                                        last_name: last_name,
                                                        address: address,
-                                                       country: country_name,
+                                                       country: country,
                                                        city: city, zip: zip, phone: phone)
-  end
-
-  def country_name
-    ISO3166::Country[country].name
   end
 end
