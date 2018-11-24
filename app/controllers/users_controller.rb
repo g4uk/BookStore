@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   respond_to :js, only: %i[update update_password]
 
   def edit
+    build_addresses
     @billing_form = AssignAddressFormService.new(@user, :billing_address).call
     @shipping_form = AssignAddressFormService.new(@user, :shipping_address).call
     @password_form = PasswordForm.new(user_id: @user.id)
@@ -63,5 +64,10 @@ class UsersController < ApplicationController
                                    %i[first_name last_name address city zip country phone],
                                  shipping_address_attributes:
                                    %i[first_name last_name address city zip country phone])
+  end
+
+  def build_addresses
+    @user.build_billing_address if @user.billing_address.blank?
+    @user.build_shipping_address if @user.shipping_address.blank?
   end
 end
