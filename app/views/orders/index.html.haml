@@ -1,0 +1,58 @@
+%main.container.general-main-wrap
+  %h1.mt-0.mb-25= t('.my_orders')
+  %p.lead.small.mb-10.visible-xs= t('.sort_by')
+  .dropdowns.dropdown.general-order-dropdown
+    %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+      = t(".#{@scope}")
+      %i.fa.fa-angle-down.dropdown-icon.pull-right
+    %ul.dropdown-menu
+      - @scopes.each do |scope, _value|
+        %li
+          = link_to t(".#{scope}"), scope: scope
+  .visible-xs
+    - @orders.each do |order|
+      .general-cart-item.divider-lg-bottom.pt-0
+        %table.table{ data: { link: "#{order_path(order)}" } }
+          %tr
+            %td.col-half
+              %span.in-grey-600= t('.number')
+            %td.col-half
+              %span.general-order-number= order.id
+          %tr
+            %td
+              %span.in-grey-600= t('.completed_at')
+            %td
+              %span.in-grey-900.font-16.fw-300= order.formatted_updated_at
+          %tr
+            %td
+              %span.in-grey-600= t('.status')
+            %td
+              %span.font-16.in-grey-900.fw-300= order.formatted_status
+          %tr
+            %td
+              %span.in-grey-600= t('.total')
+            %td
+              %strong.font-16= order.formatted_total
+  .hidden-xs.mb-res-50
+    %table.table.table-hover
+      %thead
+        %trStatus
+          %th
+            %span.in-grey-600= t('.number')
+          %th
+            %span.in-grey-600= t('.completed_at')
+          %th
+            %span.in-grey-600= t('.status')
+          %th
+            %span.in-grey-600= t('.total')
+      %tbody
+        - @orders.each do |order|
+          %tr{ data: { link: "#{order_path(order)}" } }
+            %td
+              %span.general-order-number= order.id
+            %td
+              %span.in-grey-900.font-16.fw-300= order.formatted_updated_at
+            %td
+              %span.font-16.in-grey-900.fw-300= order.formatted_status
+            %td
+              %strong.font-16= order.formatted_total

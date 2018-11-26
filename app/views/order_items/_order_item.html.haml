@@ -1,0 +1,22 @@
+- cart = type.eql?('cart')
+- order = type.eql?('order')
+%tbody
+  - order_items.each do |order_item|
+    %tr
+      %td
+        .general-img-wrap-table
+          = order_item.book_image('cart-img-shadow pull-left')
+      %td
+        %p.title= order_item.book_name
+        %p.in-grey-600.fw-300= order_item.book_description if order
+      %td
+        %span.font-16.in-gold-500= order_item.formatted_book_price
+      %td
+        = render 'carts/order_item_inputs', order_item: order_item if cart
+        %span.ml-30= order_item.quantity if order
+      %td
+        %span.font-16.in-gold-500.item-subtotal= order_item.formatted_total
+      - if cart
+        %td
+          = link_to order_item_path(order_item), method: :delete, class: 'close general-cart-close', remote: true do
+            %span{'aria-hidden': "true"} &times;

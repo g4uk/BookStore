@@ -1,0 +1,243 @@
+en:
+  helpers:
+    label:
+      user:
+        password: 'New Password'
+  
+  notice:
+    login: 'You need to sign in or sign up before continuing.'
+    empty_cart: 'Your cart is empty'
+    signed_up: 'Signed up successfully'
+    exists: 'Account already exists'
+    destroyed: 'Your account was successfully destroyed.'
+    choose_delivery: 'You should to choose shipping method'
+
+  invalid_name: 'Consists of a-z and A-Z only'
+  invalid_number: 'Consists of numbers only'
+  invalid_exp_date: 'Example 07/12'
+  invalid_phone: 'Consists of 0-9, ’+’ only'
+  invalid_address: 'Consists of a-z, A-Z, 0-9,’,’, ‘-’, ‘ ’ only'
+  invalid_zip: 'Consists of 0-9, ’-’ only'
+  card_hint: '3/4-digit security code on the back of your card'
+  invalid_code: 'Consists of A-Z, 0-9 only'
+  invalid_review: "Consists of a-z, A-Z, 0-9, or one of !#$%&\'*+-/=?^_`{|}~"
+  invalid_email: 'Invalid Email'
+  invalid_password: 'Should be min 8 letters, at list 1 uppercase, 1 lowercase, 1 number'
+  invalid_login: 'Invalid Email or password.'
+  bookstore: 'Bookstore'
+  home: 'Home'
+  shop: 'Shop'
+  orders_list: 'Orders'
+  accout: 'Settings'
+  log_in: 'Log In'
+  sign_up: 'Sign Up'
+  log_out: 'Log Out'
+  all: 'All'
+  or: 'or'
+  view_more: 'View more'
+  shipping_address: 'Shipping Address'
+  billing_address: 'Billing Address'
+  empty_cart: 'Cart Is Empty :('
+  continue: 'Save And Continue'
+  address: 'Address'
+  delivery: 'Delivery'
+  payment: 'Payment'
+  confirm: 'Confirm'
+  complete: 'Complete'
+  in_queue: 'Waiting for processing'
+  enter_email: 'Enter Email'
+  verified_reviewer: 'Verified Reviewer'
+  my_account: 'My account'
+  created_review: 'Thanks for Review. It will be published as soon as Admin will approve it.'
+  saved: 'Saved'
+  invalid_status: 'Invalid status'
+  edited: 'Edited successfully'
+  created: 'Created successfully'
+  sign_in: 'You need to sign in or sign up before continuing.'
+
+  pages:
+    home:
+      welcome: 'Welcome to our amazing Bookstore'
+      decription: 'We pore through hundreds of new books each month and select the five best we can find to share with our members.'
+      get_started: 'Get Started'
+      best_sellers: "Best Sellers"
+    carousel:
+      previous: 'Previous'
+      next: 'Next'
+      buy_now: 'Buy Now'
+  
+  books:
+    sort_links:
+      price asc: 'Price Low To High'
+      price desc: 'Price High To Low'
+      title asc: 'Title A - Z'
+      title desc: 'Title Z - A'
+      popular: 'Popular First'
+      created_at desc: 'Newest First'
+    index:
+      catalog: 'Catalog'
+      category_filter: 'Filter by category'
+      sort_by: 'Sort by'
+    show:
+      reviews: 'Reviews'
+      write_a_review: 'Write A Review'
+      score: 'Score'
+      back_to_results: 'Back To Results'
+    book:
+      description: 'Description'
+      read_more: 'Read more'
+      read_less: 'Read less'
+      published: 'Year of publication'
+      dimensions: 'Dimensions'
+      materials: 'Materials'
+
+  order_items:
+    form:
+      to_cart: 'Add to Cart'
+
+  comments:
+    form:
+      add_comment: 'Add Comment'
+
+  orders:
+    index:
+      my_orders: 'My Orders'
+      sort_by: 'Sort by'
+      number: 'Number'
+      completed_at: 'Completed at'
+      status: 'Status'
+      total: 'Total'
+      in_progress: 'Waiting for processing'
+      sorted_paid: 'All'
+      in_delivery: 'In Delivery'
+      delivered: 'Delivered'
+      canceled: 'Canceled'
+    show:
+      order: 'Order #'
+      shipments: 'Shipments'
+      payment_information: 'Payment Information'
+      shipping_address: 'Shipping Address'
+      billing_address: 'Billing Address'
+
+  carts:
+    show:
+      cart: 'Cart'
+    cart_full_info: 
+      book: 'Book'
+      price: 'Price'
+      quantity: 'Quantity'
+      subtotal: 'Subtotal'
+      order_summary: 'Order Summary'
+      coupon: 'Coupon'
+      total: 'Order Total'
+      checkout: 'Checkout'
+    form:
+      enter_code: 'Enter Your Coupon Code'
+      apply_coupon: 'Apply Coupon'
+    
+  checkouts:
+    address:
+      required: 'all fields are required'
+      use_billing: 'Use Billing Adress'
+    delivery:
+      shipments: 'Shipping Method'
+      method: 'Method'
+      days: 'Days'
+      price: 'Price'
+    payment:
+      credit_card: 'Credit Card'
+    confirm:
+      shipments: 'Shipments'
+      edit: 'edit'
+      payment_info: 'Payment Information'
+      place_order: 'Place Order'
+      shipping_address: 'Shipping Address'
+      billing_address: 'Billing Address'
+    table_headers:
+      book: 'Book'
+      price: 'Price'
+      quantity: 'Quantity'
+      total: 'Total'
+    complete:
+      confirmation_sent: 'An order confirmation has been sent to'
+      thank_you: 'Thank You for your Order!'
+      order: 'Order #'
+      back_to_store: 'Back to Store'
+    order_summary:
+      order_summary: 'Order Summary'
+      item_total: 'Item Total'
+      shipping: 'Shipping'
+      order_total: 'Order Total'
+
+  addresses:
+    settings_address:
+      save: 'Save'
+    address: 
+      edit: 'Edit'
+
+  quick_signups:
+    new:
+      create_later: 'You’ll be able to create password later'
+      quick_reg: 'Quick Registration'
+      new: 'New Customer'
+      returning: 'Returning Customer'
+      continue: 'Continue to Checkout'
+
+  users:
+    login: 
+      not_have_account: 'Don’t have an Account?'
+    signup:
+      have_account: 'have an Account?'
+    login_form:
+      forgot_password: 'Forgot password?'
+      password: 'Password'  
+    form:
+      save: 'Save'
+    edit:
+      email: 'Email'
+      password: 'Password'
+      aggrement: 'I understand that all data will be lost'
+      remove_account: 'Remove account'
+      please_remove_account: 'Please, remove my account'
+    email_form:
+      save: 'Update Email'
+    password_form:
+      save: 'Update Password'
+    forgot_password:
+      forgot_password: 'Forgot your password?'
+      send_email: 'Send Instructions'
+      cancel: 'Cancel'
+      instructions: "We'll email you instructions on how to reset it"
+    change_password:
+      set_new_password: 'Set New Password'
+      characters_minimum: 'characters minimum'
+      change_password: 'Change Password'
+
+  admin_users:
+    confirmations:
+      new:
+        resend: 'Resend confirmation instructions'
+    passwords:
+      edit:
+        new_password: 'New password'
+        confirm: 'Confirm new password'
+        change_password: 'Change my password'
+      new:
+        forgot_password: 'Forgot your password?'
+        send_instructions: 'Send me reset password instructions'
+    registrations:
+      edit:
+        waiting: 'Currently waiting confirmation for:'
+        blank: "(leave blank if you don/'t want to change it)"
+        minimum: 'characters minimum'
+        current_password: '(we need your current password to confirm your changes)'
+      new:
+        minimum: 'characters minimum'
+    shared:
+      links:
+        forgot_password: 'Forgot your password?'
+        confirm_instructions: "Didn/'t receive confirmation instructions?"
+        unlock_instructions: "Didn/'t receive unlock instructions?"
+    unlock:
+      new:
+        resend: 'Resend unlock instructions'

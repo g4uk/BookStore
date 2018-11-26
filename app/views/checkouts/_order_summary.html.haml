@@ -1,0 +1,17 @@
+%p.in-gold-500.font-18= t('.order_summary')
+%table.general-summary-table{class: ('general-summary-table-right general-text-right' if pull_right) }
+  %tr
+    %td
+      %p.font-16= t('.item_total')
+    %td
+      %p.font-16.items_price= order.formatted_item_total
+  %tr
+    %td
+      %p.font-16= t('.shipping')
+    %td
+      %p.font-16.delivery_price= order.formatted_delivery_price
+  %tr
+    %td
+      %strong.font-18= t('.order_total')
+    %td
+      %strong.font-18.order_price= order.formatted_total

@@ -1,0 +1,28 @@
+%table
+  %tr
+    %th= t(:books_list)
+    %th= t(:total)
+    %th= t(:delivery_type)
+    %th= t(:shipping_address)
+    %th= t(:billing_address)
+  %tr
+    %td
+      - order.order_items.each do |item|
+        = item.book_name + " X #{ item.quantity }"
+        %br
+    %td= order.total
+    %td= order.delivery_type
+    %td
+      - unless order.shipping_address.blank?
+        = order.shipping_address.formatted_name
+        %br
+        = order.shipping_address.formatted_city
+        %br
+        = order.shipping_address.formatted_phone
+    %td
+      - unless order.billing_address.blank?
+        = order.billing_address.formatted_name
+        %br
+        = order.billing_address.formatted_city
+        %br
+        = order.billing_address.formatted_phone

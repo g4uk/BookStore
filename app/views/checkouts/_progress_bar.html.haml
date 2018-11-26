@@ -1,0 +1,9 @@
+%h1.general-title-margin= t(:ckeckout)
+%ul.steps.list-inline
+  - wizard_steps.enum_for(:each_with_index).collect do |ckeckout_step, index|
+    %li.step{class: step_class(step, ckeckout_step)}
+      %span.step-number
+        = ckeckout_progress_bar_span_content(index, ckeckout_step)
+      %span.step-text.hidden-xs= t(ckeckout_step)
+    - unless ckeckout_step == wizard_steps.last
+      %li.step-divider

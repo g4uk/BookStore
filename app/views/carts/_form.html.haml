@@ -1,0 +1,7 @@
+= form_with model: @cart do |f|
+  .flash_message
+  .input-group.general-input-group
+    = f.label :coupon_code, t('.enter_code'), class: 'input-label'
+    = f.text_field :coupon_code, class: 'form-control mb-30', placeholder: true, title: t(:invalid_code), data: { regexp: INPUT_VALIDATIONS[:code] }
+    %div
+      = f.submit t('.apply_coupon'), class: 'btn btn-primary mr-5 mb-15'

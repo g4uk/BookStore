@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+context.instance_eval do
+  selectable_column
+  column :name
+  actions defaults: false, only: :edit do |category|
+    link_to t(:edit), edit_admin_category_path(category), remote: true
+  end
+  actions defaults: false, only: :delete do |category|
+    link_to t(:delete), admin_category_path(category), method: :delete,
+                                                       data: { confirm: "Are you sure you want to delete this item. It is associated with #{category.books.size} books" }
+  end
+end

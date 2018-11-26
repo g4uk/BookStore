@@ -1,0 +1,7 @@
+order_tr = $("#order_<%= @order.id.to_s %>");
+order_view_tr = $(".order_view_<%= @order.id.to_s %>")
+if ( !order_view_tr.length ){
+  $("<tr class='order_view_<%= @order.id.to_s %>'><td><%= j render partial: 'show', locals: {order: @order} %></td></tr>").insertAfter(order_tr);
+}else{
+  order_view_tr.remove();
+}

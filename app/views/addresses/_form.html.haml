@@ -1,0 +1,23 @@
+.form-group
+  = f.label :first_name, class: 'control-label input-label'
+  = f.text_field :first_name, id: 'firstName', class: 'form-control', placeholder: true, title: t(:invalid_name), data: { regexp: AddressForm::NAME_INPUT }
+.form-group
+  = f.label :last_name, class: 'control-label input-label'
+  = f.text_field :last_name, id: 'lastName', class: 'form-control', placeholder: true, title: t(:invalid_name), data: { regexp: AddressForm::NAME_INPUT }
+.form-group
+  = f.label :address, class: 'control-label input-label'
+  = f.text_field :address, id: 'address', class: 'form-control', placeholder: true, title: t(:invalid_address), data: { regexp: AddressForm::ADDRESS_INPUT }
+.form-group
+  = f.label :city, class: 'control-label input-label'
+  = f.text_field :city, id: 'city', class: 'form-control', placeholder: true, title: t(:invalid_name), data: { regexp: AddressForm::NAME_INPUT }
+.form-group
+  = f.label :zip, class: 'control-label input-label'
+  = f.text_field :zip, id: 'zip', class: 'form-control', placeholder: true, title: t(:invalid_zip), data: { regexp: AddressForm::ZIP_INPUT }
+.form-group
+  = f.label :country, class: 'control-label input-label'
+  = f.country_select(:country, {selected: "#{country}"}, {class: "form-control", id: 'country'})
+.form-group
+  = f.label :phone, class: 'control-label input-label'
+  = f.text_field :phone, id: 'phone', class: "form-control phone-code #{type}", type: 'tel', placeholder: true, title: t(:invalid_phone), data: { regexp:  AddressForm::PHONE_INPUT }
+= f.hidden_field :type
+= f.hidden_field :addressable_id

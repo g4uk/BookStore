@@ -1,0 +1,11 @@
+$('#comment_form_wrapper').html("<%= j render 'comment_form', book: @book %>");
+$('.flash_message').html("<%= j t(:updated_sucessfully) %>");
+rating = $( '.rating' ).children( '.rate-star' ).length;
+
+$.ajax({
+  url: '/comments/' + "<%= @comment_id %>",
+  type: 'PUT',
+  data: {
+    'id' : "<%= @comment_id %>",
+    'rating' : rating }
+});

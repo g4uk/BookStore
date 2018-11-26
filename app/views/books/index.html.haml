@@ -1,0 +1,36 @@
+%main.container
+  %h1.general-title-margin= t('.catalog')
+  .hidden-xs.clearfix
+    .dropdowns.pull-right
+      .dropdown.width-240
+        = render 'sort_links', sort_params: @sort_presenter.sort_param, sort_conditions: @sort_presenter.sort_conditions, category_id: @sort_presenter.category_id
+    %ul.list-inline.pt-10.mb-25.mr-240
+      %li.mr-35
+        = link_to books_path, class: 'filter-link' do
+          = t(:all)
+          %span.badge.general-badge= books_number
+      - categories.each do |category|
+        -if category.books_count.positive?
+          %li.mr-35
+            = link_to url_options = { category: category.id }, html_options = { class: 'filter-link' } do
+              = category.name
+              %span.badge.general-badge= category.books_count
+  .dropdowns.mb-25.visible-xs
+    %p.lead.small.mb-10= t('.category_filter')
+    .dropdown
+      %a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+        %i.fa.fa-angle-down.dropdown-icon.pull-right
+      %ul.dropdown-menu
+        - categories.each do |category|
+          -if category.books_count.positive?
+            %li
+              = link_to url_options = { category: category.id }, html_options = { class: 'filter-link' } do
+                = "#{category.name} (#{category.books_count})"
+    %p.lead.small.mb-10= t('.sort_by')
+    .dropdown
+      = render 'sort_links', sort_params: @sort_presenter.sort_param, sort_conditions: @sort_presenter.sort_conditions, category_id: @sort_presenter.category_id
+  .mb-120
+    #books-container
+      = render 'books', books: @books
+    .text-center
+      = paginate @books, remote: true

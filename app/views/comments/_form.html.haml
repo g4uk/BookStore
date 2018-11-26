@@ -1,0 +1,13 @@
+= form_with model: comment, url: book_comments_path(book_id), html: { class: 'row' } do |f|
+  .flash_message
+  .col-md-8
+    .mb-40
+      .form-group
+        = f.label :title, class: 'control-label.input-label.in-grey-600'
+        = f.text_field :title, id: 'title', class: 'form-control', title: t(:invalid_review), data: { regexp: CommentForm::COMMENT_INPUT }
+      .form-group
+        = f.label :review, class: 'control-label.input-label.in-grey-600'
+        = f.text_area :text, id: 'review', class: 'form-control', title: t(:invalid_review), data: { regexp: CommentForm::COMMENT_INPUT }
+      = f.hidden_field :rating
+    .text-right
+      = f.submit t('.add_comment'), class: 'btn btn-default mb-20'

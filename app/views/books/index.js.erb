@@ -1,0 +1,7 @@
+$('#books-container').append("<%= j(render 'books', books: @books) %>");
+
+<% if @books.last_page? %>
+  $(".text-center").hide();
+<% else %>
+  $(".text-center").html("<%= paginate @books, remote: true %>");
+<% end %>

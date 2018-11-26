@@ -1,0 +1,9 @@
+<% if @billing_form %>
+  billingAddressForm = $('#edit_billing_address_form_wrapper');
+  billingAddressForm.html("<%= j render 'settings_address', type: 'billing', country: @billing_form.country %>")
+  billingAddressForm.find('.flash_message').html("<%= j t(:updated_sucessfully) %>");
+<% else %>
+  shippinhAddressForm = $('#edit_shipping_address_form_wrapper');
+  shippinhAddressForm.html("<%= j render 'settings_address', type: 'shipping', country: @shipping_form.country %>")
+  shippinhAddressForm.find('.flash_message').html("<%= j t(:updated_sucessfully) %>");
+<% end %>

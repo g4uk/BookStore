@@ -1,0 +1,17 @@
+= form_for(:user, url: session_path(:user), html: { class: 'general-form' }) do |f|
+  = render partial: 'users/flash'
+  .form-group.mb-30
+    = f.label :email, t(:enter_email), class: 'control-label input-label'
+    = f.text_field :email, class: 'form-control', placeholder: true
+  .form-group.mb-30
+    = f.label :password, t('.password'), class: 'control-label input-label'
+    = f.password_field :password, class: 'form-control', placeholder: true
+    =# link_to t('.forgot_password'), forgot_password_users_path, class: 'help-block in-gold-500'
+  .form-group.checkbox.text-center.mb-30
+    %label.checkbox-label
+      = f.check_box :remember_me, class: 'checkbox-input', hidden: 'true'
+      %span.checkbox-icon
+        %i.fa.fa-check
+      = f.label :remember_me, class: 'checkbox-text'
+  .text-center
+    = f.submit t(:log_in), class: 'btn btn-default mb-20'

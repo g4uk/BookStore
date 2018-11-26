@@ -1,0 +1,2 @@
+$('#comment_form_wrapper').html("<%= j render 'comments/form', comment: @comment, book_id: @comment.book_id %>");
+$('.flash_message').html("<%= j t(:fix_errors) %>");

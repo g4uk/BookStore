@@ -1,0 +1,7 @@
+%a.dropdown-toggle.lead.small{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+  = t(".#{sort_params}")
+  %i.fa.fa-angle-down.dropdown-icon.pull-right
+%ul.dropdown-menu
+  - sort_conditions.each do |condition|
+    %li
+      = link_to t(".#{condition}"), sort: condition, category: category_id

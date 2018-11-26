@@ -1,0 +1,2 @@
+%span.next
+  = link_to_unless current_page.last?, I18n.t(:view_more), url, rel: 'next', remote: remote, id: 'load-more-posts', class: 'btn btn-primary'

@@ -1,0 +1,9 @@
+.general-thumb-wrap
+  .thumbnail.general-thumbnail 
+    = book.main_image('img-shadow general-thumbnail-img')
+    .thumb-hover
+      .general-thumb-link-wrap
+        = link_to book_path(book, sort: @sort_params, category: @category_id), class: 'thumb-hover-link link-to-book' do
+          %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
+        = link_to book_order_items_path(book), class: 'thumb-hover-link add-to-cart', method: :post, remote: true do
+          %i.fa.fa-shopping-cart.thumb-icon

@@ -1,0 +1,7 @@
+= form_with model: @user do |f|
+  .flash_message
+  .form-group.mb-35
+    = f.label :email, class: 'control-label input-label'
+    = f.email_field :email, id: 'email', placeholder: true, class: 'email form-control', title: t(:invalid_email), data: { regexp: INPUT_VALIDATIONS[:email] }
+  .general-text-align
+    = f.submit t('.save'), class: 'btn btn-default mb-35'

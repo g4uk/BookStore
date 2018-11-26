@@ -1,0 +1,6 @@
+= form_with model: instance_variable_get("@#{type + '_form'}"), url: addresses_path do |form|
+  .flash_message
+  = render 'addresses/form', f: form, type: type, country: country
+  .text-center.general-text-align
+    = form.submit t('.save'), class: 'btn btn-default'
+    

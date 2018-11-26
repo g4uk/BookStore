@@ -1,0 +1,119 @@
+.hidden{
+  display: none;
+}
+
+.flash_message{
+  color: red;
+  padding-left: 15px;
+  font-size: 18px;
+}
+
+tr[data-link]:hover,
+table[data-link]:hover{
+  cursor: pointer;
+}
+
+#loading-indicator{
+  display: none;
+}
+
+.general-login-icon:hover {
+  background-color: transparent;
+}
+
+a, a:link, a:visited {
+  color: #38678b;
+  text-decoration: none;
+}
+
+form input[type="text"], 
+form input[type="password"], 
+form input[type="email"], 
+form input[type="number"], 
+form input[type="url"], 
+form input[type="tel"], 
+form input[type="date"], 
+form input[type="time"], 
+form textarea {
+  width: 100%;
+}
+
+p{
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333333;
+}
+
+form input[type="submit"], 
+form input[type="button"], 
+form button{
+  font-family: "Open Sans", sans-serif;
+  border-radius: 0;
+  line-height: inherit;
+  margin-right: 0;
+  padding: 8px 32px;
+  background-color: #040403;
+  background-image: none;
+  text-shadow: none;
+  box-shadow: none;
+  border: none;
+}
+
+form input[type="submit"].btn.center-block.btn-default.mb-20{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+a, a:link, a:visited{
+  color:#8c8c8c;
+}
+
+a:hover, a:focus{
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+.btn-default:hover {
+  color: white;
+  background-color: #040403;
+  border-color: transparent;
+}
+
+form input[type="submit"]:not(.disabled):hover,
+input[type="submit"]:not(.disabled):hover{
+  background-image: none;
+}
+
+.btn-primary:hover {
+  color: white;
+  background-color: #b6834d;
+  border-color: transparent;
+}
+
+.btn.btn-primary {
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.btn.btn-default {
+  color: white;
+  font-weight: 600;
+}
+
+.nav-link, .nav-link:link, .nav-link:visited {
+  color: #8c8c8c;
+  text-decoration: none;
+}
+
+.lead, .lead p{
+  color: #8c8c8c;
+  word-break: break-word;
+  font-size: 21px;
+}
+
+.small {
+  font-size: 14px;
+}

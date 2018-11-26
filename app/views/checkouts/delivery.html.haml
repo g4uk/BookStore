@@ -1,0 +1,54 @@
+%main.container.general-main-wrap
+  = render partial: 'progress_bar'
+  %h3.general-subtitle= t('.shipments')
+  = form_for @order, url: wizard_path do |form|
+    .visible-xs
+      .general-cart-item.divider-lg-bottom
+        %table.table
+          - @order_presenter.deliveries.each do |delivery|
+            %tr
+              %td.col-half
+                %span.in-grey-600= t('.method')
+              %td.col-half
+                .form-group.radio.mt-0.mb-0
+                  %label.radio-label
+                    = form.radio_button :delivery_id, delivery.id, class: 'radio-input', hidden: true
+                    %span.radio-icon
+                    %span.radio-text= delivery.name
+            %tr
+              %td
+                %span.in-grey-600= t('.days')
+              %td
+                %span.font-16.fw-300= delivery.duration
+            %tr
+              %td
+                %span.in-grey-600= t('.price')
+              %td
+                %span.font-16.in-gold-500= delivery.formatted_price
+    .hidden-xs.mb-res-50
+      %table.table.table-hover
+        %thead
+          %tr
+            %th.col-method
+              %span.in-grey-600.ml-40= t('.method')
+            %th
+              %span.in-grey-600= t('.days')
+            %th
+              %span.in-grey-600= t('.price')
+        %tbody
+          - @order_presenter.deliveries.each do |delivery|
+            %tr
+              %td
+                .form-group.radio.mt-0.mb-0
+                  %label.radio-label
+                    = form.radio_button :delivery_id, delivery.id, class: 'radio-input', hidden: true
+                    %span.radio-icon
+                    %span.radio-text= delivery.name
+              %td
+                %span= delivery.duration
+              %td
+                %span.font-16.in-gold-500{class: ("delivery-#{delivery.id}") }= delivery.formatted_price
+    .general-text-align
+      = render 'order_summary', order: @order, pull_right: false
+    .text-center
+      = form.submit t(:continue), class: 'btn btn-default mb-20'

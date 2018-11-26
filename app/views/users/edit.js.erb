@@ -1,0 +1,3 @@
+emailForm = $('#edit_email_form_wrapper');
+emailForm.html("<%= j render partial: 'email_form' %>");
+emailForm.find('.flash_message').html("<%= j t(:fix_errors) %>");

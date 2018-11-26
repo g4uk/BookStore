@@ -1,0 +1,22 @@
+%main.container.general-main-wrap
+  .text-center
+    %h3.general-login-title= t(:sign_up)
+    = link_to user_facebook_omniauth_authorize_path, class: 'general-login-icon' do
+      %i.fa.fa-facebook-official
+    %p.general-login-text= t(:or)
+  = form_for(:user, url: registration_path(:user), html: { class: 'general-form' }) do |f|
+    = render partial: 'flash'
+    .form-group.mb-30
+      = f.label :email, t(:enter_email), class: 'control-label input-label'
+      = f.text_field :email, class: 'form-control', placeholder: true, title: t(:invalid_email), data: { regexp: INPUT_VALIDATIONS[:email] }
+    .form-group.mb-30
+      = f.label :password, class: 'control-label input-label'
+      = f.password_field :password, class: 'form-control', placeholder: true, title: t(:invalid_password), data: { regexp: INPUT_VALIDATIONS[:password] }
+    .form-group.mb-30
+      = f.label :password_confirmation, class: 'control-label input-label'
+      = f.password_field :password_confirmation, class: 'form-control', placeholder: true, title: t(:invalid_password), data: { regexp: INPUT_VALIDATIONS[:password] }
+    .text-center
+      = f.submit t(:sign_up), class: 'btn btn-default mb-20'
+  %p.general-sign-text.text-center
+    = t('.have_account')
+    = link_to t(:log_in), login_users_path, class: 'in-gold-500'

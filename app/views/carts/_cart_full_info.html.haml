@@ -1,0 +1,44 @@
+= render 'order_items/order_item_xs', order_items: order_items, type: 'cart'
+.hidden-xs
+  %table.table.table-hover
+    %tr.no-hover
+      %th.col-pic.pl-0
+        %span.in-grey-600= t('.book')
+      %th.col-title
+      %th.col-price
+        %span.in-grey-600= t('.price')
+      %th.col-quantity
+        %span.in-grey-600= t('.quantity')
+      %th.col-total
+        %span.in-grey-600= t('.subtotal')
+      %th.col-close
+    = render 'order_items/order_item', order_items: order_items, type: 'cart'
+.general-order-wrap
+  .row
+    .col-sm-4
+      #coupon-wrapper
+        = render 'carts/form'
+    .col-sm-8
+      .res-mr-200.text-center.general-text-right
+        %p.in-gold-500.font-18= t('.order_summary')
+        %table.general-summary-table.general-summary-table-right.general-text-right
+          %tr
+            %td
+              %p.font-16= t('.subtotal')
+            %td
+              %p.font-16= cart.formatted_subtotal
+          %tr
+            %td
+              %p.font-16= t('.coupon')
+            %td
+              %p.font-16= cart.formatted_discount
+          %tr
+            %td
+              %strong.font-18= t('.total')
+            %td
+              %strong.font-18= cart.formatted_total
+        .btn.btn-default.mb-20.visible-xs-inline-block= link_to(t(:checkout), orders_path, method: :post)
+  .row.hidden-xs
+    .col-sm-12
+      .text-center
+        = link_to(t('.checkout'), orders_path, method: :post, class: 'btn btn-default mb-20 hidden-xs')
